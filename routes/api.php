@@ -16,3 +16,5 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Api\Auth\RegisterController@register')->name('register');
 // ログイン
 Route::post('/login', 'Api\Auth\LoginController@login')->name('login');
+// ログアウト
+Route::post('/logout', 'Api\Auth\LoginController@logout')->name('logout');
