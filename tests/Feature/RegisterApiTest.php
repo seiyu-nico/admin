@@ -11,6 +11,7 @@ use App\Models\User;
 class RegisterApiTest extends TestCase
 {
     use RefreshDatabase;
+    
     /**
      * A basic feature test example.
      */
@@ -19,8 +20,8 @@ class RegisterApiTest extends TestCase
         $data = [
             'name' => 'tech',
             'email' => 'test@test.com',
-            'password' => 'tech',
-            'password_confirmation' => 'tech',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $response = $this->json('POST', route('register'), $data);
