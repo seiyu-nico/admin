@@ -10,27 +10,27 @@ use App\Models\User;
 
 class RegisterApiTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
-     *
-     * @return void
      */
     public function test_新しいユーザを作成して返却する()
     {
         $data = [
             'name' => 'tech',
             'email' => 'test@test.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'tech',
+            'password_confirmation' => 'tech',
         ];
 
         $response = $this->json('POST', route('register'), $data);
 
-        // $user = User::first();
-        // $this->assertEquals($data['name'], $user->name);
+        $user = User::first();
+        $this->assertEquals($data['name'], $user->name);
 
-        // $response->assertStatus(201)
-        //          ->assertJson(['name' => $user->name]);
+        $response
+            ->assertStatus(201)
+            ->assertJson(['name' => $user->name]);
 
     }
 }
