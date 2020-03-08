@@ -18,3 +18,6 @@ Route::post('/register', 'Api\Auth\RegisterController@register')->name('register
 Route::post('/login', 'Api\Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Api\Auth\LoginController@logout')->name('logout');
+
+// ログインユーザー
+Route::get('/user', fn() => Auth::user())->name('user');

@@ -35,14 +35,7 @@ data () {
       // トップページに移動する
       this.$router.push('/');
     },
-    async register () {
-      // authストアのresigterアクションを呼び出す
-      await this.$store.dispatch('auth/register', this.registerForm);
-      // トップページに移動する
-      this.$router.push('/');
-    }
   }
-
 }
 </script>
 <style scoped>
