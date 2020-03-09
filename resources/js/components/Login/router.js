@@ -1,5 +1,7 @@
 import Router from './Router';
 
+import store from '../../store';
+
 export default {
   path: '/login',
   component: Router,
@@ -12,6 +14,13 @@ export default {
         resolve(require('./Index.vue'));
         }, 'login/index');
       },
+      beforeEnter (to, from, next) {
+        if (store.getters['auth/check']) {
+          next('/');
+        } else {
+          next();
+        }
+      }
     }
   ]
 }
