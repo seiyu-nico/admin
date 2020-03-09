@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"errors/index":"errors/index","index/index":"index/index","vendors~login/index":"vendors~login/index","login/index":"login/index"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"errors/index":"errors/index","index/index":"index/index","login/index":"login/index"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -54751,10 +54751,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Router */ "./resources/js/components/Index/Router.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store */ "./resources/js/store/index.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   path: '/',
   component: _Router__WEBPACK_IMPORTED_MODULE_0__["default"],
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_1__["default"].getters['auth/check']) {
+      next();
+    } else {
+      next('/login');
+    }
+  },
   children: [{
     path: '',
     name: 'Index.Index',
@@ -54841,7 +54850,7 @@ __webpack_require__.r(__webpack_exports__);
     path: '',
     name: 'Login.Index',
     component: function component(resolve) {
-      Promise.all(/*! require.ensure | login/index */[__webpack_require__.e("vendors~login/index"), __webpack_require__.e("login/index")]).then((function () {
+      __webpack_require__.e(/*! require.ensure | login/index */ "login/index").then((function () {
         resolve(__webpack_require__(/*! ./Index.vue */ "./resources/js/components/Login/Index.vue"));
       }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
     },
@@ -54889,15 +54898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // パスとコンポーネントのマッピング
 
-var routes = [_objectSpread({}, _components_Index_router__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__["default"].getters['auth/check']) {
-      next();
-    } else {
-      next('/login');
-    }
-  }
-}), _objectSpread({}, _components_Login_router__WEBPACK_IMPORTED_MODULE_3__["default"]), _objectSpread({}, _components_Errors_router__WEBPACK_IMPORTED_MODULE_4__["default"])]; // VueRouterインスタンスを作成する
+var routes = [_objectSpread({}, _components_Index_router__WEBPACK_IMPORTED_MODULE_2__["default"]), _objectSpread({}, _components_Login_router__WEBPACK_IMPORTED_MODULE_3__["default"]), _objectSpread({}, _components_Errors_router__WEBPACK_IMPORTED_MODULE_4__["default"])]; // VueRouterインスタンスを作成する
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',

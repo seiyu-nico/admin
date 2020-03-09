@@ -15,13 +15,6 @@ Vue.use(VueRouter);
 // パスとコンポーネントのマッピング
 const routes = [
   { ...IndexRouter,
-    beforeEnter (to, from, next) {
-      if (store.getters['auth/check']) {
-        next();
-      } else {
-        next('/login');
-      }
-    }
   },
   { ...LoginRouter },
   { ...ErrorsRouter },
