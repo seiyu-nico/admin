@@ -5,8 +5,6 @@ import IndexRouter from './components/Index/router';
 import LoginRouter from './components/Login/router';
 import ErrorsRouter from './components/Errors/router';
 
-import store from './store';
-
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -14,17 +12,9 @@ Vue.use(VueRouter);
 
 // パスとコンポーネントのマッピング
 const routes = [
-  { ...IndexRouter,
-    beforeEnter (to, from, next) {
-      if (store.getters['auth/check']) {
-        next();
-      } else {
-        next('/login');
-      }
-    }
-  },
-  { ...LoginRouter },
-  { ...ErrorsRouter },
+  { ...IndexRouter, },
+  { ...LoginRouter, },
+  { ...ErrorsRouter, },
 ]
 
 // VueRouterインスタンスを作成する

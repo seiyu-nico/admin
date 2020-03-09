@@ -54751,10 +54751,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Router */ "./resources/js/components/Index/Router.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store */ "./resources/js/store/index.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   path: '/',
   component: _Router__WEBPACK_IMPORTED_MODULE_0__["default"],
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_1__["default"].getters['auth/check']) {
+      next();
+    } else {
+      next('/login');
+    }
+  },
   children: [{
     path: '',
     name: 'Index.Index',
@@ -54889,15 +54898,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // パスとコンポーネントのマッピング
 
-var routes = [_objectSpread({}, _components_Index_router__WEBPACK_IMPORTED_MODULE_2__["default"], {
-  beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__["default"].getters['auth/check']) {
-      next();
-    } else {
-      next('/login');
-    }
-  }
-}), _objectSpread({}, _components_Login_router__WEBPACK_IMPORTED_MODULE_3__["default"]), _objectSpread({}, _components_Errors_router__WEBPACK_IMPORTED_MODULE_4__["default"])]; // VueRouterインスタンスを作成する
+var routes = [_objectSpread({}, _components_Index_router__WEBPACK_IMPORTED_MODULE_2__["default"]), _objectSpread({}, _components_Login_router__WEBPACK_IMPORTED_MODULE_3__["default"]), _objectSpread({}, _components_Errors_router__WEBPACK_IMPORTED_MODULE_4__["default"])]; // VueRouterインスタンスを作成する
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
