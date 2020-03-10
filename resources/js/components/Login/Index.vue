@@ -10,12 +10,16 @@
           <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
         </ul>
       </div>
-      <label for="inputEmail" class="sr-only">Emailアドレス</label>
-      <input type="text" id="inputEmail" class="form-control"
-         placeholder="Emailアドレス" autofocus v-model="loginForm.email">
-      <label for="inputPassword" class="sr-only">パスワード</label>
-      <input type="password" id="inputPassword" class="form-control" 
-          placeholder="パスワード" v-model="loginForm.password">
+      <div class="my-1">
+        <label for="inputEmail" class="sr-only">Emailアドレス</label>
+        <input type="text" id="inputEmail" class="form-control"
+          placeholder="Emailアドレス" autofocus v-model="loginForm.email">
+      </div>
+      <div class="my-1">
+        <label for="inputPassword" class="sr-only">パスワード</label>
+        <input type="password" id="inputPassword" class="form-control" 
+            placeholder="パスワード" v-model="loginForm.password">
+      </div>
       <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" value="remember-me" id="rememberCheck">
         <label class="form-check-label" for="rememberCheck">
