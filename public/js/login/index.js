@@ -52,6 +52,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -163,68 +167,74 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("label", { staticClass: "sr-only", attrs: { for: "inputEmail" } }, [
-          _vm._v("Emailアドレス")
+        _c("div", { staticClass: "my-1" }, [
+          _c(
+            "label",
+            { staticClass: "sr-only", attrs: { for: "inputEmail" } },
+            [_vm._v("Emailアドレス")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.loginForm.email,
+                expression: "loginForm.email"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              id: "inputEmail",
+              placeholder: "Emailアドレス",
+              autofocus: ""
+            },
+            domProps: { value: _vm.loginForm.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.loginForm, "email", $event.target.value)
+              }
+            }
+          })
         ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.loginForm.email,
-              expression: "loginForm.email"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "inputEmail",
-            placeholder: "Emailアドレス",
-            autofocus: ""
-          },
-          domProps: { value: _vm.loginForm.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "my-1" }, [
+          _c(
+            "label",
+            { staticClass: "sr-only", attrs: { for: "inputPassword" } },
+            [_vm._v("パスワード")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.loginForm.password,
+                expression: "loginForm.password"
               }
-              _vm.$set(_vm.loginForm, "email", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "sr-only", attrs: { for: "inputPassword" } },
-          [_vm._v("パスワード")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.loginForm.password,
-              expression: "loginForm.password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "password",
-            id: "inputPassword",
-            placeholder: "パスワード"
-          },
-          domProps: { value: _vm.loginForm.password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "password",
+              id: "inputPassword",
+              placeholder: "パスワード"
+            },
+            domProps: { value: _vm.loginForm.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.loginForm, "password", $event.target.value)
               }
-              _vm.$set(_vm.loginForm, "password", $event.target.value)
             }
-          }
-        }),
+          })
+        ]),
         _vm._v(" "),
         _vm._m(0),
         _vm._v(" "),
