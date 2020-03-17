@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import IndexRouter from './components/Index/router';
 import LoginRouter from './components/Login/router';
 import ErrorsRouter from './components/Errors/router';
+import MemoRouter from './components/Memo/router';
 
 
 // VueRouterプラグインを使用する
@@ -15,6 +16,7 @@ const routes = [
   { ...IndexRouter, },
   { ...LoginRouter, },
   { ...ErrorsRouter, },
+  { ...MemoRouter, },
 ]
 
 // VueRouterインスタンスを作成する

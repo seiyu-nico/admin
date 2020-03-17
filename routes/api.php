@@ -21,3 +21,9 @@ Route::post('/logout', 'Api\Auth\LoginController@logout')->name('logout');
 
 // ログインユーザー
 Route::get('/user', fn() => Auth::user())->name('user');
+
+// メモ作成
+Route::group(['middleware' => 'auth'], function() {
+    Route::post('/memo', 'Api\MemoController@create')->name('memo.create');
+    Route::get('/memo', 'Api\MemoController@index')->name('memo.create');
+});

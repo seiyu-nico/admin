@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーションシップ - memosテーブル
+     */
+    public function memo()
+    {
+        return $this->hasMany('App\Models\Memo');
+    }
 }
