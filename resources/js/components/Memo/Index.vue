@@ -1,9 +1,15 @@
 <template>
   <div>
     <h1>Memo</h1>
-    <div v-for="memo in memos" :key="memo.id">
-      <p>{{memo.title}}</p>
-      <p>{{memo.body}}</p>
+    <div class="row">
+      <div class="col-lg-3 my-2" v-for="memo in memos" :key="memo.id">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{memo.title}}</h4>
+            <p class="card-text">{{memo.body}}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +24,7 @@ export default {
     async getMemo() {
       // メモ取得
       await this.$store.dispatch('memo/getMemo');
-    }
+    },
   },
   computed: {
     ...mapState({

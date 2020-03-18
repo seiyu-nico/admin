@@ -33,6 +33,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -86,21 +92,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [_vm._v("Memo")]),
-      _vm._v(" "),
+  return _c("div", [
+    _c("h1", [_vm._v("Memo")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
       _vm._l(_vm.memos, function(memo) {
-        return _c("div", { key: memo.id }, [
-          _c("p", [_vm._v(_vm._s(memo.title))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(memo.body))])
+        return _c("div", { key: memo.id, staticClass: "col-lg-3 my-2" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("h4", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(memo.title))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(memo.body))])
+            ])
+          ])
         ])
-      })
-    ],
-    2
-  )
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
