@@ -3,10 +3,10 @@
     <h1>Memo</h1>
     <div class="row">
       <div class="col-lg-3 my-2" v-for="memo in memos" :key="memo.id">
-        <div class="card">
+        <div class="card shadow">
           <div class="card-body">
             <h4 class="card-title">{{memo.title}}</h4>
-            <p class="card-text">{{memo.body}}</p>
+            <p class="card-text overflow-auto" style="height:150px;">{{memo.body}}</p>
           </div>
         </div>
       </div>
