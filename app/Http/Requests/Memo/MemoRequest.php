@@ -28,4 +28,12 @@ class MemoRequest extends FormRequest
             'body' => 'required|max:255',
         ];
     }
+    
+    public function attributes()
+    {
+        return [
+            'title' => 'タイトル',
+            'body' => '内容',
+        ];
+    }
 }
