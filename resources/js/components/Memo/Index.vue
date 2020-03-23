@@ -5,7 +5,7 @@
         <h1>Memo</h1>
       </div>
       <div class="col-2">
-         <button type="button" @click="showModal(true)" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#memo_store">追加</button>
+         <button type="button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#memo_store">追加</button>
       </div>
     </div>
     <div class="row">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <!-- モーダルの設定 -->
+    <!-- メモ追加部分 -->
     <div class="modal fade" id="memo_store" tabindex="-1" role="dialog" aria-labelledby="memo_store_label">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -42,12 +42,15 @@
           </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="modal_hidden" data-dismiss="modal" @click="showModal(false)" >閉じる</button>
+            <button type="button" class="btn btn-secondary" id="modal_hidden" data-dismiss="modal">閉じる</button>
             <button type="button" class="btn btn-primary" @click="store">保存</button>
-          </div><!-- /.modal-footer -->
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
   </div>
 </template>
 <script>

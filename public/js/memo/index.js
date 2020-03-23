@@ -307,11 +307,6 @@ var render = function() {
                       type: "button",
                       id: "modal_hidden",
                       "data-dismiss": "modal"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.showModal(false)
-                      }
                     }
                   },
                   [_vm._v("閉じる")]
