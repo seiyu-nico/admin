@@ -47,7 +47,7 @@
                   <div class="alert alert-danger" role="alert" v-for="msg in errors.body" :key="msg">{{ msg }}</div>
                 </template>
               </div>
-              <textarea class="form-control" id="memo_body" rows="3" v-model="memo.body"></textarea>
+              <textarea class="form-control" id="memo_body" rows="9" v-model="memo.body"></textarea>
             </div>
           </form>
           </div>
