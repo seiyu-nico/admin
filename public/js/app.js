@@ -55319,7 +55319,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   memos: {},
-  apiStatus: null
+  apiStatus: null,
+  error_messages: null
 };
 var getters = {};
 var mutations = {
@@ -55328,6 +55329,12 @@ var mutations = {
   },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
+  },
+  addMemo: function addMemo(state, memo) {
+    state.memos.push(memo);
+  },
+  setErrorMessages: function setErrorMessages(state, message) {
+    state.error_messages = message;
   }
 };
 var actions = {
@@ -55360,6 +55367,48 @@ var actions = {
           }
         }
       }, _callee);
+    }))();
+  },
+  store: function store(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context2.next = 3;
+              return axios.post('/api/memo', data);
+
+            case 3:
+              response = _context2.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
+                _context2.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('addMemo', response.data);
+              return _context2.abrupt("return", false);
+
+            case 8:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
     }))();
   }
 };
