@@ -206,13 +206,20 @@ var render = function() {
       { staticClass: "row" },
       _vm._l(_vm.memos, function(memo) {
         return _c("div", { key: memo.id, staticClass: "col-lg-3 my-2" }, [
-          _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card shadow" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("h4", { staticClass: "card-title" }, [
                 _vm._v(_vm._s(memo.title))
               ]),
               _vm._v(" "),
-              _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(memo.body))])
+              _c(
+                "p",
+                {
+                  staticClass: "card-text overflow-auto",
+                  staticStyle: { height: "150px" }
+                },
+                [_vm._v(_vm._s(memo.body))]
+              )
             ])
           ])
         ])
