@@ -33,10 +33,20 @@
           <form @submit.prevent="store">
             <div class="form-group">
               <label for="memo_title">メモタイトル</label>
+              <div v-if="errors" class="errors">
+                <template v-if="errors.title">
+                  <div class="alert alert-danger" role="alert" v-for="msg in errors.title" :key="msg">{{ msg }}</div>
+                </template>
+              </div>
               <input type="email" class="form-control" id="memo_title" v-model="memo.title">
             </div>
             <div class="form-group">
               <label for="memo_body">内容</label>
+              <div v-if="errors" class="errors">
+                <template v-if="errors.body">
+                  <div class="alert alert-danger" role="alert" v-for="msg in errors.body" :key="msg">{{ msg }}</div>
+                </template>
+              </div>
               <textarea class="form-control" id="memo_body" rows="3" v-model="memo.body"></textarea>
             </div>
           </form>

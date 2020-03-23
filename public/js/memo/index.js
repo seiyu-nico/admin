@@ -79,6 +79,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -244,6 +254,29 @@ var render = function() {
                         _vm._v("メモタイトル")
                       ]),
                       _vm._v(" "),
+                      _vm.errors
+                        ? _c(
+                            "div",
+                            { staticClass: "errors" },
+                            [
+                              _vm.errors.title
+                                ? _vm._l(_vm.errors.title, function(msg) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        key: msg,
+                                        staticClass: "alert alert-danger",
+                                        attrs: { role: "alert" }
+                                      },
+                                      [_vm._v(_vm._s(msg))]
+                                    )
+                                  })
+                                : _vm._e()
+                            ],
+                            2
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c("input", {
                         directives: [
                           {
@@ -271,6 +304,29 @@ var render = function() {
                       _c("label", { attrs: { for: "memo_body" } }, [
                         _vm._v("内容")
                       ]),
+                      _vm._v(" "),
+                      _vm.errors
+                        ? _c(
+                            "div",
+                            { staticClass: "errors" },
+                            [
+                              _vm.errors.body
+                                ? _vm._l(_vm.errors.body, function(msg) {
+                                    return _c(
+                                      "div",
+                                      {
+                                        key: msg,
+                                        staticClass: "alert alert-danger",
+                                        attrs: { role: "alert" }
+                                      },
+                                      [_vm._v(_vm._s(msg))]
+                                    )
+                                  })
+                                : _vm._e()
+                            ],
+                            2
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("textarea", {
                         directives: [
