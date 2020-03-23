@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\MemoRequest;
+use App\Http\Requests\Memo\MemoRequest;
+use App\Http\Requests\Memo\MemoUpdateRequest;
 use App\Models\Memo;
 use Auth;
 use Log;
@@ -31,4 +32,13 @@ class MemoController extends Controller
         $memo = Memo::create($data);
         return response($memo, 201);
     }
+
+    public function update(MemoUpdateRequest $request)
+    {
+        $memo = Memo::find($request->id);
+        $memo->update($request->all());
+        return response($memo, 200);
+    }
+    
+
 }

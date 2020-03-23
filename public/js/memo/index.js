@@ -11,7 +11,9 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -89,6 +91,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -96,11 +128,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       memo: {
         title: '',
         body: ''
-      }
+      },
+      idnex: ''
     };
   },
   created: function created() {
     this.getMemo();
+    this.clearError();
   },
   methods: {
     getMemo: function getMemo() {
@@ -136,9 +170,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 if (_this2.apiStatus) {
                   // 追加が正常に完了したのでモーダルを閉じる
-                  _this2.modalHidden();
+                  _this2.modalHidden('#modal_hidden');
 
-                  _this2.initMemo();
+                  _this2.clearMemo();
                 }
 
               case 3:
@@ -149,17 +183,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    initMemo: function initMemo() {
+    update: function update() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.$store.dispatch('memo/update', {
+                  'memo': _this3.memo,
+                  'index': _this3.index
+                });
+
+              case 2:
+                if (_this3.apiStatus) {
+                  // 追加が正常に完了したのでモーダルを閉じる
+                  _this3.modalHidden('#update_modal_hidden');
+
+                  _this3.clearMemo();
+                }
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    detail: function detail(index) {
+      this.index = index;
+      this.clearError();
+      this.memo = vue__WEBPACK_IMPORTED_MODULE_1___default.a.util.extend({}, this.memos[this.index]);
+    },
+    clearMemo: function clearMemo() {
       // メモ初期化
       this.memo.title = '';
       this.memo.body = '';
     },
-    modalHidden: function modalHidden() {
-      // モーダルを非表示にする
-      $('#modal_hidden').click();
+    clearError: function clearError() {
+      this.$store.commit('memo/setErrorMessages', null);
+    },
+    modalHidden: function modalHidden(id) {
+      $(id).click();
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
     memos: function memos(state) {
       return state.memo.memos;
     },
@@ -195,24 +266,36 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.memos, function(memo) {
+      _vm._l(_vm.memos, function(memo, index) {
         return _c("div", { key: memo.id, staticClass: "col-lg-3 my-2" }, [
-          _c("div", { staticClass: "card shadow" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _c("h4", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(memo.title))
-              ]),
-              _vm._v(" "),
-              _c(
-                "p",
-                {
-                  staticClass: "card-text overflow-auto",
-                  staticStyle: { height: "150px" }
-                },
-                [_vm._v(_vm._s(memo.body))]
-              )
-            ])
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "card shadow",
+              attrs: { "data-toggle": "modal", "data-target": "#memo_update" },
+              on: {
+                click: function($event) {
+                  return _vm.detail(index)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "card-body" }, [
+                _c("h4", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(memo.title))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  {
+                    staticClass: "card-text overflow-auto",
+                    staticStyle: { height: "150px" }
+                  },
+                  [_vm._v(_vm._s(memo.body))]
+                )
+              ])
+            ]
+          )
         ])
       }),
       0
@@ -245,6 +328,131 @@ var render = function() {
                       submit: function($event) {
                         $event.preventDefault()
                         return _vm.store($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "memo_title" } }, [
+                        _vm._v("メモタイトル")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.memo.title,
+                            expression: "memo.title"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "memo_title" },
+                        domProps: { value: _vm.memo.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.memo, "title", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "memo_body" } }, [
+                        _vm._v("内容")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.memo.body,
+                            expression: "memo.body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "memo_body", rows: "9" },
+                        domProps: { value: _vm.memo.body },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.memo, "body", $event.target.value)
+                          }
+                        }
+                      })
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: {
+                      type: "button",
+                      id: "modal_hidden",
+                      "data-dismiss": "modal"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.clearMemo()
+                      }
+                    }
+                  },
+                  [_vm._v("閉じる")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.store }
+                  },
+                  [_vm._v("保存")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "memo_update",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "memo_update_label"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.update($event)
                       }
                     }
                   },
@@ -287,7 +495,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "email", id: "memo_title" },
+                        attrs: { type: "text", id: "memo_title" },
                         domProps: { value: _vm.memo.title },
                         on: {
                           input: function($event) {
@@ -338,7 +546,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { id: "memo_body", rows: "3" },
+                        attrs: { id: "memo_body", rows: "9" },
                         domProps: { value: _vm.memo.body },
                         on: {
                           input: function($event) {
@@ -361,8 +569,13 @@ var render = function() {
                     staticClass: "btn btn-secondary",
                     attrs: {
                       type: "button",
-                      id: "modal_hidden",
+                      id: "update_modal_hidden",
                       "data-dismiss": "modal"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.clearMemo()
+                      }
                     }
                   },
                   [_vm._v("閉じる")]
@@ -373,9 +586,9 @@ var render = function() {
                   {
                     staticClass: "btn btn-primary",
                     attrs: { type: "button" },
-                    on: { click: _vm.store }
+                    on: { click: _vm.update }
                   },
-                  [_vm._v("保存")]
+                  [_vm._v("更新")]
                 )
               ])
             ])
@@ -418,6 +631,31 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "memo_store_label" } },
         [_vm._v("メモ追加")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "閉じる"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "memo_update_label" } },
+        [_vm._v("メモ修正")]
       ),
       _vm._v(" "),
       _c(

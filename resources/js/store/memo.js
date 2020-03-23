@@ -1,4 +1,4 @@
-import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util';
+import { OK, CREATED, NO_CONTENT, UNPROCESSABLE_ENTITY } from '../util';
 
 const state = {
   memos: {},
@@ -13,6 +13,9 @@ const mutations = {
   setMemos (state, memos) {
     state.memos = memos;
   },
+  updateMemo (state, data) {
+    state.memos.splice(data.index, 1, data.memo);
+  },
   setApiStatus (state, status) {
     state.apiStatus = status;
   },
@@ -21,11 +24,12 @@ const mutations = {
   },
   setErrorMessages(state, message) {
     state.error_messages = message;
-  }
+  },
 }
 
 const actions = {
   async getMemo (context) {
+    // メモ取得
     context.commit('setApiStatus', null);
     const response = await axios.get('/api/memo');
 
@@ -36,6 +40,7 @@ const actions = {
     }
   },
   async store(context, data) {
+    // メモ登録
     context.commit('setApiStatus', null);
     const response = await axios.post('/api/memo', data);
     if (response.status === CREATED) {
@@ -50,7 +55,25 @@ const actions = {
     } else {
       context.commit('error/setCode', response.status, { root: true });
     }
-  }
+  },
+  async update(context, data) {
+    // メモ更新
+    context.commit('setApiStatus', null);
+    const response = await axios.put('/api/memo', data.memo);
+    if (response.status === OK) {
+      context.commit('setApiStatus', true);
+      context.commit('updateMemo', {'memo': response.data, 'index': data.index});
+      return false;
+    }
+
+    context.commit('setApiStatus', false);
+    if (response.status === UNPROCESSABLE_ENTITY) {
+      context.commit('setErrorMessages', response.data.errors);
+    } else {
+      context.commit('error/setCode', response.status, { root: true });
+    }
+  },
+  
 }
 
 export default {

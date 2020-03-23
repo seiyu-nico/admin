@@ -55332,6 +55332,9 @@ var mutations = {
   setMemos: function setMemos(state, memos) {
     state.memos = memos;
   },
+  updateMemo: function updateMemo(state, data) {
+    state.memos.splice(data.index, 1, data.memo);
+  },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
   },
@@ -55350,6 +55353,7 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              // メモ取得
               context.commit('setApiStatus', null);
               _context.next = 3;
               return axios.get('/api/memo');
@@ -55381,6 +55385,7 @@ var actions = {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              // メモ登録
               context.commit('setApiStatus', null);
               _context2.next = 3;
               return axios.post('/api/memo', data);
@@ -55415,6 +55420,52 @@ var actions = {
         }
       }, _callee2);
     }))();
+  },
+  update: function update(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              // メモ更新
+              context.commit('setApiStatus', null);
+              _context3.next = 3;
+              return axios.put('/api/memo', data.memo);
+
+            case 3:
+              response = _context3.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context3.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('updateMemo', {
+                'memo': response.data,
+                'index': data.index
+              });
+              return _context3.abrupt("return", false);
+
+            case 8:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 10:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -55431,13 +55482,14 @@ var actions = {
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: OK, CREATED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, getCookieValue */
+/*! exports provided: OK, CREATED, NO_CONTENT, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, getCookieValue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OK", function() { return OK; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NO_CONTENT", function() { return NO_CONTENT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookieValue", function() { return getCookieValue; });
@@ -55454,6 +55506,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
  */
 var OK = 200;
 var CREATED = 201;
+var NO_CONTENT = 204;
 var UNPROCESSABLE_ENTITY = 422;
 var INTERNAL_SERVER_ERROR = 500;
 /**
