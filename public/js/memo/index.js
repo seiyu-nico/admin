@@ -76,6 +76,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -177,29 +180,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary rounded-pill",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#memo_store"
-            },
-            on: {
-              click: function($event) {
-                return _vm.showModal(true)
-              }
-            }
-          },
-          [_vm._v("追加")]
-        )
-      ])
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c(
       "div",
@@ -358,7 +339,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-10" }, [_c("h1", [_vm._v("Memo")])])
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-10" }, [_c("h1", [_vm._v("Memo")])]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary rounded-pill",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#memo_store"
+            }
+          },
+          [_vm._v("追加")]
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
