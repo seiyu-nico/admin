@@ -5,9 +5,7 @@
       <div>
         <button type="button" class="btn btn-outline-info" @click="logout">ログアウト</button>
       </div>
-      <span v-if="isLogin" class="">
-        {{ nickname }}
-      </span>
+      {{ nickname }}
     </div>
     <div v-else>
     　<router-link to="/login">ログイン</router-link>

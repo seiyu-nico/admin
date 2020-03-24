@@ -8,7 +8,7 @@ const state = {
 
 const getters = {
   check: state => !! state.user,
-  username: state => state.user ? state.user.name : '',
+  nickname: state => state.user ? state.user.nickname : '',
 }
 
 const mutations = {
