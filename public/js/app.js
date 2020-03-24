@@ -37290,7 +37290,7 @@ var runtime = (function (exports) {
     return { __await: arg };
   };
 
-  function AsyncIterator(generator, PromiseImpl) {
+  function AsyncIterator(generator) {
     function invoke(method, arg, resolve, reject) {
       var record = tryCatch(generator[method], generator, arg);
       if (record.type === "throw") {
@@ -37301,14 +37301,14 @@ var runtime = (function (exports) {
         if (value &&
             typeof value === "object" &&
             hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
+          return Promise.resolve(value.__await).then(function(value) {
             invoke("next", value, resolve, reject);
           }, function(err) {
             invoke("throw", err, resolve, reject);
           });
         }
 
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
+        return Promise.resolve(value).then(function(unwrapped) {
           // When a yielded Promise is resolved, its final value becomes
           // the .value of the Promise<{value,done}> result for the
           // current iteration.
@@ -37326,7 +37326,7 @@ var runtime = (function (exports) {
 
     function enqueue(method, arg) {
       function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
           invoke(method, arg, resolve, reject);
         });
       }
@@ -37366,12 +37366,9 @@ var runtime = (function (exports) {
   // Note that simple async functions are implemented on top of
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
     var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
+      wrap(innerFn, outerFn, self, tryLocsList)
     );
 
     return exports.isGeneratorFunction(outerFn)
@@ -53329,8 +53326,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
 /**
- * vuex v3.1.3
- * (c) 2020 Evan You
+ * vuex v3.1.2
+ * (c) 2019 Evan You
  * @license MIT
  */
 function applyMixin (Vue) {
@@ -53722,10 +53719,7 @@ Store.prototype.commit = function commit (_type, _payload, _options) {
       handler(payload);
     });
   });
-
-  this._subscribers
-    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
-    .forEach(function (sub) { return sub(mutation, this$1.state); });
+  this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); });
 
   if (
      true &&
@@ -53757,7 +53751,6 @@ Store.prototype.dispatch = function dispatch (_type, _payload) {
 
   try {
     this._actionSubscribers
-      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
       .filter(function (sub) { return sub.before; })
       .forEach(function (sub) { return sub.before(action, this$1.state); });
   } catch (e) {
@@ -54126,7 +54119,9 @@ function enableStrictMode (store) {
 }
 
 function getNestedState (state, path) {
-  return path.reduce(function (state, key) { return state[key]; }, state)
+  return path.length
+    ? path.reduce(function (state, key) { return state[key]; }, state)
+    : state
 }
 
 function unifyObjectStyle (type, payload, options) {
@@ -54369,7 +54364,7 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '3.1.3',
+  version: '3.1.2',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
@@ -55335,6 +55330,9 @@ var mutations = {
   updateMemo: function updateMemo(state, data) {
     state.memos.splice(data.index, 1, data.memo);
   },
+  deleteMemo: function deleteMemo(state, data) {
+    state.memos.splice(data.index, 1);
+  },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
   },
@@ -55465,6 +55463,53 @@ var actions = {
           }
         }
       }, _callee3);
+    }))();
+  },
+  "delete": function _delete(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              // メモ更新
+              context.commit('setApiStatus', null);
+              _context4.next = 3;
+              return axios["delete"]('/api/memo', {
+                data: data
+              });
+
+            case 3:
+              response = _context4.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["NO_CONTENT"])) {
+                _context4.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('deleteMemo', {
+                'index': data.index
+              });
+              return _context4.abrupt("return", false);
+
+            case 8:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 10:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
     }))();
   }
 };

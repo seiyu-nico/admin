@@ -93,6 +93,7 @@
           </form>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="delete_modal_hidden" data-dismiss="modal" @click="deleteMemo()">削除</button>
             <button type="button" class="btn btn-secondary" id="update_modal_hidden" data-dismiss="modal" @click="clearMemo()">閉じる</button>
             <button type="button" class="btn btn-primary" @click="update">更新</button>
           </div>
@@ -137,6 +138,18 @@ export default {
     async update() {
       await this.$store.dispatch('memo/update', { 'memo': this.memo, 'index': this.index});
       if (this.apiStatus) {
+        this.clearIndex();
+        // 追加が正常に完了したのでモーダルを閉じる
+        this.modalHidden('#update_modal_hidden');
+        this.clearMemo();
+      }
+    },
+    async deleteMemo() {
+      if (null != this.index) { 
+        await this.$store.dispatch('memo/delete', this.memos[this.index]);
+      }
+      if (this.apiStatus) {
+        this.clearIndex();
         // 追加が正常に完了したのでモーダルを閉じる
         this.modalHidden('#update_modal_hidden');
         this.clearMemo();
@@ -154,6 +167,9 @@ export default {
     },
     clearError () {
       this.$store.commit('memo/setErrorMessages', null);
+    },
+    clearIndex() {
+      this.index = null;
     },
     modalHidden(id) {
       $(id).click();

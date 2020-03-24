@@ -16,6 +16,9 @@ const mutations = {
   updateMemo (state, data) {
     state.memos.splice(data.index, 1, data.memo);
   },
+  deleteMemo (state, data) {
+    state.memos.splice(data.index, 1);
+  },
   setApiStatus (state, status) {
     state.apiStatus = status;
   },
@@ -63,6 +66,23 @@ const actions = {
     if (response.status === OK) {
       context.commit('setApiStatus', true);
       context.commit('updateMemo', {'memo': response.data, 'index': data.index});
+      return false;
+    }
+
+    context.commit('setApiStatus', false);
+    if (response.status === UNPROCESSABLE_ENTITY) {
+      context.commit('setErrorMessages', response.data.errors);
+    } else {
+      context.commit('error/setCode', response.status, { root: true });
+    }
+  },
+  async delete(context, data) {
+    // メモ更新
+    context.commit('setApiStatus', null);
+    const response = await axios.delete('/api/memo', {data: data});
+    if (response.status === NO_CONTENT) {
+      context.commit('setApiStatus', true);
+      context.commit('deleteMemo', {'index': data.index});
       return false;
     }
 

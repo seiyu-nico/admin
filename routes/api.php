@@ -27,5 +27,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/memo', 'Api\MemoController@create')->name('memo.create');
     Route::get('/memo', 'Api\MemoController@index');
     Route::put('/memo', 'Api\MemoController@update');
-
+    Route::delete('/memo', 'Api\MemoController@delete');
 });

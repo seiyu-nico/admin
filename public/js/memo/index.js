@@ -130,6 +130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -209,7 +210,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 if (_this3.apiStatus) {
-                  // 追加が正常に完了したのでモーダルを閉じる
+                  _this3.clearIndex(); // 追加が正常に完了したのでモーダルを閉じる
+
+
                   _this3.modalHidden('#update_modal_hidden');
 
                   _this3.clearMemo();
@@ -221,6 +224,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
+      }))();
+    },
+    deleteMemo: function deleteMemo() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (!(null != _this4.index)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                _context4.next = 3;
+                return _this4.$store.dispatch('memo/delete', _this4.memos[_this4.index]);
+
+              case 3:
+                if (_this4.apiStatus) {
+                  _this4.clearIndex(); // 追加が正常に完了したのでモーダルを閉じる
+
+
+                  _this4.modalHidden('#update_modal_hidden');
+
+                  _this4.clearMemo();
+                }
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     },
     detail: function detail(index) {
@@ -235,6 +272,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     clearError: function clearError() {
       this.$store.commit('memo/setErrorMessages', null);
+    },
+    clearIndex: function clearIndex() {
+      this.index = null;
     },
     modalHidden: function modalHidden(id) {
       $(id).click();
@@ -619,6 +659,24 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: {
+                      type: "button",
+                      id: "delete_modal_hidden",
+                      "data-dismiss": "modal"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteMemo()
+                      }
+                    }
+                  },
+                  [_vm._v("削除")]
+                ),
+                _vm._v(" "),
                 _c(
                   "button",
                   {

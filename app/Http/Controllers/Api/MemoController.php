@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Memo\MemoRequest;
 use App\Http\Requests\Memo\MemoUpdateRequest;
+use App\Http\Requests\Memo\MemoDeleteRequest;
 use App\Models\Memo;
 use Auth;
 use Log;
@@ -21,7 +22,6 @@ class MemoController extends Controller
     {
         $user = Auth::user();
         return $user->memo;
-
     }
 
     public function create(MemoRequest $request)
@@ -40,5 +40,9 @@ class MemoController extends Controller
         return response($memo, 200);
     }
     
-
+    public function delete(MemoDeleteRequest $request)
+    {
+        Memo::find($request->id)->delete();
+        return response(null, 204);
+    }
 }
