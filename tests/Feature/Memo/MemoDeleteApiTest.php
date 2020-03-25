@@ -9,7 +9,7 @@ use App\Models\Memo;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
-class MemoRegistApiTest extends TestCase
+class MemoDeleteApiTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,32 +18,31 @@ class MemoRegistApiTest extends TestCase
         parent::setUp();
         // メモ用のユーザ作成
         $this->user = factory(User::class)->create();
+        // メモ登録
+        $this->memo = factory(Memo::class)->create();
     }
-
 
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_メモを登録できる()
+    public function test_メモを削除できる()
     {
         $data = [
-            'title' => 'タイトル',
-            'body' => '本文',
+            'id' => $this->memo->id,
         ];
-
-        $response = $this->actingAs($this->user)
-                         ->json('POST', route('memo.create'), $data);
-
-        // 作成した1件目を取得
-        $memo = Memo::find(1);
-
-        // レスポンスが201(CREATED)であること
-        $response->assertStatus(201)
-                ->assertJson(['title' => $memo->title])
-                ->assertJson(['body' => $memo->body]);
         
+        $response = $this->actingAs($this->user)
+                         ->json('delete', route('memo.create'), $data);
+
+
+        // レスポンスが204であること
+        $response->assertStatus(204);
+        // memos.id = $this->memo->idがソフトデリートされているかどうか
+        $this->assertSoftDeleted('memos', [
+                    'id' => $this->memo->id
+                ]);
     }
 
 }

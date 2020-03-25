@@ -30,9 +30,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     logout: function logout() {
@@ -85,37 +82,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Index")]),
-    _vm._v(" "),
-    _vm.isLogin
-      ? _c("div", [
-          _c("div", [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-info",
-                attrs: { type: "button" },
-                on: { click: _vm.logout }
-              },
-              [_vm._v("ログアウト")]
-            )
-          ]),
-          _vm._v(" "),
-          _vm.isLogin
-            ? _c("span", {}, [
-                _vm._v("\n      " + _vm._s(_vm.nickname) + "\n    ")
-              ])
-            : _vm._e()
-        ])
-      : _c(
-          "div",
-          [
-            _c("router-link", { attrs: { to: "/login" } }, [_vm._v("ログイン")])
-          ],
-          1
-        )
-  ])
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("Index")]),
+      _vm._v(" "),
+      _vm.isLogin
+        ? _c("div", [
+            _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-info",
+                  attrs: { type: "button" },
+                  on: { click: _vm.logout }
+                },
+                [_vm._v("ログアウト")]
+              )
+            ]),
+            _vm._v("\n    " + _vm._s(_vm.nickname) + "\n  ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: { name: "Index.Index" } } }, [
+        _vm._v("TOP")
+      ]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: { name: "Memo.Index" } } }, [
+        _vm._v("メモ")
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

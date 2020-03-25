@@ -55051,8 +55051,8 @@ var getters = {
   check: function check(state) {
     return !!state.user;
   },
-  username: function username(state) {
-    return state.user ? state.user.name : '';
+  nickname: function nickname(state) {
+    return state.user ? state.user.nickname : '';
   }
 };
 var mutations = {
