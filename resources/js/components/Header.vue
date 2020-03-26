@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
     <div class="collapse navbar-collapse justify-content-start">
       <ul class="navbar-nav">
         <li class="nav-item active">

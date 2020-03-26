@@ -1,16 +1,21 @@
 <template>
-  <div class="container-fluid" style="padding-right: 0px; padding-left: 0px;">
+  <div class="container-fluid" style="padding: 0px;">
     <Header></Header>
     <main>
-      <div class="container-fluid" style="padding-right: 0px; padding-left: 0px;">
-        <div class="row">
-          <div class=" d-none d-sm-block col-md-2">
+      <div class="row no-gutters">
+        <template v-if="isLogin">
+          <div class="d-none d-sm-block col-md-2">
             <Sidebar></Sidebar>
           </div>
           <div class="col-12 col-sm-10">  
             <RouterView />
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <div class="col-12">  
+            <RouterView />
+          </div>
+        </template>
       </div>
     </main>
   </div>
@@ -28,7 +33,10 @@ export default {
   computed: {
     errorCode () {
       return this.$store.state.error.code;
-    }
+    },
+    isLogin () {
+      return this.$store.getters['auth/check'];
+    },
   },
   watch: {
     errorCode: {
