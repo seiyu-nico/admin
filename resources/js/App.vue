@@ -1,16 +1,19 @@
 <template>
-  <div class="container">
-    <header>
-    </header>
+  <div class="">
+    <Header></Header>
     <main>
         <RouterView />
     </main>
   </div>
 </template>
 <script>
+import Header from './components/Header';
 import { INTERNAL_SERVER_ERROR } from './util';
 
 export default {
+  components : {
+    Header,
+  },
   computed: {
     errorCode () {
       return this.$store.state.error.code;
