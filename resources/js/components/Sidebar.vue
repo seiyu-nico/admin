@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-primary fixed-left min-vh-100">
+  <nav class="bg-primary fixed-left">
     <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="205">
       <li class="active"><a href="#section1">セクション 1</a></li>
       <li><a href="#section2">セクション 2</a></li>

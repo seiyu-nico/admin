@@ -1,10 +1,10 @@
 <template>
-  <div class="container-fluid" style="padding: 0px;">
+  <div class="container-fluid">
     <Header></Header>
     <main>
-      <div class="row no-gutters">
+      <div class="row">
         <template v-if="isLogin">
-          <div class="d-none d-sm-block col-md-2">
+          <div class="d-none d-sm-block col-md-2 bg-primary seiyu-sidebar" style="background-clip: padding-box;">
             <Sidebar></Sidebar>
           </div>
           <div class="col-12 col-sm-10">  
