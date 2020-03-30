@@ -164,6 +164,7 @@ export default {
       // メモ初期化
       this.memo.title = '';
       this.memo.body = '';
+      this.clearError();
     },
     clearError () {
       this.$store.commit('memo/setErrorMessages', null);
