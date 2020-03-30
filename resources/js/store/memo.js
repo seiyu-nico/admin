@@ -17,7 +17,10 @@ const mutations = {
     state.memos.splice(data.index, 1, data.memo);
   },
   deleteMemo (state, data) {
-    state.memos.splice(data.index, 1);
+    // 削除したID以外のものを抽出
+    state.memos = state.memos.filter((memo) => {
+      return memo.id != data.id;
+    });
   },
   setApiStatus (state, status) {
     state.apiStatus = status;
@@ -82,7 +85,7 @@ const actions = {
     const response = await axios.delete('/api/memo', {data: data});
     if (response.status === NO_CONTENT) {
       context.commit('setApiStatus', true);
-      context.commit('deleteMemo', {'index': data.index});
+      context.commit('deleteMemo', {'id': data.id});
       return false;
     }
 
