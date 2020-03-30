@@ -1,23 +1,21 @@
 <template>
-  <div class="container-fluid">
+  <div class="">
     <Header></Header>
-    <main>
-      <div class="row">
-        <template v-if="isLogin">
-          <div class="d-none d-sm-block col-md-2 bg-primary seiyu-sidebar" style="background-clip: padding-box;">
-            <Sidebar></Sidebar>
-          </div>
-          <div class="col-12 col-sm-10">  
+    <template v-if="isLogin">
+      <div class="page-wrapper chiller-theme toggled overflow-auto">
+        <Sidebar></Sidebar>
+        <main class="page-content">
+          <div class="container-fluid">
             <RouterView />
           </div>
-        </template>
-        <template v-else>
-          <div class="col-12">  
-            <RouterView />
-          </div>
-        </template>
+        </main>
       </div>
-    </main>
+    </template>
+    <template v-else>
+      <div class="col-12">  
+        <RouterView />
+      </div>
+    </template>
   </div>
 </template>
 <script>

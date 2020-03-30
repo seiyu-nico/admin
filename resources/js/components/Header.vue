@@ -1,9 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" style="z-index:1;">
     <div class="collapse navbar-collapse justify-content-start">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <router-link :to="{name: 'Index.Index'}" class="navbar-brand">ダッシュボード</router-link>
+          <router-link :to="{name: 'Index.Index'}" class="navbar-brand" style="margin-left: 50px;">ダッシュボード</router-link>
         </li>
       </ul>
     </div>
