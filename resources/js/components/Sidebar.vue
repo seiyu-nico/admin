@@ -6,7 +6,7 @@
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <a>ダッシュボード</a>
+        <router-link :to="{name: 'Index.Index'}">ダッシュボード</router-link>
         <div id="close-sidebar">
           <i class="fas fa-times"></i> 
         </div>
@@ -17,20 +17,28 @@
         </div>
         <div class="user-info"> 
           <span class="user-name">
-            Jhon
-            <strong>Smith</strong>
+            {{nickname}}
           </span>
-          <span class="user-role">Administrator</span>
-          <span class="user-status">
+          <!-- <span class="user-role"></span> -->
+          <!-- <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
-          </span>
+          </span> -->
         </div>
       </div>
       <!-- sidebar-header  -->
       <div class="sidebar-menu">
         <ul>
           <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li> 
+            <router-link :to="{name: 'Memo.Index'}">
+              <i class="fa fa-book"></i>
+              <span>メモ</span>
+            </router-link>
+          </li>
+          <!-- <li class="header-menu">
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
@@ -70,7 +78,7 @@
               <i class="fa fa-calendar"></i>
               <span>Calendar</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!-- sidebar-menu  -->
@@ -100,34 +108,39 @@
 <script>
 export default {
   mounted:function () {
-$(".sidebar-dropdown > a").click(function() {
-  $(".sidebar-submenu").slideUp(200);
-  if (
-    $(this)
-      .parent()
-      .hasClass("active")
-  ) {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .parent()
-      .removeClass("active");
-  } else {
-    $(".sidebar-dropdown").removeClass("active");
-    $(this)
-      .next(".sidebar-submenu")
-      .slideDown(200);
-    $(this)
-      .parent()
-      .addClass("active");
-  }
-});
+    $(".sidebar-dropdown > a").click(function() {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+          .parent()
+          .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
 
-$("#close-sidebar").click(function() {
-  $(".page-wrapper").removeClass("toggled");
-});
-$("#show-sidebar").click(function() {
-  $(".page-wrapper").addClass("toggled");
-});
+    $("#close-sidebar").click(function() {
+      $(".page-wrapper").removeClass("toggled");
+    });
+    $("#show-sidebar").click(function() {
+      $(".page-wrapper").addClass("toggled");
+    });
+  },
+  computed: {
+    nickname () {
+      return this.$store.getters['auth/nickname'];
+    },
   }
 }
 </script>

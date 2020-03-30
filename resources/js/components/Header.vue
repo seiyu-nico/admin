@@ -9,9 +9,6 @@
     </div>
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link">{{ nickname }}</a>
-        </li>
         <li v-if="isLogin" class="nav-item active">
           <a class="nav-link" @click="logout">ログアウト</a>
         </li>
@@ -31,9 +28,6 @@ export default {
   computed: {
     isLogin () {
       return this.$store.getters['auth/check'];
-    },
-    nickname () {
-      return this.$store.getters['auth/nickname'];
     },
   }
 }
