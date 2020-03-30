@@ -29,3 +29,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/memo', 'Api\MemoController@update');
     Route::delete('/memo', 'Api\MemoController@delete');
 });
+
+// 勤怠管理
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/attendance', 'Api\AttendanceController@index');
+});

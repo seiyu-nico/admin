@@ -38,6 +38,28 @@
               <span>メモ</span>
             </router-link>
           </li>
+          <li class="sidebar-dropdown"> 
+            <a style="cursor: pointer;">
+              <i class="fa fa-book"></i>
+              <span>勤怠管理</span>
+            </a>
+             <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <router-link :to="{name: 'Attendance.Index'}">
+                    <i class="fa fa-book"></i>
+                    <span>勤怠登録</span>
+                  </router-link>
+                </li>
+                <li>
+                  <router-link :to="{name: 'Attendance.List'}">
+                    <i class="fa fa-book"></i>
+                    <span>一覧</span>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </li>
           <!-- <li class="header-menu">
             <span>General</span>
           </li>

@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Memo');
     }
+
+    /**
+     * リレーションシップ - attendancesテーブル
+     */
+     public function attendance()
+     {
+         return $this->hasMany('App\Models\Attendance');
+     }
 }
