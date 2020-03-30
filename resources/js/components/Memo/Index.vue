@@ -6,7 +6,7 @@
         <h1>Memo</h1>
       </div>
       <div class="col-2">
-         <button type="button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#memo_store">追加</button>
+         <button type="button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#memo_store" @click="clearMemo()">追加</button>
       </div>
     </div>
     <div class="row">
