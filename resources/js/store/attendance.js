@@ -9,12 +9,13 @@ const state = {
 
 const getters = {
   attendances: (state) => {
-    return state.attendances.filter(attendance => {
-      if ('2020-03-12' == attendance.start_date) {
+    return state.attendances.filter((attendance) => {
+      let date = new Date(attendance.start_date);
+      if (state.select_year == date.getFullYear() && state.select_month == ('0' + (date.getMonth() + 1)).slice(-2)) {
         return true;
       }
       return false;
-    });
+    })
   }
 }
 
