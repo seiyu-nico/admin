@@ -7,7 +7,7 @@
       <div class="col">
         <div class="form-group">
           <label for="select_year">年</label>
-          <select id="select_year" class="form-control" v-model="select_year">
+          <select id="select_year" class="form-control" :value="select.year" @change="updateSelect('year', $event)">
             <option value="2019">2019</option>
             <option value="2020">2020</option>
           </select>
@@ -16,7 +16,7 @@
       <div class="col">
         <div class="form-group">
           <label for="select_month">月</label>
-          <select id="select_month" class="form-control" v-model="select_month">
+          <select id="select_month" class="form-control" :value="select.month" @change="updateSelect('month', $event)">
             <option value="01">01</option>
             <option value="02">02</option>
             <option value="03">03</option>
@@ -58,34 +58,21 @@ export default {
       await this.$store.dispatch('attendance/getAttendances');
     },
     async selectInit() {
-      this.$store.commit('attendance/setYear', 2020);
-      this.$store.commit('attendance/setMonth', '03');
+      this.$store.commit('attendance/updateSelect', {'key': 'year', 'value': 2020,});
+      this.$store.commit('attendance/updateSelect', {'key': 'month', 'value': '03',});
+
     },
+    async updateSelect(key, event) {
+      this.$store.commit('attendance/updateSelect', {'key': key, 'value': event.target.value,});
+    }
   },
   computed: {
-    // ...mapState({
-    //   select_year: state => state.attendance.select_year,
-    //   select_month: state => state.attendance.select_month,
-    // }),
+    ...mapState({
+      select: state => state.attendance.select,
+    }),
     ...mapGetters(
       { attendances: 'attendance/attendances'}
     ),
-    select_year: {
-      get () {
-        return this.$store.state.attendance.select_year;
-      },
-      set (value) {
-        this.$store.commit('attendance/setYear', value);
-      }
-    },
-    select_month: {
-      get () {
-        return this.$store.state.attendance.select_month;
-      },
-      set (value) {
-        this.$store.commit('attendance/setMonth', value);
-      }
-    },
   },
 }
 </script>
