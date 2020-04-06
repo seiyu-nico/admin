@@ -34,26 +34,26 @@
           </li>
           <li> 
             <router-link :to="{name: 'Memo.Index'}">
-              <i class="fa fa-book"></i>
+              <i class="material-icons">description</i>
               <span>メモ</span>
             </router-link>
           </li>
           <li class="sidebar-dropdown"> 
             <a style="cursor: pointer;">
-              <i class="fa fa-book"></i>
+              <i class="material-icons">work</i>
               <span>勤怠管理</span>
             </a>
              <div class="sidebar-submenu">
               <ul>
                 <li>
                   <router-link :to="{name: 'Attendance.Index'}">
-                    <i class="fa fa-book"></i>
+                    <i class="material-icons">work</i>
                     <span>勤怠登録</span>
                   </router-link>
                 </li>
                 <li>
                   <router-link :to="{name: 'Attendance.List'}">
-                    <i class="fa fa-book"></i>
+                    <i class="material-icons">work</i>
                     <span>一覧</span>
                   </router-link>
                 </li>

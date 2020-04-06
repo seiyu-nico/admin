@@ -6,11 +6,11 @@
     <div class="form-row">
       <div class="col">
         <div class="form-group">
-          <label for="select_year">年</label>
           <select id="select_year" class="form-control" :value="select.year" @change="updateSelect('year', $event)">
             <option value="2019">2019</option>
             <option value="2020">2020</option>
           </select>
+          <label for="select_year" class="float-right">年</label>
         </div>
       </div>
       <div class="col">
@@ -27,7 +27,6 @@
       <div class="col-7"></div>
     </div>
   </form>
-
 
   <table class="table table-hover">
     <thead class="thead-light">
