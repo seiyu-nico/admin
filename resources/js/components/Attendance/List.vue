@@ -1,33 +1,26 @@
 <template>
 <div>
   <h2>勤怠一覧</h2>
-
   <form>
-    <div class="form-row">
-      <div class="col">
-        <div class="form-group">
-          <select id="select_year" class="form-control" :value="select.year" @change="updateSelect('year', $event)">
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-          </select>
-          <label for="select_year" class="float-right">年</label>
-        </div>
+    <div class="form-group row">
+      <div class="col-2">
+        <select id="select_year" class="form-control" :value="select.year" @change="updateSelect('year', $event)">
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+        </select>
       </div>
-      <div class="col">
-        <div class="form-group">
-          <label for="select_month">月</label>
-          <select id="select_month" class="form-control" :value="select.month" @change="updateSelect('month', $event)">
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-          </select>
-        </div>
+      <label for="select_year" class="col-1 col-form-label" style="padding-left: 0px;">年</label>
+      <div class="col-2">
+        <select id="select_month" class="form-control" :value="select.month" @change="updateSelect('month', $event)">
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+        </select>
       </div>
-      <div class="col-7"></div>
+      <label for="select_month" class="col-1 col-form-label" style="padding-left: 0px;">月</label>
     </div>
   </form>
-
   <table class="table table-hover">
     <thead class="thead-light">
       <tr>
