@@ -11,6 +11,7 @@ const mutations = {
 
 const actions = {
 }
+
 const common = {
   namespaced: true,
   state,

@@ -96,7 +96,6 @@ const actions = {
       context.commit('error/setCode', response.status, { root: true });
     }
   },
-  
 }
 
 export default {
