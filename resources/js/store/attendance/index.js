@@ -1,4 +1,4 @@
-import date from './date';
+import list from './list';
 
 const state = {
 }
@@ -12,13 +12,13 @@ const mutations = {
 const actions = {
 }
 
-export default {
+export default  {
   namespaced: true,
   state,
   getters,
   mutations,
   actions,
   modules: {
-    date,
+    list,
   }
 }

@@ -55813,10 +55813,38 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 /***/ }),
 
-/***/ "./resources/js/store/attendance.js":
-/*!******************************************!*\
-  !*** ./resources/js/store/attendance.js ***!
-  \******************************************/
+/***/ "./resources/js/store/attendance/index.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/attendance/index.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./list */ "./resources/js/store/attendance/list.js");
+
+var state = {};
+var getters = {};
+var mutations = {};
+var actions = {};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions,
+  modules: {
+    list: _list__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/attendance/list.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/attendance/list.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55824,7 +55852,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -56229,7 +56257,7 @@ var state = {};
 var getters = {};
 var mutations = {};
 var actions = {};
-var common = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: state,
   getters: getters,
@@ -56238,8 +56266,7 @@ var common = {
   modules: {
     date: _date__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
-};
-/* harmony default export */ __webpack_exports__["default"] = (common);
+});
 
 /***/ }),
 
@@ -56283,7 +56310,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./error */ "./resources/js/store/error.js");
 /* harmony import */ var _memo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./memo */ "./resources/js/store/memo.js");
-/* harmony import */ var _attendance__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./attendance */ "./resources/js/store/attendance.js");
+/* harmony import */ var _attendance__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./attendance */ "./resources/js/store/attendance/index.js");
 /* harmony import */ var _common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./common */ "./resources/js/store/common/index.js");
 
 

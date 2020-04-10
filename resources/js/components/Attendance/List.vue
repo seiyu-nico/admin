@@ -42,7 +42,7 @@ export default {
   methods: {
     async getAttendances() {
       // メモ取得
-      await this.$store.dispatch('attendance/getAttendances');
+      await this.$store.dispatch('attendance/list/getAttendances');
       // attendanceが返ってきてからじゃないとyearの最大値と最小値がわからないため
       // ここで実行
       await this.createYearSelector();
@@ -54,11 +54,11 @@ export default {
       const year = today.getFullYear();
       // 月は2桁表示
       const month = ("0" + (today.getMonth()+1)).slice(-2);
-      this.$store.commit('attendance/updateSelect', {'key': 'year', 'value': year,});
-      this.$store.commit('attendance/updateSelect', {'key': 'month', 'value': month,});
+      this.$store.commit('attendance/list/updateSelect', {'key': 'year', 'value': year,});
+      this.$store.commit('attendance/list/updateSelect', {'key': 'month', 'value': month,});
     },
     async updateSelect(key, event) {
-      this.$store.commit('attendance/updateSelect', {'key': key, 'value': event.target.value,});
+      this.$store.commit('attendance/list/updateSelect', {'key': key, 'value': event.target.value,});
     },
     async createMonthSelector() {
       await this.$store.dispatch('common/date/createMonth');
@@ -74,13 +74,13 @@ export default {
   },
   computed: {
     ...mapState({
-      attendances: state => state.attendance.attendances,
-      select: state => state.attendance.select,
+      attendances: state => state.attendance.list.attendances,
+      select: state => state.attendance.list.select,
       months: state => state.common.date.months,
       years: state => state.common.date.years,
     }),
     ...mapGetters(
-      { select_attendances: 'attendance/select_attendances'}
+      { select_attendances: 'attendance/list/select_attendances'}
     ),
   },
 }

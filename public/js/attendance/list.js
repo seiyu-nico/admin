@@ -74,7 +74,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('attendance/getAttendances');
+                return _this.$store.dispatch('attendance/list/getAttendances');
 
               case 2:
                 _context.next = 4;
@@ -110,12 +110,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 month = ("0" + (today.getMonth() + 1)).slice(-2);
 
-                _this2.$store.commit('attendance/updateSelect', {
+                _this2.$store.commit('attendance/list/updateSelect', {
                   'key': 'year',
                   'value': year
                 });
 
-                _this2.$store.commit('attendance/updateSelect', {
+                _this2.$store.commit('attendance/list/updateSelect', {
                   'key': 'month',
                   'value': month
                 });
@@ -136,7 +136,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.$store.commit('attendance/updateSelect', {
+                _this3.$store.commit('attendance/list/updateSelect', {
                   'key': key,
                   'value': event.target.value
                 });
@@ -201,10 +201,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     attendances: function attendances(state) {
-      return state.attendance.attendances;
+      return state.attendance.list.attendances;
     },
     select: function select(state) {
-      return state.attendance.select;
+      return state.attendance.list.select;
     },
     months: function months(state) {
       return state.common.date.months;
@@ -213,7 +213,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return state.common.date.years;
     }
   }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    select_attendances: 'attendance/select_attendances'
+    select_attendances: 'attendance/list/select_attendances'
   }))
 });
 
