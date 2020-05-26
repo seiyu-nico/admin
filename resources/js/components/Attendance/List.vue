@@ -47,23 +47,23 @@ export default {
   methods: {
     async getAttendances() {
       // メモ取得
-      await this.$store.dispatch('attendance/getAttendances');
+      await this.$store.dispatch('attendance/list/getAttendances');
     },
     async selectInit() {
-      this.$store.commit('attendance/updateSelect', {'key': 'year', 'value': 2020,});
-      this.$store.commit('attendance/updateSelect', {'key': 'month', 'value': '03',});
+      this.$store.commit('attendance/list/updateSelect', {'key': 'year', 'value': 2020,});
+      this.$store.commit('attendance/list/updateSelect', {'key': 'month', 'value': '03',});
 
     },
     async updateSelect(key, event) {
-      this.$store.commit('attendance/updateSelect', {'key': key, 'value': event.target.value,});
+      this.$store.commit('attendance/list/updateSelect', {'key': key, 'value': event.target.value,});
     }
   },
   computed: {
     ...mapState({
-      select: state => state.attendance.select,
+      select: state => state.attendance.list.select,
     }),
     ...mapGetters(
-      { attendances: 'attendance/attendances'}
+      { attendances: 'attendance/list/attendances'}
     ),
   },
 }

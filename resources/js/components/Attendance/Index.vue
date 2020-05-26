@@ -2,7 +2,18 @@
 <div>
   <h2>勤怠管理</h2>
   <form>
-
+    <vue-clock-picker 
+      :value="date.start" 
+      @open="select('start')"
+      @timeset="update"
+      done-text="ok" cancel-text="close"
+    ></vue-clock-picker>
+    <vue-clock-picker 
+      :value="date.end" 
+      @open="select('end')"
+      @timeset="update"
+      done-text="ok" cancel-text="close"
+    ></vue-clock-picker>
         <!-- ここから下はサンプル -->
         <!--氏名-->
         <!-- <div class="form-row mb-4">
@@ -120,7 +131,30 @@
     </form>
 </div>
 </template>
+
 <script>
+import VueClockPicker from '@pencilpix/vue2-clock-picker';
+import '@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css';
+import { mapState, mapGetters} from 'vuex';
 export default {
+  components: {
+    VueClockPicker,
+  },
+  methods: {
+    select(select) {
+      this.$store.commit('attendance/setSelect', select);
+
+    },
+    update(date) {
+      this.$store.commit('attendance/setDate', date);
+    },
+  },
+  computed: {
+    ...mapState({
+      date: state => state.attendance.date,
+    }),
+  },
 }
 </script>
+<style>
+</style>

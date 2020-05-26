@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import auth from './auth';
 import error from './error';
 import memo from './memo';
-import attendance from './attendance';
+import attendance from './attendance/';
 
 Vue.use(Vuex);
 

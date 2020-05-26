@@ -1,4 +1,4 @@
-import { OK, CREATED, NO_CONTENT, UNPROCESSABLE_ENTITY } from '../util';
+import { OK, CREATED, NO_CONTENT, UNPROCESSABLE_ENTITY } from '../../util';
 
 const state = {
   attendances: [],
