@@ -7,7 +7,7 @@ const state = {
 }
 
 const getters = {
-  attendances: (state) => {
+  selectAttendances: (state) => {
     return state.attendances.filter((attendance) => {
       let date = new Date(attendance.start_date);
       if (state.select.year == date.getFullYear() && state.select.month == ('0' + (date.getMonth() + 1)).slice(-2)) {

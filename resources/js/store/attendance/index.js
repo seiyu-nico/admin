@@ -28,6 +28,5 @@ export default {
   actions,
   modules: {
     list,
-
   }
 }

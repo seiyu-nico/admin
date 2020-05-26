@@ -59,15 +59,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getAttendances();
-    this.selectInit();
   },
   methods: {
     getAttendances: function getAttendances() {
@@ -82,6 +77,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('attendance/list/getAttendances');
 
               case 2:
+                _context.next = 4;
+                return _this.createYearSelector();
+
+              case 4:
+                _context.next = 6;
+                return _this.createMonthSelector();
+
+              case 6:
+                _context.next = 8;
+                return _this.selectInit();
+
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -93,21 +100,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var today, year, month;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                today = new Date();
+                year = today.getFullYear(); // 月は2桁表示
+
+                month = ("0" + (today.getMonth() + 1)).slice(-2);
+
                 _this2.$store.commit('attendance/list/updateSelect', {
                   'key': 'year',
-                  'value': 2020
+                  'value': year
                 });
 
                 _this2.$store.commit('attendance/list/updateSelect', {
                   'key': 'month',
-                  'value': '03'
+                  'value': month
                 });
 
-              case 2:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -135,14 +148,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    createMonthSelector: function createMonthSelector() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return _this4.$store.dispatch('common/date/createMonth');
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    createYearSelector: function createYearSelector() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var dates, maxDate, minDate, min_year, max_year;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                dates = _this5.attendances.map(function (attendance) {
+                  return new Date(attendance.start_date);
+                });
+                maxDate = new Date(Math.max.apply(null, dates));
+                minDate = new Date(Math.min.apply(null, dates));
+                min_year = minDate.getFullYear();
+                max_year = maxDate.getFullYear();
+                _context5.next = 7;
+                return _this5.$store.dispatch('common/date/createYear', {
+                  'min_year': min_year,
+                  'max_year': max_year
+                });
+
+              case 7:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    attendances: function attendances(state) {
+      return state.attendance.list.attendances;
+    },
     select: function select(state) {
       return state.attendance.list.select;
+    },
+    months: function months(state) {
+      return state.common.date.months;
+    },
+    years: function years(state) {
+      return state.common.date.years;
     }
-  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    attendances: 'attendance/list/attendances'
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    select_attendances: 'attendance/list/selectAttendances'
   }))
 });
 
@@ -181,11 +252,12 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("option", { attrs: { value: "2019" } }, [_vm._v("2019")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "2020" } }, [_vm._v("2020")])
-            ]
+            _vm._l(_vm.years, function(year) {
+              return _c("option", { key: year, domProps: { value: year } }, [
+                _vm._v(_vm._s(year))
+              ])
+            }),
+            0
           )
         ]),
         _vm._v(" "),
@@ -212,15 +284,12 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("option", { attrs: { value: "01" } }, [_vm._v("01")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "02" } }, [_vm._v("02")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "03" } }, [_vm._v("03")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "04" } }, [_vm._v("04")])
-            ]
+            _vm._l(_vm.months, function(month) {
+              return _c("option", { key: month, domProps: { value: month } }, [
+                _vm._v(_vm._s(month))
+              ])
+            }),
+            0
           )
         ]),
         _vm._v(" "),
@@ -241,7 +310,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.attendances, function(attendance) {
+        _vm._l(_vm.select_attendances, function(attendance) {
           return _c("tr", { key: attendance.id }, [
             _c("td", [
               _vm._v(
