@@ -1,19 +1,50 @@
 <template>
 <div>
-  <h2>勤怠管理</h2>
+  <div class="row">
+    <h2>勤怠管理</h2>
+  </div>
   <form>
-    <vue-clock-picker 
-      :value="date.start" 
-      @open="select('start')"
-      @timeset="update"
-      done-text="ok" cancel-text="close"
-    ></vue-clock-picker>
-    <vue-clock-picker 
-      :value="date.end" 
-      @open="select('end')"
-      @timeset="update"
-      done-text="ok" cancel-text="close"
-    ></vue-clock-picker>
+    <div class="row">
+      <div class="col-sm-6 col-xs-12 form-group">
+        <h3>出勤時間</h3>
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="ここに日付を入力する欄を作成">
+          </div>
+          <div class="col">
+            <vue-clock-picker :value="date.start" 
+                              @open="select('start')"
+                              @timeset="update"
+                              done-text="ok" cancel-text="close"
+                              id="start_time" class="time"
+                              input-class="form-control bg_color" 
+                              close-on-esc
+                              close-on-overlay
+                            ></vue-clock-picker>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xs-12 form-group">
+        <h3>退勤時間</h3>
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="ここに日付を入力する欄を作成">
+          </div>
+          <div class="col">
+            <vue-clock-picker :value="date.end" 
+              　　　　　　　　　@open="select('end')"
+                　　　　　　　　@timeset="update"
+              　　　　　　　　　done-text="ok" cancel-text="close"
+                              id="end_time" class="time"
+                              input-class="form-control bg_color" 
+                              close-on-esc
+                              close-on-overlay
+            　　 　　　　　　 ></vue-clock-picker>
+          </div>
+        </div>
+      </div>
+    </div>
         <!-- ここから下はサンプル -->
         <!--氏名-->
         <!-- <div class="form-row mb-4">
@@ -157,4 +188,7 @@ export default {
 }
 </script>
 <style>
+.bg_color {
+  background-color: #ffffff !important; 
+}
 </style>
