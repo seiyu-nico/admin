@@ -2,7 +2,12 @@ import list from './list';
 
 const state = {
   select: '',
-  date: {start: '', end: '',},
+  date: {
+    start_date: '', 
+    start_time: '', 
+    end_date: '', 
+    end_time: ''
+  },
 }
 
 const getters = {

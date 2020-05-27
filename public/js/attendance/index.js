@@ -13,7 +13,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css */ "./node_modules/@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css");
 /* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -185,22 +186,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0___default.a
+    VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0___default.a,
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   methods: {
     select: function select(_select) {
+      console.log(_select);
       this.$store.commit('attendance/setSelect', _select);
     },
     update: function update(date) {
       this.$store.commit('attendance/setDate', date);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])({
     date: function date(state) {
       return state.attendance.date;
     }
@@ -282,7 +299,22 @@ var render = function() {
           _c("h3", [_vm._v("出勤時間")]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm._m(1),
+            _c(
+              "div",
+              { staticClass: "col" },
+              [
+                _c("Datepicker", {
+                  attrs: {
+                    value: _vm.date.start_date,
+                    "input-class": "form-control bg_color",
+                    "monday-first": "",
+                    "bootstrap-styling": ""
+                  },
+                  on: { opened: _vm.opened, selected: _vm.update }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -291,17 +323,18 @@ var render = function() {
                 _c("vue-clock-picker", {
                   staticClass: "time",
                   attrs: {
-                    value: _vm.date.start,
+                    value: _vm.date.start_time,
                     "done-text": "ok",
                     "cancel-text": "close",
                     id: "start_time",
                     "input-class": "form-control bg_color",
                     "close-on-esc": "",
-                    "close-on-overlay": ""
+                    "close-on-overlay": "",
+                    "calendar-class": ""
                   },
                   on: {
                     open: function($event) {
-                      return _vm.select("start")
+                      return _vm.select("start_time")
                     },
                     timeset: _vm.update
                   }
@@ -316,7 +349,27 @@ var render = function() {
           _c("h3", [_vm._v("退勤時間")]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _vm._m(2),
+            _c(
+              "div",
+              { staticClass: "col" },
+              [
+                _c("Datepicker", {
+                  attrs: {
+                    value: _vm.date.start_date,
+                    "input-class": "form-control bg_color",
+                    "monday-first": "",
+                    "bootstrap-styling": ""
+                  },
+                  on: {
+                    opened: function($event) {
+                      return _vm.select("end_date")
+                    },
+                    selected: _vm.update
+                  }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -325,7 +378,7 @@ var render = function() {
                 _c("vue-clock-picker", {
                   staticClass: "time",
                   attrs: {
-                    value: _vm.date.end,
+                    value: _vm.date.end_time,
                     "done-text": "ok",
                     "cancel-text": "close",
                     id: "end_time",
@@ -335,7 +388,7 @@ var render = function() {
                   },
                   on: {
                     open: function($event) {
-                      return _vm.select("end")
+                      return _vm.select("end_time")
                     },
                     timeset: _vm.update
                   }
@@ -355,28 +408,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [_c("h2", [_vm._v("勤怠管理")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "ここに日付を入力する欄を作成" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "ここに日付を入力する欄を作成" }
-      })
-    ])
   }
 ]
 render._withStripped = true

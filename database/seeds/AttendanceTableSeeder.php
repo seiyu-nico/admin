@@ -4,6 +4,10 @@ use Illuminate\Database\Seeder;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
+/**
+ * 実行方法
+ * php artisan db:seed --class=AttendanceTableSeeder
+ */
 
 class AttendanceTableSeeder extends Seeder
 {

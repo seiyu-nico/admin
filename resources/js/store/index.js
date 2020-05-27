@@ -9,7 +9,27 @@ import common from './common';
 
 Vue.use(Vuex);
 
+const state = {
+  locale: 'jp',
+}
+
+const getters = {
+}
+
+const mutations = {
+}
+
+const actions = {
+}
+
+
+
 const store = new Vuex.Store({
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
   modules: {
     auth,
     error,

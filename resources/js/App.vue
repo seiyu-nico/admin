@@ -4,7 +4,7 @@
     <template v-if="isLogin">
       <div class="page-wrapper chiller-theme toggled overflow-auto">
         <Sidebar></Sidebar>
-        <main class="page-content">
+        <main class="page-content main">
           <div class="container-fluid">
             <RouterView />
           </div>
@@ -51,3 +51,8 @@ export default {
   }
 }
 </script>
+<style>
+.main {
+  height: calc(100vh - 70px);
+}
+</style>
