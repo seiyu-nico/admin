@@ -10,7 +10,13 @@ class Attendance extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'title', 'body'];
+    protected $fillable = [
+        'user_id', 
+        'start_date', 
+        'start_time',
+        'end_date',
+        'end_time',
+    ];
 
     /**
      * リレーション

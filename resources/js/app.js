@@ -7,6 +7,8 @@ import store from './store';
 // ルートコンポーネントをインポートする
 import App from './App.vue';
 
+// moment
+import moment from 'vue-moment';
 
 const createApp = async () => {
   await store.dispatch('auth/currentUser');
@@ -17,7 +19,10 @@ const createApp = async () => {
     store, // ストア
     components: { App }, // ルートコンポーネントの使用を宣言する
     template: '<App />' // ルートコンポーネントを描画する
-  })
+  });
+  
+  Vue.use(moment, {});
 }
+
 
 createApp();

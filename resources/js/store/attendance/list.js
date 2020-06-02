@@ -34,7 +34,7 @@ const actions = {
   async getAttendances (context) {
     // 勤怠データ取得
     context.commit('setApiStatus', null);
-    const response = await axios.get('/api/attendance');
+    const response = await axios.get('/api/attendances');
 
     if (OK === response.status) {
       context.commit('setApiStatus', true);

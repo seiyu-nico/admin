@@ -32,5 +32,10 @@ Route::group(['middleware' => 'auth'], function() {
 
 // 勤怠管理
 Route::group(['middleware' => 'auth'], function() {
+    Route::post('/attendance', 'Api\AttendanceController@create')->name('attendance.create');
     Route::get('/attendance', 'Api\AttendanceController@index');
+    Route::put('/attendance', 'Api\AttendanceController@update');
+    Route::delete('/attendance', 'Api\AttendanceController@delete');
+    // リスト部分
+    Route::get('/attendances', 'Api\AttendanceListController@index')->name('attendances.create');
 });

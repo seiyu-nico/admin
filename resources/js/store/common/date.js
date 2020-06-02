@@ -37,7 +37,7 @@ const actions = {
       years.push(year);
     }
     context.commit('setYear', years);
-  }
+  },
 }
 
 export default {

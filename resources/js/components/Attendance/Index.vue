@@ -13,12 +13,12 @@
                         input-class="form-control bg_color" 
                         monday-first 
                         bootstrap-styling
-                        @selected="update"
+                        @selected="startDateUpdate"
                         format="yyyy/MM/dd"
                         ></Datepicker>
           </div>
           <div class="col">
-            <vue-clock-picker :value="date.start_time" 
+            <vue-clock-picker :value="date.start_time | formatTime" 
                               @open="select('start_time')"
                               @timeset="update"
                               done-text="ok" cancel-text="close"
@@ -26,26 +26,24 @@
                               input-class="form-control bg_color" 
                               close-on-esc
                               close-on-overlay
-                              calendar-class=""
                             ></vue-clock-picker>
           </div>
         </div>
       </div>
-
       <div class="col-sm-6 col-xs-12 form-group">
         <h3>退勤時間</h3>
         <div class="row">
           <div class="col">
-            <Datepicker :value="date.start_date" 
+            <Datepicker :value="date.end_date" 
                         input-class="form-control bg_color" 
                         monday-first 
                         bootstrap-styling
-                        @selected="update"
+                        @selected="endDateUpdate"
                         format="yyyy/MM/dd"
                         ></Datepicker>
           </div>
           <div class="col">
-            <vue-clock-picker :value="date.end_time" 
+            <vue-clock-picker :value="date.end_time | formatTime" 
               　　　　　　　　　@open="select('end_time')"
                 　　　　　　　　@timeset="update"
               　　　　　　　　　done-text="ok" cancel-text="close"
@@ -58,121 +56,7 @@
         </div>
       </div>
     </div>
-        <!-- ここから下はサンプル -->
-        <!--氏名-->
-        <!-- <div class="form-row mb-4">
-            <div class="col-md-6">
-                <label for="lastName">名字</label>
-                <input type="text" class="form-control" id="lastName" placeholder="名字" required>
-                <div class="invalid-feedback">
-                    入力してください
-                </div>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="firstName">名前</label>
-                <input type="text" class="form-control" id="firstName" placeholder="名前" required>
-                <div class="invalid-feedback">
-                    入力してください
-                </div>
-            </div>
-        </div> -->
-        <!--/氏名-->
-
-        <!--Eメール-->
-        <!-- <div class="form-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">Eメール</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Eメール" required>
-                <div class="invalid-feedback">入力してください</div>
-            </div>
-        </div> -->
-        <!--/Eメール-->
-
-        <!--パスワード-->
-        <!-- <div class="form-group row mb-5">
-            <label for="inputPassword" class="col-sm-2 col-form-label">パスワード</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" placeholder="パスワード" required>
-                <div class="invalid-feedback">入力してください</div>
-                <small id="passwordHelpBlock" class="form-text text-muted">パスワードは、文字と数字を含めて8～20文字で、空白、特殊文字、絵文字を含むことはできません。</small>
-            </div>
-        </div> -->
-        <!--/パスワード-->
-
-        <!--住所-->
-        <!-- <div class="form-row">
-            <div class="col-md-3 mb-5">
-                <label for="inputAddress01">郵便番号(7桁)</label>
-                <input type="text" name="zip01" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','pref01','addr01');" class="form-control" id="inputAddress01" placeholder="1030013" required>
-                <div class="invalid-feedback">入力してください</div>
-            </div>
-            <div class="col-md-3">
-                <label for="inputAddress02">都道府県</label>
-                <input type="text" name="pref01" id="inputAddress02" class="form-control" placeholder="東京都" required>
-                <div class="invalid-feedback">入力してください</div>
-            </div>
-            <div class="col-md-6">
-                <label for="inputAddress03">住所</label>
-                <input type="text" name="addr01" class="form-control" id="inputAddress03" placeholder="中央区日本橋人形町" required>
-                <div class="invalid-feedback">入力してください</div>
-            </div>
-        </div> -->
-        <!--/住所-->
-
-        <!--性別-->
-        <!-- <div class="form-group">
-            <div class="row mb-4">
-                <legend class="col-form-label col-sm-2">性別</legend>
-                <div class="col-sm-10">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" required>
-                        <label class="custom-control-label" for="customRadioInline1">女性</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadioInline2">男性</label>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!--/性別-->
-
-        <!--ファイル選択-->
-        <!-- <div class="custom-file mb-5">
-            <input type="file" class="custom-file-input pb-3" id="customFile" required>
-            <label class="custom-file-label pb-3" for="customFile">ファイル選択...</label>
-            <div class="invalid-feedback">ファイルを選択してください</div>
-        </div> -->
-        <!--/ファイル選択-->
-
-        <!--備考欄-->
-        <!-- <div class="form-group pb-3">
-            <label for="Textarea">備考欄</label>
-            <textarea class="form-control" id="Textarea" rows="3" placeholder="その他、質問などありましたら" required></textarea>
-            <div class="invalid-feedback">入力してください</div>
-        </div> -->
-        <!--/備考欄-->
-
-        <!--利用規約-->
-        <!-- <div class="form-group pb-3">
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" value="" id="invalidCheck" required>
-                <label class="custom-control-label" for="invalidCheck">
-                    利用規約に同意する
-                </label>
-                <div class="invalid-feedback mb-3">提出する前に同意する必要があります</div>
-            </div>
-        </div> -->
-        <!--/利用規約-->
-
-        <!--ボタンブロック-->
-        <!-- <div class="form-group row">
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary btn-block">登録</button>
-            </div>
-        </div> -->
-        <!--/ボタンブロック-->
-    </form>
+  </form>
 </div>
 </template>
 
@@ -186,14 +70,38 @@ export default {
     VueClockPicker,
     Datepicker,
   },
+  created () {
+    this.getAttendance();
+  },
   methods: {
+    async getAttendance() {
+      // 今日のデータ取得
+      let date = this.$moment().format('YYYY-MM-DD');
+      await this.$store.dispatch('attendance/getAttendance', date);
+    },
     select(select) {
-      console.log(select);
       this.$store.commit('attendance/setSelect', select);
     },
-    update(date) {
-      this.$store.commit('attendance/setDate', date);
+    async update(date) {
+      this.$store.dispatch('attendance/store', date);
     },
+    async startDateUpdate(date) {
+      this.select('start_date');
+      await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
+    },
+    async endDateUpdate(date) {
+      this.select('end_date');
+      await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
+    }
+  },
+  filters: {
+    formatTime: (value) => {
+      if (!value) {
+        return '';
+      }
+      var time = value.split(':');
+      return time[0] + ':' + time[1];
+    }
   },
   computed: {
     ...mapState({
@@ -205,5 +113,8 @@ export default {
 <style>
 .bg_color {
   background-color: #ffffff !important; 
+}
+.inpur_error_hidden {
+  display: none;
 }
 </style>

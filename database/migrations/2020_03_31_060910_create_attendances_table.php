@@ -16,10 +16,10 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->comment('users.id');
-            $table->date('start_date')->comment('出勤日');
-            $table->time('start_time')->comment('出勤時間');
-            $table->date('end_date')->comment('退勤日');
-            $table->time('end_time')->comment('退勤時間');
+            $table->date('start_date')->nullable()->comment('出勤日');
+            $table->time('start_time')->nullable()->comment('出勤時間');
+            $table->date('end_date')->nullable()->comment('退勤日');
+            $table->time('end_time')->nullable()->comment('退勤時間');
             $table->timestamps();
             $table->softDeletes();
 

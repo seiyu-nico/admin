@@ -9,134 +9,26 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @pencilpix/vue2-clock-picker */ "./node_modules/@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.es.js");
-/* harmony import */ var _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css */ "./node_modules/@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css");
-/* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @pencilpix/vue2-clock-picker */ "./node_modules/@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.es.js");
+/* harmony import */ var _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css */ "./node_modules/@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css");
+/* harmony import */ var _pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_pencilpix_vue2_clock_picker_dist_vue2_clock_picker_min_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -205,19 +97,110 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_0___default.a,
-    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_2__["default"]
+    VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1___default.a,
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  created: function created() {
+    this.getAttendance();
   },
   methods: {
+    getAttendance: function getAttendance() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var date;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // 今日のデータ取得
+                date = _this.$moment().format('YYYY-MM-DD');
+                _context.next = 3;
+                return _this.$store.dispatch('attendance/getAttendance', date);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     select: function select(_select) {
-      console.log(_select);
       this.$store.commit('attendance/setSelect', _select);
     },
     update: function update(date) {
-      this.$store.commit('attendance/setDate', date);
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.$store.dispatch('attendance/store', date);
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    startDateUpdate: function startDateUpdate(date) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.select('start_date');
+
+                _context3.next = 3;
+                return _this3.$store.dispatch('attendance/store', _this3.$moment(date).format('YYYY-MM-DD'));
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    endDateUpdate: function endDateUpdate(date) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this4.select('end_date');
+
+                _context4.next = 3;
+                return _this4.$store.dispatch('attendance/store', _this4.$moment(date).format('YYYY-MM-DD'));
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])({
+  filters: {
+    formatTime: function formatTime(value) {
+      if (!value) {
+        return '';
+      }
+
+      var time = value.split(':');
+      return time[0] + ':' + time[1];
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
     date: function date(state) {
       return state.attendance.date;
     }
@@ -238,7 +221,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.bg_color {\n  background-color: #ffffff !important;\n}\n", ""]);
+exports.push([module.i, "\n.bg_color {\n  background-color: #ffffff !important;\n}\n.inpur_error_hidden {\n  display: none;\n}\n", ""]);
 
 // exports
 
@@ -308,9 +291,10 @@ var render = function() {
                     value: _vm.date.start_date,
                     "input-class": "form-control bg_color",
                     "monday-first": "",
-                    "bootstrap-styling": ""
+                    "bootstrap-styling": "",
+                    format: "yyyy/MM/dd"
                   },
-                  on: { opened: _vm.opened, selected: _vm.update }
+                  on: { selected: _vm.startDateUpdate }
                 })
               ],
               1
@@ -323,14 +307,13 @@ var render = function() {
                 _c("vue-clock-picker", {
                   staticClass: "time",
                   attrs: {
-                    value: _vm.date.start_time,
+                    value: _vm._f("formatTime")(_vm.date.start_time),
                     "done-text": "ok",
                     "cancel-text": "close",
                     id: "start_time",
                     "input-class": "form-control bg_color",
                     "close-on-esc": "",
-                    "close-on-overlay": "",
-                    "calendar-class": ""
+                    "close-on-overlay": ""
                   },
                   on: {
                     open: function($event) {
@@ -355,17 +338,13 @@ var render = function() {
               [
                 _c("Datepicker", {
                   attrs: {
-                    value: _vm.date.start_date,
+                    value: _vm.date.end_date,
                     "input-class": "form-control bg_color",
                     "monday-first": "",
-                    "bootstrap-styling": ""
+                    "bootstrap-styling": "",
+                    format: "yyyy/MM/dd"
                   },
-                  on: {
-                    opened: function($event) {
-                      return _vm.select("end_date")
-                    },
-                    selected: _vm.update
-                  }
+                  on: { selected: _vm.endDateUpdate }
                 })
               ],
               1
@@ -378,7 +357,7 @@ var render = function() {
                 _c("vue-clock-picker", {
                   staticClass: "time",
                   attrs: {
-                    value: _vm.date.end_time,
+                    value: _vm._f("formatTime")(_vm.date.end_time),
                     "done-text": "ok",
                     "cancel-text": "close",
                     id: "end_time",

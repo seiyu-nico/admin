@@ -6,37 +6,41 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Auth;
+use Log;
 
 class AttendanceController extends Controller
 {
-    
     public function __construct()
     {
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        return $user->attendance;
+        $date = $request->date;
+        $attendance = Attendance::where('user_id', $user->id)->where('start_date', $date)->first();
+        return response($attendance, 200);
     }
 
-    public function create(MemoRequest $request)
+    public function create(Request $request)
     {
-        // $user = Auth::user();
-        // $data = $request->all();
-        // $data['user_id'] = $user->id;
-        // $memo = Memo::create($data);
-        // return response($memo, 201);
+        $user = Auth::user();
+        $data = $request->all();
+        $data['user_id'] = $user->id;
+        $attendance = Attendance::create($data);
+        return response($attendance, 201);
     }
 
-    public function update(MemoUpdateRequest $request)
+    public function update(Request $request)
     {
-        // $memo = Memo::find($request->id);
-        // $memo->update($request->all());
-        // return response($memo, 200);
+        $attendance = Attendance::find($request->id);
+        Log::info($request->all());
+        $attendance->update($request->all());
+        Log::info($attendance);
+        return response($attendance, 200);
     }
     
-    public function delete(MemoDeleteRequest $request)
+    public function delete(Request $request)
     {
         // Memo::find($request->id)->delete();
         // return response(null, 204);
