@@ -34,7 +34,6 @@ const actions = {
       'date': data,
     }
 
-    console.log(params);
     const response = await axios.get('/api/attendance', {params: params});
     if (OK === response.status) {
       context.commit('setApiStatus', true);
@@ -44,15 +43,12 @@ const actions = {
   },
   async store(context, data) {
     // メモ登録
-    console.log(context.state.select);
-    console.log(context.state.date);
     let id = context.state.date.id;
     let select = context.state.select;
     let params = {
       id: id,
       [select]: data,
     }
-    console.log(params);
     if ('' == id) {
       const response = await axios.post('/api/attendance', params);
       if (response.status === CREATED) {

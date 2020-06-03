@@ -39683,7 +39683,17 @@ var render = function() {
                             _vm._v("work")
                           ]),
                           _vm._v(" "),
-                          _c("span", [_vm._v("勤怠登録")])
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.closeSideber()
+                                }
+                              }
+                            },
+                            [_vm._v("勤怠登録")]
+                          )
                         ]
                       )
                     ],
@@ -39701,7 +39711,17 @@ var render = function() {
                             _vm._v("work")
                           ]),
                           _vm._v(" "),
-                          _c("span", [_vm._v("一覧")])
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.closeSideber()
+                                }
+                              }
+                            },
+                            [_vm._v("一覧")]
+                          )
                         ]
                       )
                     ],
@@ -61685,17 +61705,16 @@ var actions = {
               params = {
                 'date': data
               };
-              console.log(params);
-              _context.next = 4;
+              _context.next = 3;
               return axios.get('/api/attendance', {
                 params: params
               });
 
-            case 4:
+            case 3:
               response = _context.sent;
 
               if (!(_util__WEBPACK_IMPORTED_MODULE_2__["OK"] === response.status)) {
-                _context.next = 9;
+                _context.next = 8;
                 break;
               }
 
@@ -61703,7 +61722,7 @@ var actions = {
               context.commit('setDate', response.data);
               return _context.abrupt("return", false);
 
-            case 9:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -61720,28 +61739,25 @@ var actions = {
           switch (_context2.prev = _context2.next) {
             case 0:
               // メモ登録
-              console.log(context.state.select);
-              console.log(context.state.date);
               id = context.state.date.id;
               select = context.state.select;
               params = _defineProperty({
                 id: id
               }, select, data);
-              console.log(params);
 
               if (!('' == id)) {
-                _context2.next = 16;
+                _context2.next = 13;
                 break;
               }
 
-              _context2.next = 9;
+              _context2.next = 6;
               return axios.post('/api/attendance', params);
 
-            case 9:
+            case 6:
               _response = _context2.sent;
 
               if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
-                _context2.next = 14;
+                _context2.next = 11;
                 break;
               }
 
@@ -61749,19 +61765,19 @@ var actions = {
               context.commit('setDate', _response.data);
               return _context2.abrupt("return", false);
 
-            case 14:
-              _context2.next = 23;
+            case 11:
+              _context2.next = 20;
               break;
 
-            case 16:
-              _context2.next = 18;
+            case 13:
+              _context2.next = 15;
               return axios.put('/api/attendance', params);
 
-            case 18:
+            case 15:
               _response2 = _context2.sent;
 
               if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
-                _context2.next = 23;
+                _context2.next = 20;
                 break;
               }
 
@@ -61769,7 +61785,7 @@ var actions = {
               context.commit('setDate', _response2.data);
               return _context2.abrupt("return", false);
 
-            case 23:
+            case 20:
               context.commit('setApiStatus', false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
@@ -61780,7 +61796,7 @@ var actions = {
                 });
               }
 
-            case 25:
+            case 22:
             case "end":
               return _context2.stop();
           }

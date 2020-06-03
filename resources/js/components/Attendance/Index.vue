@@ -57,6 +57,12 @@
       </div>
     </div>
   </form>
+  <div>
+    <p>勤務時間: {{workingTimes()}}</p>
+    <span>休憩1時間(12:00 ~ 13:00)</span>
+  
+
+  </div>
 </div>
 </template>
 
@@ -92,6 +98,25 @@ export default {
     async endDateUpdate(date) {
       this.select('end_date');
       await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
+    },
+    workingTimes() {
+      // 午前の計算
+      let am_date_to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
+      let am_date_from = this.$moment(this.date.start_date + ' 12:00:00');
+      let am_diff = am_date_from.diff(am_date_to, 'minutes');
+      let am_hours = Math.floor(am_diff / 60);
+      let am_minutes = Math.floor(am_diff % 60);
+      // 午後の計算
+      let pm_date_to = this.$moment(this.date.end_date + ' 13:00:00');
+      let pm_date_from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
+      let pm_diff = pm_date_from.diff(pm_date_to, 'minutes');
+      let pm_hours = Math.floor(pm_diff / 60);
+      let pm_minutes = Math.floor(pm_diff % 60);
+      
+      let hours = am_hours + pm_hours;
+      let minutes = ('00' + (am_minutes + pm_minutes)).slice(-2);
+      let time = hours + ':' + minutes;
+      return time;
     }
   },
   filters: {
@@ -99,7 +124,7 @@ export default {
       if (!value) {
         return '';
       }
-      var time = value.split(':');
+      let time = value.split(':');
       return time[0] + ':' + time[1];
     }
   },

@@ -91,6 +91,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -188,6 +194,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    workingTimes: function workingTimes() {
+      // 午前の計算
+      var am_date_to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
+      var am_date_from = this.$moment(this.date.start_date + ' 12:00:00');
+      var am_diff = am_date_from.diff(am_date_to, 'minutes');
+      var am_hours = Math.floor(am_diff / 60);
+      var am_minutes = Math.floor(am_diff % 60); // 午後の計算
+
+      var pm_date_to = this.$moment(this.date.end_date + ' 13:00:00');
+      var pm_date_from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
+      var pm_diff = pm_date_from.diff(pm_date_to, 'minutes');
+      var pm_hours = Math.floor(pm_diff / 60);
+      var pm_minutes = Math.floor(pm_diff % 60);
+      var hours = am_hours + pm_hours;
+      var minutes = ('00' + (am_minutes + pm_minutes)).slice(-2);
+      var time = hours + ':' + minutes;
+      return time;
     }
   },
   filters: {
@@ -378,6 +402,12 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("p", [_vm._v("勤務時間: " + _vm._s(_vm.workingTimes()))]),
+      _vm._v(" "),
+      _c("span", [_vm._v("休憩1時間(12:00 ~ 13:00)")])
     ])
   ])
 }

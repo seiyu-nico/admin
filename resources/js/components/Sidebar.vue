@@ -48,13 +48,13 @@
                 <li>
                   <router-link :to="{name: 'Attendance.Index'}">
                     <i class="material-icons">work</i>
-                    <span>勤怠登録</span>
+                    <span @click="closeSideber()">勤怠登録</span>
                   </router-link>
                 </li>
                 <li>
                   <router-link :to="{name: 'Attendance.List'}">
                     <i class="material-icons">work</i>
-                    <span>一覧</span>
+                    <span @click="closeSideber()">一覧</span>
                   </router-link>
                 </li>
               </ul>
