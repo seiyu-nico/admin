@@ -2319,6 +2319,11 @@ __webpack_require__.r(__webpack_exports__);
       $(".page-wrapper").addClass("toggled");
     });
   },
+  methods: {
+    closeSideber: function closeSideber() {
+      $(".page-wrapper").removeClass("toggled");
+    }
+  },
   computed: {
     nickname: function nickname() {
       return this.$store.getters['auth/nickname'];
@@ -39646,7 +39651,17 @@ var render = function() {
                     _vm._v("description")
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("メモ")])
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.closeSideber()
+                        }
+                      }
+                    },
+                    [_vm._v("メモ")]
+                  )
                 ])
               ],
               1
