@@ -35,7 +35,7 @@
           <li> 
             <router-link :to="{name: 'Memo.Index'}">
               <i class="fa fa-book"></i>
-              <span>メモ</span>
+              <span  @click="closeSideber()">メモ</span>
             </router-link>
           </li>
           <!-- <li class="header-menu">
@@ -136,6 +136,11 @@ export default {
     $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
     });
+  },
+  methods: {
+    closeSideber () {
+      $(".page-wrapper").removeClass("toggled");
+    },
   },
   computed: {
     nickname () {
