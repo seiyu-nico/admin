@@ -61680,15 +61680,47 @@ var state = {
     start_time: '',
     end_date: '',
     end_time: ''
-  }
+  },
+  break_times: [{
+    id: '1',
+    attendance_id: '17',
+    start_date: '2020-06-05',
+    start_time: '10:00:00',
+    end_date: '2020-06-05',
+    end_time: '11:00:00'
+  }, {
+    id: '2',
+    attendance_id: '17',
+    start_date: '2020-06-05',
+    start_time: '12:00:00',
+    end_date: '2020-06-05',
+    end_time: '13:00:00'
+  }, {
+    id: '3',
+    attendance_id: '17',
+    start_date: '2020-06-05',
+    start_time: '14:00:00',
+    end_date: '2020-06-05',
+    end_time: '15:00:00'
+  }, {
+    id: '4',
+    attendance_id: '17',
+    start_date: '2020-06-05',
+    start_time: '16:00:00',
+    end_date: '2020-06-05',
+    end_time: '17:00:00'
+  }]
 };
 var getters = {};
 var mutations = {
-  setSelect: function setSelect(state, select) {
-    state.select = select;
+  setSelect: function setSelect(state, data) {
+    state.select = data;
   },
   setDate: function setDate(state, data) {
     state.date = data;
+  },
+  setBreakTimeValue: function setBreakTimeValue(state, data) {
+    state.break_times[data.index][data.key] = data.value;
   },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
@@ -61719,7 +61751,11 @@ var actions = {
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setDate', response.data);
+
+              if (response.data) {
+                context.commit('setDate', response.data);
+              }
+
               return _context.abrupt("return", false);
 
             case 8:
@@ -61803,6 +61839,9 @@ var actions = {
         }
       }, _callee2);
     }))();
+  },
+  updateBreakTimeValue: function updateBreakTimeValue(context, data) {
+    context.commit('setBreakTimeValue', data);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

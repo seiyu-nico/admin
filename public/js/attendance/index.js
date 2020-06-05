@@ -97,6 +97,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -105,6 +135,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1___default.a,
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  data: function data() {
+    return {};
   },
   created: function created() {
     this.getAttendance();
@@ -196,22 +229,82 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     workingTimes: function workingTimes() {
-      // 午前の計算
-      var am_date_to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
-      var am_date_from = this.$moment(this.date.start_date + ' 12:00:00');
-      var am_diff = am_date_from.diff(am_date_to, 'minutes');
-      var am_hours = Math.floor(am_diff / 60);
-      var am_minutes = Math.floor(am_diff % 60); // 午後の計算
+      // どれかが未入力なら計算しない
+      if (!this.date.start_date || !this.date.start_time || !this.date.end_date || !this.date.end_time) {
+        return '00:00';
+      }
 
-      var pm_date_to = this.$moment(this.date.end_date + ' 13:00:00');
-      var pm_date_from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
-      var pm_diff = pm_date_from.diff(pm_date_to, 'minutes');
-      var pm_hours = Math.floor(pm_diff / 60);
-      var pm_minutes = Math.floor(pm_diff % 60);
-      var hours = am_hours + pm_hours;
-      var minutes = ('00' + (am_minutes + pm_minutes)).slice(-2);
-      var time = hours + ':' + minutes;
+      var times = [];
+
+      for (var i = 0; i <= this.break_times.length; i++) {
+        console.log(i);
+
+        if (0 == i) {
+          // 最初のループ
+          var to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
+          var from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
+          times.push(this.diff(to, from));
+        } else if (i == this.break_times.length) {
+          // 最後のループ
+          var _to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+
+          var _from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
+
+          times.push(this.diff(_to, _from));
+        } else {
+          var _to2 = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+
+          var _from2 = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
+
+          times.push(this.diff(_to2, _from2));
+        }
+      } // 分の合計
+
+
+      var minutes_sum = times.reduce(function (sum, v) {
+        return sum + v.minutes;
+      }, 0); // 繰り上げ分計算
+
+      var carry = Math.floor(minutes_sum / 60); // あまり(実際の分) 
+
+      var minutes = Math.floor(minutes_sum % 60); // 時の合計と繰り上げ分を足す
+
+      var hours = times.reduce(function (sum, v) {
+        return sum + v.hours;
+      }, 0) + carry;
+      return hours + ':' + ('00' + minutes).slice(-2);
+    },
+    diff: function diff(to, from) {
+      var time = {
+        'hours': 0,
+        'minutes': 0
+      };
+      var diff = from.diff(to, 'minutes');
+      time['hours'] = Math.floor(diff / 60);
+      time['minutes'] = Math.floor(diff % 60);
       return time;
+    },
+    updateBreakTimeValue: function updateBreakTimeValue(event, key, index) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _this5.$store.dispatch('updateBreakTimeValue', {
+                  key: key,
+                  index: index,
+                  value: event.target.value
+                });
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   },
   filters: {
@@ -227,6 +320,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
     date: function date(state) {
       return state.attendance.date;
+    },
+    break_times: function break_times(state) {
+      return state.attendance.break_times;
     }
   }))
 });
@@ -407,7 +503,85 @@ var render = function() {
     _c("div", [
       _c("p", [_vm._v("勤務時間: " + _vm._s(_vm.workingTimes()))]),
       _vm._v(" "),
-      _c("span", [_vm._v("休憩1時間(12:00 ~ 13:00)")])
+      _c("table", { staticClass: "table table-hover" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.break_times, function(break_time, index) {
+            return _c("tr", { key: break_time.id }, [
+              _c("td", [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      domProps: { value: break_time.start_date },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateBreakTimeValue(
+                            $event,
+                            "start_date",
+                            index
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      domProps: { value: break_time.start_time },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateBreakTimeValue(
+                            $event,
+                            "start_time",
+                            index
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      domProps: { value: break_time.end_date },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateBreakTimeValue(
+                            $event,
+                            "end_date",
+                            index
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      domProps: { value: break_time.end_time },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateBreakTimeValue(
+                            $event,
+                            "end_time",
+                            index
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -417,6 +591,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [_c("h2", [_vm._v("勤怠管理")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [_c("td", [_vm._v("休憩時間")]), _vm._v(" "), _c("td")])
+    ])
   }
 ]
 render._withStripped = true

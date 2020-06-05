@@ -11,17 +11,54 @@ const state = {
     end_date: '', 
     end_time: ''
   },
+  break_times: [
+    {
+      id: '1',
+      attendance_id: '17',
+      start_date: '2020-06-05', 
+      start_time: '10:00:00', 
+      end_date: '2020-06-05', 
+      end_time: '11:00:00'
+    },
+    {
+      id: '2',
+      attendance_id: '17',
+      start_date: '2020-06-05', 
+      start_time: '12:00:00', 
+      end_date: '2020-06-05', 
+      end_time: '13:00:00'
+    },
+    {
+      id: '3',
+      attendance_id: '17',
+      start_date: '2020-06-05', 
+      start_time: '14:00:00', 
+      end_date: '2020-06-05', 
+      end_time: '15:00:00'
+    },
+    {
+      id: '4',
+      attendance_id: '17',
+      start_date: '2020-06-05', 
+      start_time: '16:00:00', 
+      end_date: '2020-06-05', 
+      end_time: '17:00:00'
+    },
+  ]
 }
 
 const getters = {
 }
 
 const mutations = {
-  setSelect (state, select) {
-    state.select = select;
+  setSelect (state, data) {
+    state.select = data;
   },
   setDate (state, data) {
     state.date = data;
+  },
+  setBreakTimeValue (state, data) {
+    state.break_times[data.index][data.key] = data.value;
   },
   setApiStatus (state, status) {
     state.apiStatus = status;
@@ -37,7 +74,9 @@ const actions = {
     const response = await axios.get('/api/attendance', {params: params});
     if (OK === response.status) {
       context.commit('setApiStatus', true);
-      context.commit('setDate', response.data);
+      if (response.data) {
+        context.commit('setDate', response.data);
+      }
       return false;
     }
   },
@@ -72,6 +111,9 @@ const actions = {
       context.commit('error/setCode', response.status, { root: true });
     }
   },
+  updateBreakTimeValue(context, data) {
+    context.commit('setBreakTimeValue', data);
+  }
 }
 
 export default {

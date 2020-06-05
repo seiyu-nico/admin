@@ -59,8 +59,38 @@
   </form>
   <div>
     <p>勤務時間: {{workingTimes()}}</p>
-    <span>休憩1時間(12:00 ~ 13:00)</span>
-  
+    <table class="table table-hover">
+    <thead class="thead-light">
+      <tr>
+        <td>休憩時間</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(break_time, index) in break_times" :key="break_time.id">
+        <td>
+          <div class="row">
+            <div class="col">
+              <input :value="break_time.start_date" @input="updateBreakTimeValue($event, 'start_date', index)" >
+            </div>
+            <div class="col">
+              <input :value="break_time.start_time" @input="updateBreakTimeValue($event, 'start_time', index)" >
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="row">
+            <div class="col">
+              <input :value="break_time.end_date" @input="updateBreakTimeValue($event, 'end_date', index)" >
+            </div>
+            <div class="col">
+              <input :value="break_time.end_time" @input="updateBreakTimeValue($event, 'end_time', index)" >
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   </div>
 </div>
@@ -75,6 +105,10 @@ export default {
   components: {
     VueClockPicker,
     Datepicker,
+  },
+  data() {
+    return {
+    }
   },
   created () {
     this.getAttendance();
@@ -98,26 +132,56 @@ export default {
     async endDateUpdate(date) {
       this.select('end_date');
       await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
-    },
+    }, 
     workingTimes() {
-      // 午前の計算
-      let am_date_to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
-      let am_date_from = this.$moment(this.date.start_date + ' 12:00:00');
-      let am_diff = am_date_from.diff(am_date_to, 'minutes');
-      let am_hours = Math.floor(am_diff / 60);
-      let am_minutes = Math.floor(am_diff % 60);
-      // 午後の計算
-      let pm_date_to = this.$moment(this.date.end_date + ' 13:00:00');
-      let pm_date_from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
-      let pm_diff = pm_date_from.diff(pm_date_to, 'minutes');
-      let pm_hours = Math.floor(pm_diff / 60);
-      let pm_minutes = Math.floor(pm_diff % 60);
-      
-      let hours = am_hours + pm_hours;
-      let minutes = ('00' + (am_minutes + pm_minutes)).slice(-2);
-      let time = hours + ':' + minutes;
+      // どれかが未入力なら計算しない
+      if (!this.date.start_date || !this.date.start_time || !this.date.end_date || !this.date.end_time) {
+            return '00:00';
+      }
+
+      let times = [];
+      for (let i = 0; i <= this.break_times.length; i++) {
+        console.log(i);
+        if (0 == i) {
+
+          // 最初のループ
+          const to = this.$moment(this.date.start_date + ' ' + this.date.start_time);
+          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
+          times.push(this.diff(to, from));
+        } else if (i == this.break_times.length) {
+          // 最後のループ
+          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+          const from = this.$moment(this.date.end_date + ' ' + this.date.end_time);
+          times.push(this.diff(to, from));
+        } else {
+          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
+          times.push(this.diff(to, from));
+        }
+      }
+      // 分の合計
+      const minutes_sum = times.reduce((sum, v) => sum + v.minutes, 0);
+      // 繰り上げ分計算
+      const carry = Math.floor(minutes_sum / 60);
+      // あまり(実際の分) 
+      const minutes = Math.floor(minutes_sum % 60);
+      // 時の合計と繰り上げ分を足す
+      const hours = times.reduce((sum, v) => sum + v.hours, 0) + carry;
+
+      return hours + ':' + ('00' + (minutes)).slice(-2);
+    },
+    diff(to, from) {
+      let time = {
+        'hours': 0, 'minutes': 0
+      };
+      let diff = from.diff(to, 'minutes');
+      time['hours'] = Math.floor(diff / 60);
+      time['minutes'] = Math.floor(diff % 60);
       return time;
-    }
+    },
+    async updateBreakTimeValue(event, key, index) {
+      this.$store.dispatch('updateBreakTimeValue', { key: key, index:index, value: event.target.value });
+    },
   },
   filters: {
     formatTime: (value) => {
@@ -131,6 +195,7 @@ export default {
   computed: {
     ...mapState({
       date: state => state.attendance.date,
+      break_times: state => state.attendance.break_times,
     }),
   },
 }
