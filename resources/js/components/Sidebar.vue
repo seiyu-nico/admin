@@ -34,8 +34,10 @@
           </li>
           <li> 
             <router-link :to="{name: 'Memo.Index'}">
-              <i class="material-icons">description</i>
-              <span @click="closeSideber()">メモ</span>
+              <span @click="closeSideber()">
+                <i class="fa fa-book"></i>
+                <span>メモ</span>
+              </span>
             </router-link>
           </li>
           <li class="sidebar-dropdown"> 
@@ -47,14 +49,18 @@
               <ul>
                 <li>
                   <router-link :to="{name: 'Attendance.Index'}">
-                    <i class="material-icons">work</i>
-                    <span @click="closeSideber()">勤怠登録</span>
+                    <span @click="closeSideber()">
+                      <i class="material-icons">work</i>
+                      <span>勤怠登録</span>
+                    </span>
                   </router-link>
                 </li>
                 <li>
                   <router-link :to="{name: 'Attendance.List'}">
-                    <i class="material-icons">work</i>
-                    <span @click="closeSideber()">一覧</span>
+                    <span @click="closeSideber()">
+                      <i class="material-icons">work</i>
+                      <span>一覧</span>
+                    </span>
                   </router-link>
                 </li>
               </ul>
@@ -148,10 +154,19 @@ export default {
     $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
     });
+    $(function() {
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
+    });
   },
   methods: {
     closeSideber () {
-      $(".page-wrapper").removeClass("toggled");
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
     },
   },
   computed: {

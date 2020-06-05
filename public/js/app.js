@@ -2298,6 +2298,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $(".sidebar-dropdown > a").click(function () {
@@ -2318,10 +2324,19 @@ __webpack_require__.r(__webpack_exports__);
     $("#show-sidebar").click(function () {
       $(".page-wrapper").addClass("toggled");
     });
+    $(function () {
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
+    });
   },
   methods: {
     closeSideber: function closeSideber() {
-      $(".page-wrapper").removeClass("toggled");
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
     }
   },
   computed: {
@@ -39647,10 +39662,6 @@ var render = function() {
               "li",
               [
                 _c("router-link", { attrs: { to: { name: "Memo.Index" } } }, [
-                  _c("i", { staticClass: "material-icons" }, [
-                    _vm._v("description")
-                  ]),
-                  _vm._v(" "),
                   _c(
                     "span",
                     {
@@ -39660,7 +39671,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("メモ")]
+                    [
+                      _c("i", { staticClass: "fa fa-book" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("メモ")])
+                    ]
                   )
                 ])
               ],
@@ -39679,10 +39694,6 @@ var render = function() {
                         "router-link",
                         { attrs: { to: { name: "Attendance.Index" } } },
                         [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("work")
-                          ]),
-                          _vm._v(" "),
                           _c(
                             "span",
                             {
@@ -39692,7 +39703,13 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("勤怠登録")]
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("work")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", [_vm._v("勤怠登録")])
+                            ]
                           )
                         ]
                       )
@@ -39707,10 +39724,6 @@ var render = function() {
                         "router-link",
                         { attrs: { to: { name: "Attendance.List" } } },
                         [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("work")
-                          ]),
-                          _vm._v(" "),
                           _c(
                             "span",
                             {
@@ -39720,7 +39733,13 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("一覧")]
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("work")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", [_vm._v("一覧")])
+                            ]
                           )
                         ]
                       )
