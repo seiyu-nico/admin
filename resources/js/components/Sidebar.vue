@@ -131,7 +131,10 @@ export default {
     });
 
     $("#close-sidebar").click(function() {
-      $(".page-wrapper").removeClass("toggled");
+      if (992 <= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
     });
     $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
