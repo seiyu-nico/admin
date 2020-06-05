@@ -34,8 +34,10 @@
           </li>
           <li> 
             <router-link :to="{name: 'Memo.Index'}">
-              <i class="fa fa-book"></i>
-              <span  @click="closeSideber()">メモ</span>
+              <div @click="closeSideber()">
+                <i class="fa fa-book"></i>
+                <span>メモ</span>
+              </div>
             </router-link>
           </li>
           <!-- <li class="header-menu">
@@ -110,39 +112,35 @@ export default {
   mounted:function () {
     $(".sidebar-dropdown > a").click(function() {
       $(".sidebar-submenu").slideUp(200);
-      if (
-        $(this)
-          .parent()
-          .hasClass("active")
-      ) {
+      if ($(this).parent().hasClass("active")) {
         $(".sidebar-dropdown").removeClass("active");
-        $(this)
-          .parent()
-          .removeClass("active");
+        $(this).parent().removeClass("active");
       } else {
         $(".sidebar-dropdown").removeClass("active");
-        $(this)
-          .next(".sidebar-submenu")
-          .slideDown(200);
-        $(this)
-          .parent()
-          .addClass("active");
+        $(this).next(".sidebar-submenu").slideDown(200);
+        $(this).parent().addClass("active");
       }
     });
 
     $("#close-sidebar").click(function() {
-      if (992 <= window.innerWidth) {
-        // 画面サイズがPC(992px)以上のときだけたたむ
-        $(".page-wrapper").removeClass("toggled");
-      }
+      $(".page-wrapper").removeClass("toggled");
     });
     $("#show-sidebar").click(function() {
       $(".page-wrapper").addClass("toggled");
     });
+    $(function() {
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
+    });
   },
   methods: {
     closeSideber () {
-      $(".page-wrapper").removeClass("toggled");
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
     },
   },
   computed: {

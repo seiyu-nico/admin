@@ -1,11 +1,8 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/attendance/index.js": "/js/attendance/index.js?id=f569b5010f02263168e8",
-    "/js/attendance/list.js": "/js/attendance/list.js?id=9682f582fc05720f27b8",
-    "/js/errors/index.js": "/js/errors/index.js",
-    "/js/index/index.js": "/js/index/index.js",
-    "/js/login/index.js": "/js/login/index.js",
-    "/js/memo/index.js": "/js/memo/index.js",
-    "/js/vendors~attendance/index.js": "/js/vendors~attendance/index.js?id=0646b8a4b9ba2e0279ab"
+    "/js/app.js": "/js/app.js?id=ab25c252e3770abca408",
+    "/css/app.css": "/css/app.css?id=7c707638af87a43347e7",
+    "/js/errors/index.js": "/js/errors/index.js?id=83a0de133ec4281e1ff0",
+    "/js/index/index.js": "/js/index/index.js?id=fdb45f573ea343186ee9",
+    "/js/login/index.js": "/js/login/index.js?id=ee8563855e31ca2b6095",
+    "/js/memo/index.js": "/js/memo/index.js?id=b9305638d5ad3fb41380"
 }

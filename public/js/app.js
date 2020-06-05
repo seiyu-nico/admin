@@ -2276,6 +2276,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $(".sidebar-dropdown > a").click(function () {
@@ -2291,18 +2293,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     $("#close-sidebar").click(function () {
-      if (992 <= window.innerWidth) {
-        // 画面サイズがPC(992px)以上のときだけたたむ
-        $(".page-wrapper").removeClass("toggled");
-      }
+      $(".page-wrapper").removeClass("toggled");
     });
     $("#show-sidebar").click(function () {
       $(".page-wrapper").addClass("toggled");
     });
+    $(function () {
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
+    });
   },
   methods: {
     closeSideber: function closeSideber() {
-      $(".page-wrapper").removeClass("toggled");
+      if (992 >= window.innerWidth) {
+        // 画面サイズがPC(992px)以上のときだけたたむ
+        $(".page-wrapper").removeClass("toggled");
+      }
     }
   },
   computed: {
@@ -38959,10 +38967,8 @@ var render = function() {
               "li",
               [
                 _c("router-link", { attrs: { to: { name: "Memo.Index" } } }, [
-                  _c("i", { staticClass: "fa fa-book" }),
-                  _vm._v(" "),
                   _c(
-                    "span",
+                    "div",
                     {
                       on: {
                         click: function($event) {
@@ -38970,7 +38976,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("メモ")]
+                    [
+                      _c("i", { staticClass: "fa fa-book" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("メモ")])
+                    ]
                   )
                 ])
               ],
