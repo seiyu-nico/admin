@@ -7,7 +7,7 @@
         <td></td>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-if="break_times">
       <tr v-for="(break_time, index) in break_times" :key="break_time.id">
         <td>
           <div class="row">

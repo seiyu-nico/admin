@@ -14,7 +14,6 @@ class BreakTimeController extends Controller
     //
     public function create(Request $request)
     {
-        Log::info($request->all());
         $user = Auth::user();
         $data = $request->all();
         $data['user_id'] = $user->id;

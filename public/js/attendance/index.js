@@ -469,81 +469,83 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.break_times, function(break_time, index) {
-          return _c("tr", { key: break_time.id }, [
-            _c("td", [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col" }, [
-                  _c("input", {
-                    domProps: { value: break_time.start_date },
-                    on: {
-                      input: function($event) {
-                        return _vm.updateBreakTimeValue(
-                          $event,
-                          "start_date",
-                          break_time.id
-                        )
-                      }
-                    }
-                  })
+      _vm.break_times
+        ? _c(
+            "tbody",
+            _vm._l(_vm.break_times, function(break_time, index) {
+              return _c("tr", { key: break_time.id }, [
+                _c("td", [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col" }, [
+                      _c("input", {
+                        domProps: { value: break_time.start_date },
+                        on: {
+                          input: function($event) {
+                            return _vm.updateBreakTimeValue(
+                              $event,
+                              "start_date",
+                              break_time.id
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col" }, [
+                      _c("input", {
+                        domProps: { value: break_time.start_time },
+                        on: {
+                          input: function($event) {
+                            return _vm.updateBreakTimeValue(
+                              $event,
+                              "start_time",
+                              break_time.id
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col" }, [
-                  _c("input", {
-                    domProps: { value: break_time.start_time },
-                    on: {
-                      input: function($event) {
-                        return _vm.updateBreakTimeValue(
-                          $event,
-                          "start_time",
-                          break_time.id
-                        )
-                      }
-                    }
-                  })
+                _c("td", [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col" }, [
+                      _c("input", {
+                        domProps: { value: break_time.end_date },
+                        on: {
+                          input: function($event) {
+                            return _vm.updateBreakTimeValue(
+                              $event,
+                              "end_date",
+                              break_time.id
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col" }, [
+                      _c("input", {
+                        domProps: { value: break_time.end_time },
+                        on: {
+                          input: function($event) {
+                            return _vm.updateBreakTimeValue(
+                              $event,
+                              "end_time",
+                              break_time.id
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("td", [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col" }, [
-                  _c("input", {
-                    domProps: { value: break_time.end_date },
-                    on: {
-                      input: function($event) {
-                        return _vm.updateBreakTimeValue(
-                          $event,
-                          "end_date",
-                          break_time.id
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col" }, [
-                  _c("input", {
-                    domProps: { value: break_time.end_time },
-                    on: {
-                      input: function($event) {
-                        return _vm.updateBreakTimeValue(
-                          $event,
-                          "end_time",
-                          break_time.id
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ])
-          ])
-        }),
-        0
-      )
+            }),
+            0
+          )
+        : _vm._e()
     ])
   ])
 }
