@@ -46,8 +46,7 @@ const actions = {
     }
   },
   async store(context, data) {
-    // メモ登録
-    let id = context.state.date.id;
+    let id = context.state.attendance.id;
     let select = context.state.select;
     let params = {
       id: id,
