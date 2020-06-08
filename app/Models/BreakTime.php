@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Attendance extends Model
+class BreakTime extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
         'user_id', 
+        'attendance_id',
         'start_date', 
         'start_time',
         'end_date',
@@ -25,9 +26,9 @@ class Attendance extends Model
      {
          return $this->belongsTo('App\Models\User');
      }
-
-    public function break_time()
+     
+    public function attendance()
     {
-        return $this->hasMany('App\Models\BreakTime');
+        return $this->belongsTo('App\Models\Attendance');
     }
 }

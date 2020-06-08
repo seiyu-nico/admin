@@ -38,4 +38,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('/attendance', 'Api\AttendanceController@delete');
     // リスト部分
     Route::get('/attendances', 'Api\AttendanceListController@index')->name('attendances.create');
+
+    Route::post('/break-time', 'Api\BreakTimeController@create')->name('break_time.create');
+    Route::put('/break-time', 'Api\BreakTimeController@update');
 });

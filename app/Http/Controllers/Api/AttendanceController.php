@@ -19,7 +19,8 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $date = $request->date;
         $attendance = Attendance::where('user_id', $user->id)->where('start_date', $date)->first();
-        return response($attendance, 200);
+        $break_times = $attendance->break_time;
+        return response(['attendance' => $attendance, 'break_times' => $break_times], 200);
     }
 
     public function create(Request $request)
@@ -34,9 +35,7 @@ class AttendanceController extends Controller
     public function update(Request $request)
     {
         $attendance = Attendance::find($request->id);
-        Log::info($request->all());
         $attendance->update($request->all());
-        Log::info($attendance);
         return response($attendance, 200);
     }
     

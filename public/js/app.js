@@ -61667,10 +61667,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 /***/ }),
 
-/***/ "./resources/js/store/attendance/index.js":
-/*!************************************************!*\
-  !*** ./resources/js/store/attendance/index.js ***!
-  \************************************************/
+/***/ "./resources/js/store/attendance/break_time.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/store/attendance/break_time.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61691,55 +61691,201 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
+  break_times: [],
+  apiStatus: null
+};
+var getters = {};
+var mutations = {
+  setBreakTime: function setBreakTime(state, data) {
+    state.break_times = data;
+  },
+  setBreakTimeValue: function setBreakTimeValue(state, data) {
+    state.break_times.find(function (break_time) {
+      return break_time.id === data.id;
+    })[data.key] = data.value;
+  },
+  addBreakTime: function addBreakTime(state, data) {
+    state.break_times.push(data);
+  },
+  setApiStatus: function setApiStatus(state, status) {
+    state.apiStatus = status;
+  }
+};
+var actions = {
+  updateBreakTimeValue: function updateBreakTimeValue(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _params;
+
+      var attendance_id, params, _response, _response2;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              attendance_id = context.state.break_times.find(function (break_time) {
+                return break_time.id === data.id;
+              }).attendance_id;
+              params = (_params = {
+                'id': data.id
+              }, _defineProperty(_params, data.key, data.value), _defineProperty(_params, 'attendance_id', attendance_id), _params);
+
+              if (!('' == data.id)) {
+                _context.next = 12;
+                break;
+              }
+
+              _context.next = 5;
+              return axios.post('/api/break-time', params);
+
+            case 5:
+              _response = _context.sent;
+
+              if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
+                _context.next = 10;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setBreakTimeValue', data);
+              return _context.abrupt("return", false);
+
+            case 10:
+              _context.next = 19;
+              break;
+
+            case 12:
+              _context.next = 14;
+              return axios.put('/api/break-time', params);
+
+            case 14:
+              _response2 = _context.sent;
+
+              if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                _context.next = 19;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setBreakTimeValue', data);
+              return _context.abrupt("return", false);
+
+            case 19:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 21:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  addBreakTime: function addBreakTime(context, data) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.post('/api/break-time', data);
+
+            case 2:
+              response = _context2.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
+                _context2.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('addBreakTime', response.data);
+              return _context2.abrupt("return", false);
+
+            case 7:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 9:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions,
+  modules: {
+    list: _list__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/attendance/index.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/attendance/index.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./list */ "./resources/js/store/attendance/list.js");
+/* harmony import */ var _break_time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./break_time */ "./resources/js/store/attendance/break_time.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+var state = {
   apiStatus: null,
   select: '',
-  date: {
+  attendance: {
     id: '',
     start_date: '',
     start_time: '',
     end_date: '',
     end_time: ''
-  },
-  break_times: [{
-    id: '1',
-    attendance_id: '17',
-    start_date: '2020-06-05',
-    start_time: '10:00:00',
-    end_date: '2020-06-05',
-    end_time: '11:00:00'
-  }, {
-    id: '2',
-    attendance_id: '17',
-    start_date: '2020-06-05',
-    start_time: '12:00:00',
-    end_date: '2020-06-05',
-    end_time: '13:00:00'
-  }, {
-    id: '3',
-    attendance_id: '17',
-    start_date: '2020-06-05',
-    start_time: '14:00:00',
-    end_date: '2020-06-05',
-    end_time: '15:00:00'
-  }, {
-    id: '4',
-    attendance_id: '17',
-    start_date: '2020-06-05',
-    start_time: '16:00:00',
-    end_date: '2020-06-05',
-    end_time: '17:00:00'
-  }]
+  }
 };
 var getters = {};
 var mutations = {
   setSelect: function setSelect(state, data) {
     state.select = data;
   },
-  setDate: function setDate(state, data) {
-    state.date = data;
-  },
-  setBreakTimeValue: function setBreakTimeValue(state, data) {
-    state.break_times[data.index][data.key] = data.value;
+  setAttendance: function setAttendance(state, data) {
+    state.attendance = data;
   },
   setApiStatus: function setApiStatus(state, status) {
     state.apiStatus = status;
@@ -61764,7 +61910,7 @@ var actions = {
             case 3:
               response = _context.sent;
 
-              if (!(_util__WEBPACK_IMPORTED_MODULE_2__["OK"] === response.status)) {
+              if (!(_util__WEBPACK_IMPORTED_MODULE_3__["OK"] === response.status)) {
                 _context.next = 8;
                 break;
               }
@@ -61772,7 +61918,10 @@ var actions = {
               context.commit('setApiStatus', true);
 
               if (response.data) {
-                context.commit('setDate', response.data);
+                context.commit('setAttendance', response.data.attendance);
+                context.commit('attendance/break_time/setBreakTime', response.data.break_times, {
+                  root: true
+                });
               }
 
               return _context.abrupt("return", false);
@@ -61811,13 +61960,13 @@ var actions = {
             case 6:
               _response = _context2.sent;
 
-              if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
+              if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_3__["CREATED"])) {
                 _context2.next = 11;
                 break;
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setDate', _response.data);
+              context.commit('setAttendance', _response.data);
               return _context2.abrupt("return", false);
 
             case 11:
@@ -61831,19 +61980,19 @@ var actions = {
             case 15:
               _response2 = _context2.sent;
 
-              if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+              if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_3__["OK"])) {
                 _context2.next = 20;
                 break;
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setDate', _response2.data);
+              context.commit('setAttendance', _response2.data);
               return _context2.abrupt("return", false);
 
             case 20:
               context.commit('setApiStatus', false);
 
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_3__["UNPROCESSABLE_ENTITY"]) {
                 context.commit('setErrorMessages', response.data.errors);
               } else {
                 context.commit('error/setCode', response.status, {
@@ -61858,9 +62007,6 @@ var actions = {
         }
       }, _callee2);
     }))();
-  },
-  updateBreakTimeValue: function updateBreakTimeValue(context, data) {
-    context.commit('setBreakTimeValue', data);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61870,6 +62016,7 @@ var actions = {
   mutations: mutations,
   actions: actions,
   modules: {
+    break_time: _break_time__WEBPACK_IMPORTED_MODULE_2__["default"],
     list: _list__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
