@@ -27,7 +27,6 @@ const mutations = {
 const actions = {
   async updateBreakTimeValue(context, data) {
     const attendance_id = context.state.break_times.find((break_time) =>  break_time.id === data.id).attendance_id;
-
     const params = {
       'id': data.id,
       [data.key]: data.value,

@@ -63,21 +63,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    updateBreakTimeValue: function updateBreakTimeValue(event, key, id) {
+    updateBreakTimeValue: function updateBreakTimeValue(old_value, event, key, id) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var date_valid, time_valid;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$store.dispatch('attendance/break_time/updateBreakTimeValue', {
-                  key: key,
-                  id: id,
-                  value: event.target.value
-                });
+                date_valid = _this.$moment(event.target.value, 'YYYY-MM-DD', true).isValid();
+                time_valid = _this.$moment(event.target.value, 'HH:mm:ss', true).isValid(); // 日付 or 時間形式として正しければ送信
 
-              case 1:
+                console.log(event);
+
+                if (date_valid || time_valid) {
+                  _this.$store.dispatch('attendance/break_time/updateBreakTimeValue', {
+                    key: key,
+                    id: id,
+                    value: event.target.value
+                  });
+                } else {// 元の値に戻す処理
+                }
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -482,6 +491,7 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
+                              break_time.start_date,
                               $event,
                               "start_date",
                               break_time.id
@@ -497,6 +507,7 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
+                              break_time.start_time,
                               $event,
                               "start_time",
                               break_time.id
@@ -516,6 +527,7 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
+                              break_time.end_date,
                               $event,
                               "end_date",
                               break_time.id
@@ -531,6 +543,7 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
+                              break_time.end_date,
                               $event,
                               "end_time",
                               break_time.id

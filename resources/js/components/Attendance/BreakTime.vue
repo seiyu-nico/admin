@@ -12,20 +12,20 @@
         <td>
           <div class="row">
             <div class="col">
-              <input :value="break_time.start_date" @input="updateBreakTimeValue($event, 'start_date', break_time.id)" >
+              <input :value="break_time.start_date" @input="updateBreakTimeValue(break_time.start_date, $event, 'start_date', break_time.id)" >
             </div>
             <div class="col">
-              <input :value="break_time.start_time" @input="updateBreakTimeValue($event, 'start_time', break_time.id)" >
+              <input :value="break_time.start_time" @input="updateBreakTimeValue(break_time.start_time, $event, 'start_time', break_time.id)" >
             </div>
           </div>
         </td>
         <td>
           <div class="row">
             <div class="col">
-              <input :value="break_time.end_date" @input="updateBreakTimeValue($event, 'end_date', break_time.id)" >
+              <input :value="break_time.end_date" @input="updateBreakTimeValue(break_time.end_date, $event, 'end_date', break_time.id)" >
             </div>
             <div class="col">
-              <input :value="break_time.end_time" @input="updateBreakTimeValue($event, 'end_time', break_time.id)" >
+              <input :value="break_time.end_time" @input="updateBreakTimeValue(break_time.end_date, $event, 'end_time', break_time.id)" >
             </div>
           </div>
         </td>
@@ -38,8 +38,16 @@
 import { mapState, mapGetters} from 'vuex';
 export default {
   methods: {
-    async updateBreakTimeValue(event, key, id) {
-      this.$store.dispatch('attendance/break_time/updateBreakTimeValue', { key: key, id: id, value: event.target.value });
+    async updateBreakTimeValue(old_value, event, key, id) {
+      const date_valid = this.$moment(event.target.value, 'YYYY-MM-DD', true).isValid();
+      const time_valid = this.$moment(event.target.value, 'HH:mm:ss', true).isValid(); 
+      // 日付 or 時間形式として正しければ送信
+      console.log(event);
+      if (date_valid || time_valid) {
+        this.$store.dispatch('attendance/break_time/updateBreakTimeValue', { key: key, id: id, value: event.target.value });
+      } else {
+        // 元の値に戻す処理
+      }
     },
     addBreakTime() {
       const param = {
