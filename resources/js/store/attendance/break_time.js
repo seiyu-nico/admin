@@ -22,6 +22,10 @@ const mutations = {
   setApiStatus (state, status) {
     state.apiStatus = status;
   },
+  deleteBreakTime (state, data) {
+    console.log(data);
+    // state.break_times.find((break_time) =>  break_time.id === data.id)[data.key] = data.value;
+  }
 }
 
 const actions = {
@@ -67,6 +71,21 @@ const actions = {
     } else {
       context.commit('error/setCode', response.status, { root: true });
     }
+  },
+  async deleteBreakTime(context, data) {
+    // const response = await axios.delete('/api/break-time', data);
+    // if (response.status === CREATED) {
+    //   context.commit('setApiStatus', true);
+    //   context.commit('deleteBreakTime', data.id);
+    //   return false;
+    // }
+    // context.commit('setApiStatus', false);
+    // if (response.status === UNPROCESSABLE_ENTITY) {
+    //   context.commit('setErrorMessages', response.data.errors);
+    // } else {
+    //   context.commit('error/setCode', response.status, { root: true });
+    // }
+    context.commit('deleteBreakTime', data.id);
   }
 }
 

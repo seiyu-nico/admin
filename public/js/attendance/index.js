@@ -64,6 +64,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
@@ -79,8 +81,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 date_valid = _this.$moment(event.target.value, 'YYYY-MM-DD', true).isValid();
                 time_valid = _this.$moment(event.target.value, 'HH:mm:ss', true).isValid(); // 日付 or 時間形式として正しければ送信
 
-                console.log(event);
-
                 if (date_valid || time_valid) {
                   _this.$store.dispatch('attendance/break_time/updateBreakTimeValue', {
                     key: key,
@@ -89,7 +89,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -117,16 +117,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         'end_time': '13:00:00'
       };
       this.$store.dispatch('attendance/break_time/addBreakTime', param);
+    },
+    deleteBreakTime: function deleteBreakTime(id) {
+      var param = {
+        'id': id
+      };
+      console.log('delete');
+      this.$store.dispatch('attendance/break_time/deleteBreakTime', param);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     attendance: function attendance(state) {
       return state.attendance.attendance;
     },
     break_times: function break_times(state) {
       return state.attendance.break_time.break_times;
     }
-  }))
+  })), {}, {
+    sortStartDate: function sortStartDate() {
+      // 休憩時間をソートする
+      return this.break_times.sort(function (a, b) {
+        return a.start_date + ' ' + a.start_time > b.start_date + ' ' + b.start_time ? 1 : -1;
+      });
+    }
+  })
 });
 
 /***/ }),
@@ -236,9 +250,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"],
     BreakTimes: _BreakTime__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  data: function data() {
-    return {};
-  },
   created: function created() {
     this.getAttendance();
   },
@@ -329,11 +340,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     workingTimes: function workingTimes() {
-      // どれかが未入力なら計算しない
-      if (!this.attendance.start_date || !this.attendance.start_time || !this.attendance.end_date || !this.attendance.end_time) {
+      console.log('ここ動いてる？');
+      var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+      var from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+      if (false == to.isValid() && false == from.isValid()) {
+        console.log('ここ入ってる説');
         return '00:00';
       }
 
+      var times = [];
+
+      if (0 == this.break_times.length) {
+        // 休憩時間がない場合
+        console.log(1);
+
+        if (to.isValid() && from.isValid()) {
+          times.push(this.diff(to, from));
+        }
+      } else {
+        console.log(2); // 休憩時間がある場合
+
+        times = this.existsBreakTimes();
+      }
+
+      if (0 == times.length) {
+        // timesがないときは計算できないので00:00を返す
+        return '00:00';
+      } else {
+        // 分の合計
+        var minutes_sum = times.reduce(function (sum, v) {
+          return sum + v.minutes;
+        }, 0); // 繰り上げ分計算
+
+        var carry = Math.floor(minutes_sum / 60); // あまり(実際の分) 
+
+        var minutes = Math.floor(minutes_sum % 60); // 時の合計と繰り上げ分を足す
+
+        var hours = times.reduce(function (sum, v) {
+          return sum + v.hours;
+        }, 0) + carry;
+        return hours + ':' + ('00' + minutes).slice(-2);
+      }
+    },
+    existsBreakTimes: function existsBreakTimes() {
+      // 休憩時間がある場合の計算
       var times = [];
 
       for (var i = 0; i <= this.break_times.length; i++) {
@@ -363,21 +414,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             times.push(this.diff(_to2, _from2));
           }
         }
-      } // 分の合計
+      }
 
-
-      var minutes_sum = times.reduce(function (sum, v) {
-        return sum + v.minutes;
-      }, 0); // 繰り上げ分計算
-
-      var carry = Math.floor(minutes_sum / 60); // あまり(実際の分) 
-
-      var minutes = Math.floor(minutes_sum % 60); // 時の合計と繰り上げ分を足す
-
-      var hours = times.reduce(function (sum, v) {
-        return sum + v.hours;
-      }, 0) + carry;
-      return hours + ':' + ('00' + minutes).slice(-2);
+      return times;
     },
     diff: function diff(to, from) {
       var time = {
@@ -509,6 +548,8 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
+          _c("td"),
+          _vm._v(" "),
           _c("td")
         ])
       ]),
@@ -516,7 +557,7 @@ var render = function() {
       _vm.break_times
         ? _c(
             "tbody",
-            _vm._l(_vm.break_times, function(break_time, index) {
+            _vm._l(_vm.sortStartDate, function(break_time, index) {
               return _c("tr", { key: break_time.id }, [
                 _c("td", [
                   _c("div", { staticClass: "row" }, [
@@ -584,6 +625,21 @@ var render = function() {
                       })
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm mx-2",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteBreakTime(break_time.id)
+                        }
+                      }
+                    },
+                    [_vm._v("削除")]
+                  )
                 ])
               ])
             }),

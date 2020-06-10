@@ -9,10 +9,11 @@
           <button class="btn btn-primary btn-sm mx-2" @click="addBreakTimeLunchTime()">お昼休憩追加</button>
         </td>
         <td></td>
+        <td></td>
       </tr>
     </thead>
     <tbody v-if="break_times">
-      <tr v-for="(break_time, index) in break_times" :key="break_time.id">
+      <tr v-for="(break_time, index) in sortStartDate" :key="break_time.id">
         <td>
           <div class="row">
             <div class="col">
@@ -33,6 +34,7 @@
             </div>
           </div>
         </td>
+        <td><button class="btn btn-primary btn-sm mx-2" @click="deleteBreakTime(break_time.id)">削除</button></td>
       </tr>
     </tbody>
   </table>
@@ -46,7 +48,6 @@ export default {
       const date_valid = this.$moment(event.target.value, 'YYYY-MM-DD', true).isValid();
       const time_valid = this.$moment(event.target.value, 'HH:mm:ss', true).isValid(); 
       // 日付 or 時間形式として正しければ送信
-      console.log(event);
       if (date_valid || time_valid) {
         this.$store.dispatch('attendance/break_time/updateBreakTimeValue', { key: key, id: id, value: event.target.value });
       }
@@ -72,12 +73,23 @@ export default {
       }
       this.$store.dispatch('attendance/break_time/addBreakTime',  param); 
     },
+    deleteBreakTime(id) {
+      const param = {
+        'id': id,
+      }
+      console.log('delete');
+      this.$store.dispatch('attendance/break_time/deleteBreakTime',  param);
+    },
   },
   computed: {
     ...mapState({
       attendance: state => state.attendance.attendance,
       break_times: state => state.attendance.break_time.break_times,
     }),
+    sortStartDate(){
+      // 休憩時間をソートする
+      return this.break_times.sort((a,b) => (a.start_date + ' ' + a.start_time > b.start_date + ' ' + b.start_time  ? 1 : -1));
+    }
   },
 }
 </script>

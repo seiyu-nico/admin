@@ -74,10 +74,6 @@ export default {
     Datepicker,
     BreakTimes,
   },
-  data() {
-    return {
-    }
-  },
   created () {
     this.getAttendance();
   },
@@ -102,11 +98,47 @@ export default {
       await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
     }, 
     workingTimes() {
-      // どれかが未入力なら計算しない
-      if (!this.attendance.start_date || !this.attendance.start_time || !this.attendance.end_date || !this.attendance.end_time) {
-            return '00:00';
+      console.log('ここ動いてる？');
+
+      const to = this.$moment(this. attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+      const from = this.$moment(this. attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+     
+     if (false == to.isValid() && false == from.isValid()) {
+        console.log('ここ入ってる説');
+        return '00:00';
       }
 
+      let times = [];
+      if (0 == this.break_times.length) {
+        // 休憩時間がない場合
+        console.log(1);
+        if (to.isValid() && from.isValid()) {
+          times.push(this.diff(to, from));
+        }
+      } else {
+        console.log(2);
+        // 休憩時間がある場合
+        times = this.existsBreakTimes();
+      }
+
+      if (0 == times.length) {
+        // timesがないときは計算できないので00:00を返す
+        return '00:00';
+      } else {
+        // 分の合計
+        const minutes_sum = times.reduce((sum, v) => sum + v.minutes, 0);
+        // 繰り上げ分計算
+        const carry = Math.floor(minutes_sum / 60);
+        // あまり(実際の分) 
+        const minutes = Math.floor(minutes_sum % 60);
+        // 時の合計と繰り上げ分を足す
+        const hours = times.reduce((sum, v) => sum + v.hours, 0) + carry;
+  
+        return hours + ':' + ('00' + (minutes)).slice(-2);
+      }
+    },
+    existsBreakTimes() {
+      // 休憩時間がある場合の計算
       let times = [];
       for (let i = 0; i <= this.break_times.length; i++) {
         if (0 == i) {
@@ -131,16 +163,7 @@ export default {
           }
         }
       }
-      // 分の合計
-      const minutes_sum = times.reduce((sum, v) => sum + v.minutes, 0);
-      // 繰り上げ分計算
-      const carry = Math.floor(minutes_sum / 60);
-      // あまり(実際の分) 
-      const minutes = Math.floor(minutes_sum % 60);
-      // 時の合計と繰り上げ分を足す
-      const hours = times.reduce((sum, v) => sum + v.hours, 0) + carry;
-
-      return hours + ':' + ('00' + (minutes)).slice(-2);
+      return times;
     },
     diff(to, from) {
       let time = {
