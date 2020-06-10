@@ -60,6 +60,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
@@ -99,6 +103,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         'attendance_id': this.attendance.id,
         'start_date': this.attendance.start_date,
         'end_date': this.attendance.end_date
+      };
+      this.$store.dispatch('attendance/break_time/addBreakTime', param);
+    },
+    addBreakTimeLunchTime: function addBreakTimeLunchTime() {
+      // お昼休憩追加
+      var param = {
+        'id': '',
+        'attendance_id': this.attendance.id,
+        'start_date': this.attendance.start_date,
+        'start_time': '12:00:00',
+        'end_date': this.attendance.end_date,
+        'end_time': '13:00:00'
       };
       this.$store.dispatch('attendance/break_time/addBreakTime', param);
     }
@@ -465,7 +481,7 @@ var render = function() {
       _c("thead", { staticClass: "thead-light" }, [
         _c("tr", [
           _c("td", [
-            _vm._v("休憩時間"),
+            _vm._v("\n        休憩時間\n        "),
             _c(
               "button",
               {
@@ -477,6 +493,19 @@ var render = function() {
                 }
               },
               [_vm._v("追加")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-sm mx-2",
+                on: {
+                  click: function($event) {
+                    return _vm.addBreakTimeLunchTime()
+                  }
+                }
+              },
+              [_vm._v("お昼休憩追加")]
             )
           ]),
           _vm._v(" "),

@@ -3,7 +3,11 @@
     <table class="table table-hover">
     <thead class="thead-light">
       <tr>
-        <td>休憩時間<button class="btn btn-primary btn-sm mx-2" @click="addBreakTime()">追加</button></td>
+        <td>
+          休憩時間
+          <button class="btn btn-primary btn-sm mx-2" @click="addBreakTime()">追加</button>
+          <button class="btn btn-primary btn-sm mx-2" @click="addBreakTimeLunchTime()">お昼休憩追加</button>
+        </td>
         <td></td>
       </tr>
     </thead>
@@ -55,7 +59,19 @@ export default {
         'end_date': this.attendance.end_date,
       }
       this.$store.dispatch('attendance/break_time/addBreakTime',  param);
-    }
+    },
+    addBreakTimeLunchTime(){
+      // お昼休憩追加
+      const param = {
+        'id': '',
+        'attendance_id': this.attendance.id,
+        'start_date': this.attendance.start_date,
+        'start_time': '12:00:00',
+        'end_date': this.attendance.end_date,
+        'end_time': '13:00:00',
+      }
+      this.$store.dispatch('attendance/break_time/addBreakTime',  param); 
+    },
   },
   computed: {
     ...mapState({
