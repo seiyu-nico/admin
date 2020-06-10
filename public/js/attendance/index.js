@@ -63,7 +63,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    updateBreakTimeValue: function updateBreakTimeValue(old_value, event, key, id) {
+    updateBreakTimeValue: function updateBreakTimeValue(event, key, id) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -83,7 +83,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     id: id,
                     value: event.target.value
                   });
-                } else {// 元の値に戻す処理
                 }
 
               case 4:
@@ -323,23 +322,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       for (var i = 0; i <= this.break_times.length; i++) {
         if (0 == i) {
-          // 最初のループ
-          var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time);
-          var from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
-          times.push(this.diff(to, from));
+          // 最初のループbreak_time
+          var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+          var from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          if (to.isValid() && from.isValid()) {
+            times.push(this.diff(to, from));
+          }
         } else if (i == this.break_times.length) {
           // 最後のループ
-          var _to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+          var _to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
 
-          var _from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time);
+          var _from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
 
-          times.push(this.diff(_to, _from));
+          if (_to.isValid() && _from.isValid()) {
+            times.push(this.diff(_to, _from));
+          }
         } else {
-          var _to2 = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
+          var _to2 = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
 
-          var _from2 = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
+          var _from2 = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
 
-          times.push(this.diff(_to2, _from2));
+          if (_to2.isValid() && _from2.isValid()) {
+            times.push(this.diff(_to2, _from2));
+          }
         }
       } // 分の合計
 
@@ -491,7 +497,6 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
-                              break_time.start_date,
                               $event,
                               "start_date",
                               break_time.id
@@ -507,7 +512,6 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
-                              break_time.start_time,
                               $event,
                               "start_time",
                               break_time.id
@@ -527,7 +531,6 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
-                              break_time.end_date,
                               $event,
                               "end_date",
                               break_time.id
@@ -543,7 +546,6 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return _vm.updateBreakTimeValue(
-                              break_time.end_date,
                               $event,
                               "end_time",
                               break_time.id

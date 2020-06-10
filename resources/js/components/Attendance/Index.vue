@@ -110,19 +110,25 @@ export default {
       let times = [];
       for (let i = 0; i <= this.break_times.length; i++) {
         if (0 == i) {
-          // 最初のループ
-          const to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time);
-          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
-          times.push(this.diff(to, from));
+          // 最初のループbreak_time
+          const to = this.$moment(this. attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
+          if (to.isValid() && from.isValid()) {
+            times.push(this.diff(to, from));
+          }
         } else if (i == this.break_times.length) {
           // 最後のループ
-          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
-          const from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time);
-          times.push(this.diff(to, from));
+          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
+          const from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+          if (to.isValid() && from.isValid()) {
+            times.push(this.diff(to, from));
+          }
         } else {
-          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time);
-          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time);
-          times.push(this.diff(to, from));
+          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
+          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
+          if (to.isValid() && from.isValid()) {
+            times.push(this.diff(to, from));
+          }
         }
       }
       // 分の合計
