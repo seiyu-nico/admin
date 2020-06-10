@@ -340,12 +340,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     workingTimes: function workingTimes() {
-      console.log('ここ動いてる？');
       var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
       var from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
 
       if (false == to.isValid() && false == from.isValid()) {
-        console.log('ここ入ってる説');
         return '00:00';
       }
 
@@ -353,14 +351,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (0 == this.break_times.length) {
         // 休憩時間がない場合
-        console.log(1);
-
         if (to.isValid() && from.isValid()) {
           times.push(this.diff(to, from));
         }
       } else {
-        console.log(2); // 休憩時間がある場合
-
+        // 休憩時間がある場合
         times = this.existsBreakTimes();
       }
 
