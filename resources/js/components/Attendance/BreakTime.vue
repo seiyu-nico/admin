@@ -34,7 +34,7 @@
             </div>
           </div>
         </td>
-        <td><button class="btn btn-primary btn-sm mx-2" @click="deleteBreakTime(break_time.id)">削除</button></td>
+        <td><button class="btn btn-primary btn-sm mx-2" @click="deleteBreakTime(index)">削除</button></td>
       </tr>
     </tbody>
   </table>
@@ -73,11 +73,11 @@ export default {
       }
       this.$store.dispatch('attendance/break_time/addBreakTime',  param); 
     },
-    deleteBreakTime(id) {
+    deleteBreakTime(index) {
       const param = {
-        'id': id,
+        'index': index,
+        'id': this.break_times[index]['id'],
       }
-      console.log('delete');
       this.$store.dispatch('attendance/break_time/deleteBreakTime',  param);
     },
   },

@@ -118,11 +118,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
       this.$store.dispatch('attendance/break_time/addBreakTime', param);
     },
-    deleteBreakTime: function deleteBreakTime(id) {
+    deleteBreakTime: function deleteBreakTime(index) {
       var param = {
-        'id': id
+        'index': index,
+        'id': this.break_times[index]['id']
       };
-      console.log('delete');
       this.$store.dispatch('attendance/break_time/deleteBreakTime', param);
     }
   },
@@ -629,7 +629,7 @@ var render = function() {
                       staticClass: "btn btn-primary btn-sm mx-2",
                       on: {
                         click: function($event) {
-                          return _vm.deleteBreakTime(break_time.id)
+                          return _vm.deleteBreakTime(index)
                         }
                       }
                     },

@@ -28,5 +28,10 @@ class BreakTimeController extends Controller
         return response($break_time, 200);
     }
     
-
+    public function delete(Request $request)
+    {
+        BreakTime::find($request->id)->delete();
+        $attendance = BreakTime::find($request->id);
+        return response(null, 204);
+    }
 }

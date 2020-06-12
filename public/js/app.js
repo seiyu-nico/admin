@@ -61711,7 +61711,7 @@ var mutations = {
     state.apiStatus = status;
   },
   deleteBreakTime: function deleteBreakTime(state, data) {
-    console.log(data); // state.break_times.find((break_time) =>  break_time.id === data.id)[data.key] = data.value;
+    state.break_times.splice(data, 1);
   }
 };
 var actions = {
@@ -61834,25 +61834,43 @@ var actions = {
   },
   deleteBreakTime: function deleteBreakTime(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var param, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              // const response = await axios.delete('/api/break-time', data);
-              // if (response.status === CREATED) {
-              //   context.commit('setApiStatus', true);
-              //   context.commit('deleteBreakTime', data.id);
-              //   return false;
-              // }
-              // context.commit('setApiStatus', false);
-              // if (response.status === UNPROCESSABLE_ENTITY) {
-              //   context.commit('setErrorMessages', response.data.errors);
-              // } else {
-              //   context.commit('error/setCode', response.status, { root: true });
-              // }
-              context.commit('deleteBreakTime', data.id);
+              param = {
+                'id': data.id
+              };
+              _context3.next = 3;
+              return axios["delete"]('/api/break-time', {
+                data: param
+              });
 
-            case 1:
+            case 3:
+              response = _context3.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["NO_CONTENT"])) {
+                _context3.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('deleteBreakTime', data.index);
+              return _context3.abrupt("return", false);
+
+            case 8:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
+                context.commit('setErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 10:
             case "end":
               return _context3.stop();
           }

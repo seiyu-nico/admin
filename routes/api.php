@@ -41,4 +41,5 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('/break-time', 'Api\BreakTimeController@create')->name('break_time.create');
     Route::put('/break-time', 'Api\BreakTimeController@update');
+    Route::delete('/break-time', 'Api\BreakTimeController@delete');
 });
