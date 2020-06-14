@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"attendance/list":"attendance/list","errors/index":"errors/index","index/index":"index/index","login/index":"login/index","memo/index":"memo/index","vendors~attendance/index":"vendors~attendance/index","attendance/index":"attendance/index"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"errors/index":"errors/index","index/index":"index/index","login/index":"login/index","memo/index":"memo/index","vendors~attendance/index":"vendors~attendance/index","attendance/index":"attendance/index","vendors~attendance/list":"vendors~attendance/list","attendance/list":"attendance/list"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -61127,7 +61127,7 @@ __webpack_require__.r(__webpack_exports__);
     path: 'list',
     name: 'Attendance.List',
     component: function component(resolve) {
-      __webpack_require__.e(/*! require.ensure | attendance/list */ "attendance/list").then((function () {
+      Promise.all(/*! require.ensure | attendance/list */[__webpack_require__.e("vendors~attendance/list"), __webpack_require__.e("attendance/list")]).then((function () {
         resolve(__webpack_require__(/*! ./List.vue */ "./resources/js/components/Attendance/List.vue"));
       }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
     }

@@ -12,6 +12,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-daterange-picker */ "./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.umd.min.js");
+/* harmony import */ var vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue2_daterange_picker_dist_vue2_daterange_picker_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-daterange-picker/dist/vue2-daterange-picker.css */ "./node_modules/vue2-daterange-picker/dist/vue2-daterange-picker.css");
+/* harmony import */ var vue2_daterange_picker_dist_vue2_daterange_picker_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_daterange_picker_dist_vue2_daterange_picker_css__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -54,17 +58,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
+
+ //you need to import the CSS manually (in case you want to override it)
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DateRangePicker: vue2_daterange_picker__WEBPACK_IMPORTED_MODULE_2___default.a
+  },
+  data: function data() {
+    return {
+      dateRange: [],
+      dateFormat: 'YYYY-MM-DD',
+      date_range: {
+        "startDate": "2020-01",
+        "endDate": '2020-06'
+      }
+    };
+  },
   created: function created() {
     this.getAttendances();
   },
   methods: {
+    format: function format() {
+      return 'YYYY-MM-DD';
+    },
     getAttendances: function getAttendances() {
       var _this = this;
 
@@ -237,73 +255,22 @@ var render = function() {
   return _c("div", [
     _c("h2", [_vm._v("勤怠一覧")]),
     _vm._v(" "),
-    _c("form", [
-      _c("div", { staticClass: "form-group row" }, [
-        _c("div", { staticClass: "col-2" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              attrs: { id: "select_year" },
-              domProps: { value: _vm.select.year },
-              on: {
-                change: function($event) {
-                  return _vm.updateSelect("year", $event)
-                }
-              }
-            },
-            _vm._l(_vm.years, function(year) {
-              return _c("option", { key: year, domProps: { value: year } }, [
-                _vm._v(_vm._s(year))
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "col-1 col-form-label",
-            staticStyle: { "padding-left": "0px" },
-            attrs: { for: "select_year" }
-          },
-          [_vm._v("年")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-2" }, [
-          _c(
-            "select",
-            {
-              staticClass: "form-control",
-              attrs: { id: "select_month" },
-              domProps: { value: _vm.select.month },
-              on: {
-                change: function($event) {
-                  return _vm.updateSelect("month", $event)
-                }
-              }
-            },
-            _vm._l(_vm.months, function(month) {
-              return _c("option", { key: month, domProps: { value: month } }, [
-                _vm._v(_vm._s(month))
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "col-1 col-form-label",
-            staticStyle: { "padding-left": "0px" },
-            attrs: { for: "select_month" }
-          },
-          [_vm._v("月")]
-        )
-      ])
-    ]),
+    _c(
+      "form",
+      [
+        _c("date-range-picker", {
+          ref: "picker",
+          attrs: {
+            "locale-data": { firstDay: 1, format: "yyyy-mm-dd" },
+            autoApply: true,
+            "date-range": _vm.date_range,
+            "date-format": _vm.format,
+            opens: "right"
+          }
+        })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("table", { staticClass: "table table-hover" }, [
       _vm._m(0),

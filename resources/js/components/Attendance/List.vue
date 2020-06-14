@@ -2,20 +2,15 @@
 <div>
   <h2>勤怠一覧</h2>
   <form>
-    <div class="form-group row">
-      <div class="col-2">
-        <select id="select_year" class="form-control" :value="select.year" @change="updateSelect('year', $event)">
-          <option v-for="year in years" :value="year" :key="year">{{year}}</option>
-        </select>
-      </div>
-      <label for="select_year" class="col-1 col-form-label" style="padding-left: 0px;">年</label>
-      <div class="col-2">
-        <select id="select_month" class="form-control" :value="select.month" @change="updateSelect('month', $event)">
-          <option v-for="month in months" :value="month" :key="month">{{month}}</option>
-        </select>
-      </div>
-      <label for="select_month" class="col-1 col-form-label" style="padding-left: 0px;">月</label>
-    </div>
+    <date-range-picker
+             ref="picker"
+            :locale-data="{ firstDay: 1, format: 'yyyy-mm-dd'}"
+            :autoApply="true"
+            :date-range="date_range"
+            :date-format="format"
+            opens="right"
+    >
+    </date-range-picker>
   </form>
   <table class="table table-hover">
     <thead class="thead-light">
@@ -35,11 +30,28 @@
 </template>
 <script>
 import { mapState, mapGetters} from 'vuex';
+import DateRangePicker from 'vue2-daterange-picker';
+//you need to import the CSS manually (in case you want to override it)
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
 export default {
+  components: { 
+    DateRangePicker
+  },
+  data: function () {
+    return {
+      dateRange: [],
+      dateFormat: 'YYYY-MM-DD',
+      date_range: {"startDate": "2020-01", "endDate": '2020-06'},
+
+    }
+  },
   created () {
     this.getAttendances(); 
   },
   methods: {
+    format() {
+      return 'YYYY-MM-DD';
+    },
     async getAttendances() {
       // メモ取得
       await this.$store.dispatch('attendance/list/getAttendances');
