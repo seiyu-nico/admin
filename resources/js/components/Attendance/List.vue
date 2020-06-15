@@ -9,6 +9,7 @@
             :date-range="date_range"
             :date-format="format"
             opens="right"
+            @select="rangeSelect"
     >
     </date-range-picker>
   </form>
@@ -83,6 +84,9 @@ export default {
       const max_year = maxDate.getFullYear();
       await this.$store.dispatch('common/date/createYear', {'min_year': min_year, 'max_year': max_year});
     },
+    rangeSelect(value) {
+      console.log(value);
+    }
   },
   computed: {
     ...mapState({

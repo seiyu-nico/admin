@@ -58,6 +58,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
  //you need to import the CSS manually (in case you want to override it)
 
@@ -215,6 +216,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee5);
       }))();
+    },
+    rangeSelect: function rangeSelect(value) {
+      console.log(value);
     }
   },
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
@@ -266,7 +270,8 @@ var render = function() {
             "date-range": _vm.date_range,
             "date-format": _vm.format,
             opens: "right"
-          }
+          },
+          on: { select: _vm.rangeSelect }
         })
       ],
       1
