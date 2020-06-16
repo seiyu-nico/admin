@@ -18,9 +18,8 @@ const createApp = async () => {
     router, // ルーティングの定義を読み込む
     store, // ストア
     components: { App }, // ルートコンポーネントの使用を宣言する
-    template: '<App />' // ルートコンポーネントを描画する
+    template: '<App />', // ルートコンポーネントを描画する
   });
-  
   Vue.use(moment, {});
 }
 

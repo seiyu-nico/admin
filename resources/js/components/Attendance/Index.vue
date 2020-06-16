@@ -57,7 +57,7 @@
       </div>
     </div>
   </form>
-  <p>勤務時間: {{workingTimes()}}</p>
+  <p>勤務時間: {{workingTime()}}</p>
   <BreakTimes></BreakTimes>
 </div>
 </template>
@@ -68,7 +68,9 @@ import '@pencilpix/vue2-clock-picker/dist/vue2-clock-picker.min.css';
 import Datepicker from 'vuejs-datepicker';
 import { mapState, mapGetters} from 'vuex';
 import BreakTimes from './BreakTime';
+import attendanceMixin from '../../mixin/Attendance/index';
 export default {
+  mixins: [attendanceMixin],
   components: {
     VueClockPicker,
     Datepicker,
@@ -97,78 +99,9 @@ export default {
       this.select('end_date');
       await this.$store.dispatch('attendance/store', this.$moment(date).format('YYYY-MM-DD'));
     }, 
-    workingTimes() {
-
-      const to = this.$moment(this. attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
-      const from = this.$moment(this. attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
-     
-     if (false == to.isValid() && false == from.isValid()) {
-        return '00:00';
-      }
-
-      let times = [];
-      if (0 == this.break_times.length) {
-        // 休憩時間がない場合
-        if (to.isValid() && from.isValid()) {
-          times.push(this.diff(to, from));
-        }
-      } else {
-        // 休憩時間がある場合
-        times = this.existsBreakTimes();
-      }
-
-      if (0 == times.length) {
-        // timesがないときは計算できないので00:00を返す
-        return '00:00';
-      } else {
-        // 分の合計
-        const minutes_sum = times.reduce((sum, v) => sum + v.minutes, 0);
-        // 繰り上げ分計算
-        const carry = Math.floor(minutes_sum / 60);
-        // あまり(実際の分) 
-        const minutes = Math.floor(minutes_sum % 60);
-        // 時の合計と繰り上げ分を足す
-        const hours = times.reduce((sum, v) => sum + v.hours, 0) + carry;
-  
-        return hours + ':' + ('00' + (minutes)).slice(-2);
-      }
-    },
-    existsBreakTimes() {
-      // 休憩時間がある場合の計算
-      let times = [];
-      for (let i = 0; i <= this.break_times.length; i++) {
-        if (0 == i) {
-          // 最初のループbreak_time
-          const to = this.$moment(this. attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
-          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
-          if (to.isValid() && from.isValid()) {
-            times.push(this.diff(to, from));
-          }
-        } else if (i == this.break_times.length) {
-          // 最後のループ
-          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
-          const from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
-          if (to.isValid() && from.isValid()) {
-            times.push(this.diff(to, from));
-          }
-        } else {
-          const to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
-          const from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
-          if (to.isValid() && from.isValid()) {
-            times.push(this.diff(to, from));
-          }
-        }
-      }
-      return times;
-    },
-    diff(to, from) {
-      let time = {
-        'hours': 0, 'minutes': 0
-      };
-      let diff = from.diff(to, 'minutes');
-      time['hours'] = Math.floor(diff / 60);
-      time['minutes'] = Math.floor(diff % 60);
-      return time;
+    workingTime() {
+      const times = this.getWorkingTime(this.attendance, this.break_times);
+      return this.format(times);
     },
   },
   filters: {

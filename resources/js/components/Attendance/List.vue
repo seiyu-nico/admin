@@ -12,6 +12,17 @@
     >
     </date-range-picker>
   </form>
+  <div class="row my-2">
+    <div class="col-4">
+      <p>勤務時間: {{ workingTimes() }}</p>
+    </div>
+    <div class="col-4">
+      <p>休憩時間: </p>
+    </div>
+    <div class="col-4">
+      <p>合計時間(休憩時間なし): </p>
+    </div>
+  </div>
   <table class="table table-hover">
     <thead class="thead-light">
       <tr>
@@ -33,7 +44,9 @@ import { mapState, mapGetters} from 'vuex';
 import DateRangePicker from 'vue2-daterange-picker';
 //you need to import the CSS manually (in case you want to override it)
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
+import attendanceMixin from '../../mixin/Attendance/index';
 export default {
+  mixins: [attendanceMixin],
   components: { 
     DateRangePicker
   },
@@ -59,7 +72,18 @@ export default {
       const start = this.$moment(value.startDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
       const end = this.$moment(value.endDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
       await this.$store.dispatch('attendance/list/getAttendances', {'start': start, 'end': end });
-    }
+    },
+    workingTimes() {
+      // TODO: 一覧での勤務時間の計算から
+      const minutes = this.attendances.map((attendance, index, array) => {
+        return this.getWorkingTime(attendance, attendance.break_time).reduce((sum, v) => sum + v, 0);
+      });
+      return this.format(minutes);
+    },
+    test(attendance, index, array) {
+      console.log(index);
+      console.log(attendance);
+    },
   },
   computed: {
     ...mapState({

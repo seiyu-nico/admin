@@ -163,6 +163,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _BreakTime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./BreakTime */ "./resources/js/components/Attendance/BreakTime.vue");
+/* harmony import */ var _mixin_Attendance_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixin/Attendance/index */ "./resources/js/mixin/Attendance/index.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -244,7 +245,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixin_Attendance_index__WEBPACK_IMPORTED_MODULE_6__["default"]],
   components: {
     VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1___default.a,
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -339,89 +342,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    workingTimes: function workingTimes() {
-      var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
-      var from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-      if (false == to.isValid() && false == from.isValid()) {
-        return '00:00';
-      }
-
-      var times = [];
-
-      if (0 == this.break_times.length) {
-        // 休憩時間がない場合
-        if (to.isValid() && from.isValid()) {
-          times.push(this.diff(to, from));
-        }
-      } else {
-        // 休憩時間がある場合
-        times = this.existsBreakTimes();
-      }
-
-      if (0 == times.length) {
-        // timesがないときは計算できないので00:00を返す
-        return '00:00';
-      } else {
-        // 分の合計
-        var minutes_sum = times.reduce(function (sum, v) {
-          return sum + v.minutes;
-        }, 0); // 繰り上げ分計算
-
-        var carry = Math.floor(minutes_sum / 60); // あまり(実際の分) 
-
-        var minutes = Math.floor(minutes_sum % 60); // 時の合計と繰り上げ分を足す
-
-        var hours = times.reduce(function (sum, v) {
-          return sum + v.hours;
-        }, 0) + carry;
-        return hours + ':' + ('00' + minutes).slice(-2);
-      }
-    },
-    existsBreakTimes: function existsBreakTimes() {
-      // 休憩時間がある場合の計算
-      var times = [];
-
-      for (var i = 0; i <= this.break_times.length; i++) {
-        if (0 == i) {
-          // 最初のループbreak_time
-          var to = this.$moment(this.attendance.start_date + ' ' + this.attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
-          var from = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-          if (to.isValid() && from.isValid()) {
-            times.push(this.diff(to, from));
-          }
-        } else if (i == this.break_times.length) {
-          // 最後のループ
-          var _to = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-          var _from = this.$moment(this.attendance.end_date + ' ' + this.attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-          if (_to.isValid() && _from.isValid()) {
-            times.push(this.diff(_to, _from));
-          }
-        } else {
-          var _to2 = this.$moment(this.break_times[i - 1].end_date + ' ' + this.break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-          var _from2 = this.$moment(this.break_times[i].start_date + ' ' + this.break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
-
-          if (_to2.isValid() && _from2.isValid()) {
-            times.push(this.diff(_to2, _from2));
-          }
-        }
-      }
-
-      return times;
-    },
-    diff: function diff(to, from) {
-      var time = {
-        'hours': 0,
-        'minutes': 0
-      };
-      var diff = from.diff(to, 'minutes');
-      time['hours'] = Math.floor(diff / 60);
-      time['minutes'] = Math.floor(diff % 60);
-      return time;
+    workingTime: function workingTime() {
+      var times = this.getWorkingTime(this.attendance, this.break_times);
+      return this.format(times);
     }
   },
   filters: {
@@ -775,7 +698,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("p", [_vm._v("勤務時間: " + _vm._s(_vm.workingTimes()))]),
+      _c("p", [_vm._v("勤務時間: " + _vm._s(_vm.workingTime()))]),
       _vm._v(" "),
       _c("BreakTimes")
     ],
@@ -949,6 +872,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_0c2cfa77___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixin/Attendance/index.js":
+/*!************************************************!*\
+  !*** ./resources/js/mixin/Attendance/index.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    getWorkingTime: function getWorkingTime(attendance, break_times) {
+      var times = []; // 勤務時間計算
+
+      var to = this.$moment(attendance.start_date + ' ' + attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+      var from = this.$moment(attendance.end_date + ' ' + attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+      if (false == to.isValid() && false == from.isValid()) {
+        return times;
+      }
+
+      if (0 == break_times.length) {
+        // 休憩時間がない場合
+        if (to.isValid() && from.isValid()) {
+          times.push(this.diff(to, from));
+        }
+      } else {
+        // 休憩時間がある場合
+        times = this.existsBreakTime(attendance, break_times);
+      }
+
+      return times;
+    },
+    existsBreakTime: function existsBreakTime(attendance, break_times) {
+      // 休憩時間がある場合の計算
+      var times = [];
+
+      for (var i = 0; i <= break_times.length; i++) {
+        if (0 == i) {
+          // 最初のループbreak_time
+          var to = this.$moment(attendance.start_date + ' ' + attendance.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+          var from = this.$moment(break_times[i].start_date + ' ' + break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          if (to.isValid() && from.isValid()) {
+            times.push(this.diff(to, from));
+          }
+        } else if (i == break_times.length) {
+          // 最後のループ
+          var _to = this.$moment(break_times[i - 1].end_date + ' ' + break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          var _from = this.$moment(attendance.end_date + ' ' + attendance.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          if (_to.isValid() && _from.isValid()) {
+            times.push(this.diff(_to, _from));
+          }
+        } else {
+          var _to2 = this.$moment(break_times[i - 1].end_date + ' ' + break_times[i - 1].end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          var _from2 = this.$moment(break_times[i].start_date + ' ' + break_times[i].start_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+          if (_to2.isValid() && _from2.isValid()) {
+            times.push(this.diff(_to2, _from2));
+          }
+        }
+      }
+
+      return times;
+    },
+    diff: function diff(to, from) {
+      var minutes = from.diff(to, 'minutes');
+      ;
+      return minutes;
+    },
+    format: function format(minutes_array) {
+      if (0 == minutes_array.length) {
+        // timesがないときは計算できないので00:00を返す
+        return '00:00';
+      } else {
+        // 分の合計
+        var minutes_sum = minutes_array.reduce(function (sum, v) {
+          return sum + v;
+        }, 0);
+        var hours = Math.floor(minutes_sum / 60);
+        var minutes = Math.floor(minutes_sum % 60);
+        return hours + ':' + ('00' + minutes).slice(-2);
+      }
+    }
+  }
+});
 
 /***/ })
 
