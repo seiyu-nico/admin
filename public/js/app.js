@@ -61692,7 +61692,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   break_times: [],
-  apiStatus: null
+  error_messages: []
 };
 var getters = {};
 var mutations = {
@@ -61707,11 +61707,11 @@ var mutations = {
   addBreakTime: function addBreakTime(state, data) {
     state.break_times.push(data);
   },
-  setApiStatus: function setApiStatus(state, status) {
-    state.apiStatus = status;
-  },
   deleteBreakTime: function deleteBreakTime(state, data) {
     state.break_times.splice(data, 1);
+  },
+  setErrorMessages: function setErrorMessages(state, messages) {
+    state.error_messages = messages;
   }
 };
 var actions = {
@@ -61733,7 +61733,7 @@ var actions = {
               }, _defineProperty(_params, data.key, data.value), _defineProperty(_params, 'attendance_id', attendance_id), _params);
 
               if (!('' == data.id)) {
-                _context.next = 12;
+                _context.next = 11;
                 break;
               }
 
@@ -61744,37 +61744,33 @@ var actions = {
               _response = _context.sent;
 
               if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
-                _context.next = 10;
+                _context.next = 9;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('setBreakTimeValue', data);
               return _context.abrupt("return", false);
 
-            case 10:
-              _context.next = 19;
+            case 9:
+              _context.next = 17;
               break;
 
-            case 12:
-              _context.next = 14;
+            case 11:
+              _context.next = 13;
               return axios.put('/api/break-time', params);
 
-            case 14:
+            case 13:
               _response2 = _context.sent;
 
               if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
-                _context.next = 19;
+                _context.next = 17;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('setBreakTimeValue', data);
               return _context.abrupt("return", false);
 
-            case 19:
-              context.commit('setApiStatus', false);
-
+            case 17:
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
                 context.commit('setErrorMessages', response.data.errors);
               } else {
@@ -61783,7 +61779,7 @@ var actions = {
                 });
               }
 
-            case 21:
+            case 18:
             case "end":
               return _context.stop();
           }
@@ -61805,17 +61801,14 @@ var actions = {
               response = _context2.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["CREATED"])) {
-                _context2.next = 7;
+                _context2.next = 6;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('addBreakTime', response.data);
               return _context2.abrupt("return", false);
 
-            case 7:
-              context.commit('setApiStatus', false);
-
+            case 6:
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
                 context.commit('setErrorMessages', response.data.errors);
               } else {
@@ -61824,7 +61817,7 @@ var actions = {
                 });
               }
 
-            case 9:
+            case 7:
             case "end":
               return _context2.stop();
           }
@@ -61851,17 +61844,14 @@ var actions = {
               response = _context3.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["NO_CONTENT"])) {
-                _context3.next = 8;
+                _context3.next = 7;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('deleteBreakTime', data.index);
               return _context3.abrupt("return", false);
 
-            case 8:
-              context.commit('setApiStatus', false);
-
+            case 7:
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"]) {
                 context.commit('setErrorMessages', response.data.errors);
               } else {
@@ -61870,7 +61860,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 8:
             case "end":
               return _context3.stop();
           }
@@ -61926,7 +61916,8 @@ var state = {
     start_time: '',
     end_date: '',
     end_time: ''
-  }
+  },
+  error_messages: []
 };
 var getters = {};
 var mutations = {
@@ -61936,8 +61927,8 @@ var mutations = {
   setAttendance: function setAttendance(state, data) {
     state.attendance = data;
   },
-  setApiStatus: function setApiStatus(state, status) {
-    state.apiStatus = status;
+  setErrorMessages: function setErrorMessages(state, messages) {
+    state.error_messages = messages;
   }
 };
 var actions = {
@@ -61960,11 +61951,9 @@ var actions = {
               response = _context.sent;
 
               if (!(_util__WEBPACK_IMPORTED_MODULE_3__["OK"] === response.status)) {
-                _context.next = 8;
+                _context.next = 7;
                 break;
               }
-
-              context.commit('setApiStatus', true);
 
               if (response.data) {
                 context.commit('setAttendance', response.data.attendance);
@@ -61975,7 +61964,7 @@ var actions = {
 
               return _context.abrupt("return", false);
 
-            case 8:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -61998,7 +61987,7 @@ var actions = {
               }, select, data);
 
               if (!('' == id)) {
-                _context2.next = 13;
+                _context2.next = 12;
                 break;
               }
 
@@ -62009,37 +61998,33 @@ var actions = {
               _response = _context2.sent;
 
               if (!(_response.status === _util__WEBPACK_IMPORTED_MODULE_3__["CREATED"])) {
-                _context2.next = 11;
+                _context2.next = 10;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('setAttendance', _response.data);
               return _context2.abrupt("return", false);
 
-            case 11:
-              _context2.next = 20;
+            case 10:
+              _context2.next = 18;
               break;
 
-            case 13:
-              _context2.next = 15;
+            case 12:
+              _context2.next = 14;
               return axios.put('/api/attendance', params);
 
-            case 15:
+            case 14:
               _response2 = _context2.sent;
 
               if (!(_response2.status === _util__WEBPACK_IMPORTED_MODULE_3__["OK"])) {
-                _context2.next = 20;
+                _context2.next = 18;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('setAttendance', _response2.data);
               return _context2.abrupt("return", false);
 
-            case 20:
-              context.commit('setApiStatus', false);
-
+            case 18:
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_3__["UNPROCESSABLE_ENTITY"]) {
                 context.commit('setErrorMessages', response.data.errors);
               } else {
@@ -62048,7 +62033,7 @@ var actions = {
                 });
               }
 
-            case 22:
+            case 19:
             case "end":
               return _context2.stop();
           }
@@ -62092,62 +62077,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   attendances: [],
-  select: {
-    year: 0,
-    month: 0
-  },
   apiStatus: null
 };
-var getters = {
-  selectAttendances: function selectAttendances(state) {
-    return state.attendances.filter(function (attendance) {
-      var date = new Date(attendance.start_date);
-
-      if (state.select.year == date.getFullYear() && state.select.month == ('0' + (date.getMonth() + 1)).slice(-2)) {
-        return true;
-      }
-
-      return false;
-    });
-  }
-};
+var getters = {};
 var mutations = {
   setAttendances: function setAttendances(state, attendances) {
     state.attendances = attendances;
-  },
-  setApiStatus: function setApiStatus(state, status) {
-    state.apiStatus = status;
-  },
-  updateSelect: function updateSelect(state, select) {
-    state.select[select.key] = select.value;
   }
 };
 var actions = {
-  getAttendances: function getAttendances(context) {
+  getAttendances: function getAttendances(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // 勤怠データ取得
-              context.commit('setApiStatus', null);
-              _context.next = 3;
-              return axios.get('/api/attendances');
+              _context.next = 2;
+              return axios.get('/api/attendances', {
+                params: data
+              });
 
-            case 3:
+            case 2:
               response = _context.sent;
 
               if (!(_util__WEBPACK_IMPORTED_MODULE_1__["OK"] === response.status)) {
-                _context.next = 8;
+                _context.next = 6;
                 break;
               }
 
-              context.commit('setApiStatus', true);
               context.commit('setAttendances', response.data);
               return _context.abrupt("return", false);
 
-            case 8:
+            case 6:
             case "end":
               return _context.stop();
           }

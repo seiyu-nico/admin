@@ -28,6 +28,6 @@ class Attendance extends Model
 
     public function break_time()
     {
-        return $this->hasMany('App\Models\BreakTime');
+        return $this->hasMany('App\Models\BreakTime')->orderBy('start_time', 'asc');
     }
 }

@@ -6,10 +6,9 @@
              ref="picker"
             :locale-data="{ firstDay: 1, format: 'yyyy-mm-dd'}"
             :autoApply="true"
-            :date-range="date_range"
-            :date-format="format"
+            :date-range="attendance_date_range"
             opens="right"
-            @select="rangeSelect"
+            @select="getAttendances"
     >
     </date-range-picker>
   </form>
@@ -21,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="attendance in select_attendances" :key="attendance.id">
+      <tr v-for="attendance in attendances" :key="attendance.id">
         <td>{{attendance.start_date}} {{attendance.start_time}}</td>
         <td>{{attendance.end_date}} {{attendance.end_time}}</td>
       </tr>
@@ -40,64 +39,32 @@ export default {
   },
   data: function () {
     return {
-      dateRange: [],
-      dateFormat: 'YYYY-MM-DD',
-      date_range: {"startDate": "2020-01", "endDate": '2020-06'},
-
+      attendance_date_range: {
+        'startDate': '',
+        'endDate': '',
+      },
     }
   },
   created () {
-    this.getAttendances(); 
+    this.selectInit();
   },
   methods: {
-    format() {
-      return 'YYYY-MM-DD';
-    },
-    async getAttendances() {
-      // メモ取得
-      await this.$store.dispatch('attendance/list/getAttendances');
-      // attendanceが返ってきてからじゃないとyearの最大値と最小値がわからないため
-      // ここで実行
-      await this.createYearSelector();
-      await this.createMonthSelector();
-      await this.selectInit();
-    },
     async selectInit() {
-      const today = new Date();
-      const year = today.getFullYear();
-      // 月は2桁表示
-      const month = ("0" + (today.getMonth()+1)).slice(-2);
-      this.$store.commit('attendance/list/updateSelect', {'key': 'year', 'value': year,});
-      this.$store.commit('attendance/list/updateSelect', {'key': 'month', 'value': month,});
+      const today = this.$moment();
+      this.attendance_date_range.startDate = today.startOf('month').format('YYYY-MM-DD');
+      this.attendance_date_range.endDate = today.endOf('month').format('YYYY-MM-DD');
+      this.getAttendances(this.attendance_date_range);
     },
-    async updateSelect(key, event) {
-      this.$store.commit('attendance/list/updateSelect', {'key': key, 'value': event.target.value,});
-    },
-    async createMonthSelector() {
-      await this.$store.dispatch('common/date/createMonth');
-    },
-    async createYearSelector() {
-      let dates = this.attendances.map(attendance => new Date(attendance.start_date));
-      let maxDate=new Date(Math.max.apply(null, dates));
-      let minDate=new Date(Math.min.apply(null, dates));
-      const min_year = minDate.getFullYear();
-      const max_year = maxDate.getFullYear();
-      await this.$store.dispatch('common/date/createYear', {'min_year': min_year, 'max_year': max_year});
-    },
-    rangeSelect(value) {
-      console.log(value);
+    async getAttendances(value) {
+      const start = this.$moment(value.startDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+      const end = this.$moment(value.endDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+      await this.$store.dispatch('attendance/list/getAttendances', {'start': start, 'end': end });
     }
   },
   computed: {
     ...mapState({
       attendances: state => state.attendance.list.attendances,
-      select: state => state.attendance.list.select,
-      months: state => state.common.date.months,
-      years: state => state.common.date.years,
     }),
-    ...mapGetters(
-      { select_attendances: 'attendance/list/selectAttendances'}
-    ),
   },
 }
 </script>

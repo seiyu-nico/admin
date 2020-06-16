@@ -58,7 +58,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
  //you need to import the CSS manually (in case you want to override it)
 
@@ -69,45 +68,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      dateRange: [],
-      dateFormat: 'YYYY-MM-DD',
-      date_range: {
-        "startDate": "2020-01",
-        "endDate": '2020-06'
+      attendance_date_range: {
+        'startDate': '',
+        'endDate': ''
       }
     };
   },
   created: function created() {
-    this.getAttendances();
+    this.selectInit();
   },
   methods: {
-    format: function format() {
-      return 'YYYY-MM-DD';
-    },
-    getAttendances: function getAttendances() {
+    selectInit: function selectInit() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var today;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return _this.$store.dispatch('attendance/list/getAttendances');
+                today = _this.$moment();
+                _this.attendance_date_range.startDate = today.startOf('month').format('YYYY-MM-DD');
+                _this.attendance_date_range.endDate = today.endOf('month').format('YYYY-MM-DD');
 
-              case 2:
-                _context.next = 4;
-                return _this.createYearSelector();
+                _this.getAttendances(_this.attendance_date_range);
 
               case 4:
-                _context.next = 6;
-                return _this.createMonthSelector();
-
-              case 6:
-                _context.next = 8;
-                return _this.selectInit();
-
-              case 8:
               case "end":
                 return _context.stop();
             }
@@ -115,127 +101,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    selectInit: function selectInit() {
+    getAttendances: function getAttendances(value) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var today, year, month;
+        var start, end;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                today = new Date();
-                year = today.getFullYear(); // 月は2桁表示
-
-                month = ("0" + (today.getMonth() + 1)).slice(-2);
-
-                _this2.$store.commit('attendance/list/updateSelect', {
-                  'key': 'year',
-                  'value': year
+                start = _this2.$moment(value.startDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+                end = _this2.$moment(value.endDate, 'YYYY-MM-DD', true).format('YYYY-MM-DD');
+                _context2.next = 4;
+                return _this2.$store.dispatch('attendance/list/getAttendances', {
+                  'start': start,
+                  'end': end
                 });
 
-                _this2.$store.commit('attendance/list/updateSelect', {
-                  'key': 'month',
-                  'value': month
-                });
-
-              case 5:
+              case 4:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    },
-    updateSelect: function updateSelect(key, event) {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _this3.$store.commit('attendance/list/updateSelect', {
-                  'key': key,
-                  'value': event.target.value
-                });
-
-              case 1:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    createMonthSelector: function createMonthSelector() {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return _this4.$store.dispatch('common/date/createMonth');
-
-              case 2:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    createYearSelector: function createYearSelector() {
-      var _this5 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var dates, maxDate, minDate, min_year, max_year;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                dates = _this5.attendances.map(function (attendance) {
-                  return new Date(attendance.start_date);
-                });
-                maxDate = new Date(Math.max.apply(null, dates));
-                minDate = new Date(Math.min.apply(null, dates));
-                min_year = minDate.getFullYear();
-                max_year = maxDate.getFullYear();
-                _context5.next = 7;
-                return _this5.$store.dispatch('common/date/createYear', {
-                  'min_year': min_year,
-                  'max_year': max_year
-                });
-
-              case 7:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-    rangeSelect: function rangeSelect(value) {
-      console.log(value);
     }
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     attendances: function attendances(state) {
       return state.attendance.list.attendances;
-    },
-    select: function select(state) {
-      return state.attendance.list.select;
-    },
-    months: function months(state) {
-      return state.common.date.months;
-    },
-    years: function years(state) {
-      return state.common.date.years;
     }
-  })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
-    select_attendances: 'attendance/list/selectAttendances'
   }))
 });
 
@@ -267,11 +162,10 @@ var render = function() {
           attrs: {
             "locale-data": { firstDay: 1, format: "yyyy-mm-dd" },
             autoApply: true,
-            "date-range": _vm.date_range,
-            "date-format": _vm.format,
+            "date-range": _vm.attendance_date_range,
             opens: "right"
           },
-          on: { select: _vm.rangeSelect }
+          on: { select: _vm.getAttendances }
         })
       ],
       1
@@ -282,7 +176,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.select_attendances, function(attendance) {
+        _vm._l(_vm.attendances, function(attendance) {
           return _c("tr", { key: attendance.id }, [
             _c("td", [
               _vm._v(
@@ -328,14 +222,15 @@ render._withStripped = true
 /*!*****************************************************!*\
   !*** ./resources/js/components/Attendance/List.vue ***!
   \*****************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _List_vue_vue_type_template_id_41925689___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./List.vue?vue&type=template&id=41925689& */ "./resources/js/components/Attendance/List.vue?vue&type=template&id=41925689&");
 /* harmony import */ var _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./List.vue?vue&type=script&lang=js& */ "./resources/js/components/Attendance/List.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _List_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -365,7 +260,7 @@ component.options.__file = "resources/js/components/Attendance/List.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/Attendance/List.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

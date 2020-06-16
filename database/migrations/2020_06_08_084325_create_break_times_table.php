@@ -23,7 +23,7 @@ class CreateBreakTimesTable extends Migration
             $table->time('end_time')->nullable()->comment('退勤時間');
             
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('attendance_id')->references('id')->on('attendances');
+            $table->foreign('attendance_id')->references('id')->on('attendances')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

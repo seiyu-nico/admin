@@ -12,6 +12,7 @@ const state = {
     end_date: '', 
     end_time: ''
   },
+  error_messages: [],
 }
 
 const getters = {
@@ -24,8 +25,8 @@ const mutations = {
   setAttendance (state, data) {
     state.attendance = data;
   },
-  setApiStatus (state, status) {
-    state.apiStatus = status;
+  setErrorMessages (state, messages) {
+    state.error_messages = messages;
   },
 }
 
@@ -37,7 +38,6 @@ const actions = {
 
     const response = await axios.get('/api/attendance', {params: params});
     if (OK === response.status) {
-      context.commit('setApiStatus', true);
       if (response.data) {
         context.commit('setAttendance', response.data.attendance);
         context.commit('attendance/break_time/setBreakTime', response.data.break_times, {root: true});
@@ -55,20 +55,16 @@ const actions = {
     if ('' == id) {
       const response = await axios.post('/api/attendance', params);
       if (response.status === CREATED) {
-        context.commit('setApiStatus', true);
         context.commit('setAttendance', response.data);
         return false;
       }
     } else {
       const response = await axios.put('/api/attendance', params);
       if (response.status === OK) {
-        context.commit('setApiStatus', true);
         context.commit('setAttendance', response.data);
         return false;
       }
     }
-
-    context.commit('setApiStatus', false);
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setErrorMessages', response.data.errors);
     } else {

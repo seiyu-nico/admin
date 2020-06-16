@@ -22,7 +22,7 @@ class CreateMemosTable extends Migration
             $table->softDeletes();
 
             // user_idをusers.idと紐付け
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

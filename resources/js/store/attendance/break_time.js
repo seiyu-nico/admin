@@ -3,7 +3,7 @@ import { OK, CREATED, NO_CONTENT, UNPROCESSABLE_ENTITY } from '../../util';
 
 const state = {
   break_times: [],
-  apiStatus: null,
+  error_messages: [],
 }
 
 const getters = {
@@ -19,12 +19,12 @@ const mutations = {
   addBreakTime(state, data) {
     state.break_times.push(data);
   },
-  setApiStatus (state, status) {
-    state.apiStatus = status;
-  },
   deleteBreakTime (state, data) {
     state.break_times.splice(data, 1);
-  }
+  },
+  setErrorMessages (state, messages) {
+    state.error_messages = messages;
+  },
 }
 
 const actions = {
@@ -38,19 +38,16 @@ const actions = {
     if ('' == data.id) {
       const response = await axios.post('/api/break-time', params);
       if (response.status === CREATED) {
-        context.commit('setApiStatus', true);
         context.commit('setBreakTimeValue', data);
         return false;
       }
     } else {
       const response = await axios.put('/api/break-time', params);
       if (response.status === OK) {
-        context.commit('setApiStatus', true);
         context.commit('setBreakTimeValue', data);
         return false;
       }
     }
-    context.commit('setApiStatus', false);
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setErrorMessages', response.data.errors);
     } else {
@@ -60,11 +57,9 @@ const actions = {
   async addBreakTime(context, data) {
     const response = await axios.post('/api/break-time', data);
     if (response.status === CREATED) {
-      context.commit('setApiStatus', true);
       context.commit('addBreakTime', response.data);
       return false;
     }
-    context.commit('setApiStatus', false);
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setErrorMessages', response.data.errors);
     } else {
@@ -77,11 +72,9 @@ const actions = {
     }
     const response = await axios.delete('/api/break-time', {data: param});
     if (response.status === NO_CONTENT) {
-      context.commit('setApiStatus', true);
       context.commit('deleteBreakTime', data.index);
       return false;
     }
-    context.commit('setApiStatus', false);
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setErrorMessages', response.data.errors);
     } else {
