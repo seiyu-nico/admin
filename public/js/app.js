@@ -62077,12 +62077,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var state = {
   attendances: [],
-  apiStatus: null
+  apiStatus: null,
+  spinner: false
 };
 var getters = {};
 var mutations = {
   setAttendances: function setAttendances(state, attendances) {
     state.attendances = attendances;
+  },
+  setSpinner: function setSpinner(state, flag) {
+    state.spinner = flag;
   }
 };
 var actions = {
@@ -62093,23 +62097,26 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              // 勤怠データ取得
+              context.commit('setSpinner', false);
+              _context.next = 3;
               return axios.get('/api/attendances', {
                 params: data
               });
 
-            case 2:
+            case 3:
               response = _context.sent;
 
               if (!(_util__WEBPACK_IMPORTED_MODULE_1__["OK"] === response.status)) {
-                _context.next = 6;
+                _context.next = 8;
                 break;
               }
 
               context.commit('setAttendances', response.data);
+              context.commit('setSpinner', true);
               return _context.abrupt("return", false);
 
-            case 6:
+            case 8:
             case "end":
               return _context.stop();
           }

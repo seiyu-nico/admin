@@ -29,13 +29,16 @@
         <td>退勤時間</td>
       </tr>
     </thead>
-    <tbody>
+    <tbody v-show="spinner">
       <tr v-for="attendance in attendances" :key="attendance.id">
         <td>{{attendance.start_date}} {{attendance.start_time}}</td>
         <td>{{attendance.end_date}} {{attendance.end_time}}</td>
       </tr>
     </tbody>
   </table>
+  <div v-show="false == spinner">
+    <Spinner />
+  </div>
 </div>
 </template>
 <script>
@@ -44,10 +47,12 @@ import DateRangePicker from 'vue2-daterange-picker';
 //you need to import the CSS manually (in case you want to override it)
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
 import attendanceMixin from '../../mixin/Attendance/index';
+import Spinner from '../Spinner/Index';
 export default {
   mixins: [attendanceMixin],
   components: { 
-    DateRangePicker
+    DateRangePicker,
+    Spinner,
   },
   data: function () {
     return {
@@ -89,6 +94,7 @@ export default {
   computed: {
     ...mapState({
       attendances: state => state.attendance.list.attendances,
+      spinner: state => state.attendance.list.spinner, 
     }),
   },
 }
