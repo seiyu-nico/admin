@@ -62,12 +62,10 @@ export default {
         const minutes_sum = minutes_array.reduce((sum, v) => sum + v, 0);
         const hours = Math.floor(minutes_sum / 60);
         const minutes = Math.floor(minutes_sum % 60);
-  
         return hours + ':' + ('00' + (minutes)).slice(-2);
       }
     },
     getBreakTimes(break_times) {
-      console.log(break_times);
       const times = break_times.map((break_time, index, array) => {
         const to = this.$moment(break_time.start_date + ' ' + break_time.start_time, 'YYYY-MM-DD HH:mm:ss', true);
         const from = this.$moment(break_time.end_date + ' ' + break_time.end_time, 'YYYY-MM-DD HH:mm:ss', true);

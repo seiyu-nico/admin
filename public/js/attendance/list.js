@@ -423,7 +423,6 @@ __webpack_require__.r(__webpack_exports__);
     getBreakTimes: function getBreakTimes(break_times) {
       var _this = this;
 
-      console.log(break_times);
       var times = break_times.map(function (break_time, index, array) {
         var to = _this.$moment(break_time.start_date + ' ' + break_time.start_time, 'YYYY-MM-DD HH:mm:ss', true);
 
