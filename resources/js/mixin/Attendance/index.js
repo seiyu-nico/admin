@@ -66,5 +66,17 @@ export default {
         return hours + ':' + ('00' + (minutes)).slice(-2);
       }
     },
+    getBreakTimes(break_times) {
+      console.log(break_times);
+      const times = break_times.map((break_time, index, array) => {
+        const to = this.$moment(break_time.start_date + ' ' + break_time.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+        const from = this.$moment(break_time.end_date + ' ' + break_time.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+        if (to.isValid() && from.isValid()) {
+          return this.diff(to, from);
+        }
+        return 0;
+      }) 
+      return times;
+    }
   }
 }

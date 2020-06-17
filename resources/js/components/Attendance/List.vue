@@ -17,10 +17,9 @@
       <p>勤務時間: {{ workingTimes() }}</p>
     </div>
     <div class="col-4">
-      <p>休憩時間: </p>
+      <p>休憩時間: {{ breakTimes() }}</p>
     </div>
     <div class="col-4">
-      <p>合計時間(休憩時間なし): </p>
     </div>
   </div>
   <table class="table table-hover">
@@ -80,10 +79,12 @@ export default {
       });
       return this.format(minutes);
     },
-    test(attendance, index, array) {
-      console.log(index);
-      console.log(attendance);
-    },
+    breakTimes() {
+       const minutes = this.attendances.map((attendance, index, array) => {
+        return this.getBreakTimes(attendance.break_time).reduce((sum, v) => sum + v, 0);
+      });
+      return this.format(minutes);
+    }
   },
   computed: {
     ...mapState({

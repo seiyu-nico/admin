@@ -255,6 +255,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.getAttendance();
+    console.log(this.attendance);
+    var times = [];
   },
   methods: {
     getAttendance: function getAttendance() {
@@ -961,6 +963,23 @@ __webpack_require__.r(__webpack_exports__);
         var minutes = Math.floor(minutes_sum % 60);
         return hours + ':' + ('00' + minutes).slice(-2);
       }
+    },
+    getBreakTimes: function getBreakTimes(break_times) {
+      var _this = this;
+
+      console.log(break_times);
+      var times = break_times.map(function (break_time, index, array) {
+        var to = _this.$moment(break_time.start_date + ' ' + break_time.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+        var from = _this.$moment(break_time.end_date + ' ' + break_time.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+        if (to.isValid() && from.isValid()) {
+          return _this.diff(to, from);
+        }
+
+        return 0;
+      });
+      return times;
     }
   }
 });

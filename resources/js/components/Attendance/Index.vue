@@ -78,6 +78,8 @@ export default {
   },
   created () {
     this.getAttendance();
+    console.log(this.attendance);
+    let times = [];
   },
   methods: {
     async getAttendance() {

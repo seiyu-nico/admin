@@ -69,7 +69,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
  //you need to import the CSS manually (in case you want to override it)
 
@@ -151,9 +150,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
       return this.format(minutes);
     },
-    test: function test(attendance, index, array) {
-      console.log(index);
-      console.log(attendance);
+    breakTimes: function breakTimes() {
+      var _this4 = this;
+
+      var minutes = this.attendances.map(function (attendance, index, array) {
+        return _this4.getBreakTimes(attendance.break_time).reduce(function (sum, v) {
+          return sum + v;
+        }, 0);
+      });
+      return this.format(minutes);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
@@ -205,13 +210,15 @@ var render = function() {
         _c("p", [_vm._v("勤務時間: " + _vm._s(_vm.workingTimes()))])
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "col-4" }, [
+        _c("p", [_vm._v("休憩時間: " + _vm._s(_vm.breakTimes()))])
+      ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "col-4" })
     ]),
     _vm._v(" "),
     _c("table", { staticClass: "table table-hover" }, [
-      _vm._m(2),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "tbody",
@@ -238,22 +245,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("p", [_vm._v("休憩時間: ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("p", [_vm._v("合計時間(休憩時間なし): ")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -428,6 +419,23 @@ __webpack_require__.r(__webpack_exports__);
         var minutes = Math.floor(minutes_sum % 60);
         return hours + ':' + ('00' + minutes).slice(-2);
       }
+    },
+    getBreakTimes: function getBreakTimes(break_times) {
+      var _this = this;
+
+      console.log(break_times);
+      var times = break_times.map(function (break_time, index, array) {
+        var to = _this.$moment(break_time.start_date + ' ' + break_time.start_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+        var from = _this.$moment(break_time.end_date + ' ' + break_time.end_time, 'YYYY-MM-DD HH:mm:ss', true);
+
+        if (to.isValid() && from.isValid()) {
+          return _this.diff(to, from);
+        }
+
+        return 0;
+      });
+      return times;
     }
   }
 });
