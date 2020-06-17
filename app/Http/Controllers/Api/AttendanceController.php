@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Attendance AS RA;
 use App\Models\Attendance;
 use Auth;
 use Carbon\Carbon;
@@ -32,7 +33,7 @@ class AttendanceController extends Controller
         return response(['attendance' => $attendance, 'break_times' => $break_times], 200);
     }
 
-    public function create(Request $request)
+    public function create(RA\CreateRequest $request)
     {
         $user = Auth::user();
         $data = $request->all();
@@ -41,7 +42,7 @@ class AttendanceController extends Controller
         return response($attendance, 201);
     }
 
-    public function update(Request $request)
+    public function update(RA\UpdateRequest $request)
     {
         $attendance = Attendance::find($request->id);
         $attendance->update($request->all());
