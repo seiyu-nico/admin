@@ -21,7 +21,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
         if (isset($request->id)) {
             $id = $request->id;
-            $attendance = Attendance::find($id)->where('user_id', $user->id)->first();
+            $attendance = Attendance::where('id', $id)->where('user_id', $user->id)->first();
         } elseif (isset($request->date)) {
             $date = $request->date;
             $attendance = Attendance::where('user_id', $user->id)->where('start_date', $date)->first();
