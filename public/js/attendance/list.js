@@ -73,6 +73,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
  //you need to import the CSS manually (in case you want to override it)
 
@@ -247,7 +255,7 @@ var render = function() {
       _c("div", { staticClass: "col-4" })
     ]),
     _vm._v(" "),
-    _c("table", { staticClass: "table table-hover" }, [
+    _c("table", { staticClass: "table table-hover table-striped" }, [
       _vm._m(0),
       _vm._v(" "),
       _c(
@@ -276,7 +284,30 @@ var render = function() {
               _vm._v(
                 _vm._s(attendance.end_date) + " " + _vm._s(attendance.end_time)
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "td",
+              [
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "Attendance.Update",
+                        params: { id: attendance.id }
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { staticClass: "material-icons text-dark" }, [
+                      _vm._v("\n                create\n              ")
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
           ])
         }),
         0
@@ -309,7 +340,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("td", [_vm._v("出勤時間")]),
         _vm._v(" "),
-        _c("td", [_vm._v("退勤時間")])
+        _c("td", [_vm._v("退勤時間")]),
+        _vm._v(" "),
+        _c("td")
       ])
     ])
   }

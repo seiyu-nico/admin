@@ -78,16 +78,15 @@ export default {
     BreakTimes,
   },
   created () {
-    const id = this.$route.params.id;
-    this.getAttendance(id);
+    this.getAttendance();
   },
   methods: {
-    async getAttendance(id) {
-      const params = this.createAttendanceParams(id);
+    async getAttendance() {
+      const params = this.createAttendanceParams();
       await this.$store.dispatch('attendance/getAttendance', params);
     },
-    createAttendanceParams(id) {
-      if (undefined === id) {
+    createAttendanceParams() {
+      if (undefined === this.id) {
         // 今日のデータ取得
         const params = {
           'date': this.$moment().format('YYYY-MM-DD'),
@@ -95,7 +94,7 @@ export default {
         return params;
       } else {
         const params = {
-          'id': id,
+          'id': this.id,
         }
         return params;
       } 
@@ -137,8 +136,9 @@ export default {
   watch: {
     '$route' (to, from) {
       // ルートの変更の検知...
+      this.getAttendance();
     }
-  }
+  },
 }
 </script>
 <style>

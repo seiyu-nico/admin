@@ -61125,7 +61125,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     props: true
   }, {
-    path: ':id',
+    path: ':id(\\d+)',
     name: 'Attendance.Update',
     component: function component(resolve) {
       Promise.all(/*! require.ensure | attendance/index */[__webpack_require__.e("vendors~attendance/index"), __webpack_require__.e("attendance/index")]).then((function () {

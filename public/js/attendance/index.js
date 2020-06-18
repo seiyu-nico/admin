@@ -255,11 +255,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     BreakTimes: _BreakTime__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   created: function created() {
-    var id = this.$route.params.id;
-    this.getAttendance(id);
+    this.getAttendance();
   },
   methods: {
-    getAttendance: function getAttendance(id) {
+    getAttendance: function getAttendance() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -268,7 +267,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                params = _this.createAttendanceParams(id);
+                params = _this.createAttendanceParams();
                 _context.next = 3;
                 return _this.$store.dispatch('attendance/getAttendance', params);
 
@@ -280,8 +279,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    createAttendanceParams: function createAttendanceParams(id) {
-      if (undefined === id) {
+    createAttendanceParams: function createAttendanceParams() {
+      if (undefined === this.id) {
         // 今日のデータ取得
         var params = {
           'date': this.$moment().format('YYYY-MM-DD')
@@ -289,7 +288,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return params;
       } else {
         var _params = {
-          'id': id
+          'id': this.id
         };
         return _params;
       }
@@ -381,7 +380,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   })),
   watch: {
-    '$route': function $route(to, from) {// ルートの変更の検知...
+    '$route': function $route(to, from) {
+      // ルートの変更の検知...
+      this.getAttendance();
     }
   }
 });

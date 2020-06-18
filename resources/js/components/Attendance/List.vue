@@ -22,17 +22,25 @@
     <div class="col-4">
     </div>
   </div>
-  <table class="table table-hover">
+  <table class="table table-hover table-striped">
     <thead class="thead-light">
       <tr>
         <td>出勤時間</td>
         <td>退勤時間</td>
+        <td></td>
       </tr>
     </thead>
     <tbody v-show="spinner">
       <tr v-for="attendance in attendances" :key="attendance.id">
         <td>{{attendance.start_date}} {{attendance.start_time}}</td>
         <td>{{attendance.end_date}} {{attendance.end_time}}</td>
+        <td>
+          <router-link :to="{ name: 'Attendance.Update', params: { id: attendance.id }}">
+              <span class="material-icons text-dark">
+                create
+              </span>
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>

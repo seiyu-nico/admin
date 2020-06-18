@@ -24,7 +24,7 @@ export default {
       props: true
     },
     {
-      path: ':id',
+      path: ':id(\\d+)',
       name: 'Attendance.Update',
       component: resolve => {
         require.ensure(['./Index.vue'], () => {
