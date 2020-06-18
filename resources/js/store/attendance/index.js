@@ -31,11 +31,7 @@ const mutations = {
 }
 
 const actions = {
-  async getAttendance(context, data) {
-    let params = {
-      'date': data,
-    }
-
+  async getAttendance(context, params) {
     const response = await axios.get('/api/attendance', {params: params});
     if (OK === response.status) {
       if (response.data) {

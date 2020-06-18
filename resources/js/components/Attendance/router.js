@@ -21,6 +21,17 @@ export default {
         resolve(require('./Index.vue'));
         }, 'attendance/index');
       },
+      props: true
+    },
+    {
+      path: ':id',
+      name: 'Attendance.Update',
+      component: resolve => {
+        require.ensure(['./Index.vue'], () => {
+        resolve(require('./Index.vue'));
+        }, 'attendance/index');
+      },
+      props: true
     },
     {
       path: 'list',

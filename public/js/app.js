@@ -61122,7 +61122,17 @@ __webpack_require__.r(__webpack_exports__);
       Promise.all(/*! require.ensure | attendance/index */[__webpack_require__.e("vendors~attendance/index"), __webpack_require__.e("attendance/index")]).then((function () {
         resolve(__webpack_require__(/*! ./Index.vue */ "./resources/js/components/Attendance/Index.vue"));
       }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
-    }
+    },
+    props: true
+  }, {
+    path: ':id',
+    name: 'Attendance.Update',
+    component: function component(resolve) {
+      Promise.all(/*! require.ensure | attendance/index */[__webpack_require__.e("vendors~attendance/index"), __webpack_require__.e("attendance/index")]).then((function () {
+        resolve(__webpack_require__(/*! ./Index.vue */ "./resources/js/components/Attendance/Index.vue"));
+      }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+    },
+    props: true
   }, {
     path: 'list',
     name: 'Attendance.List',
@@ -61932,26 +61942,23 @@ var mutations = {
   }
 };
 var actions = {
-  getAttendance: function getAttendance(context, data) {
+  getAttendance: function getAttendance(context, params) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var params, response;
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              params = {
-                'date': data
-              };
-              _context.next = 3;
+              _context.next = 2;
               return axios.get('/api/attendance', {
                 params: params
               });
 
-            case 3:
+            case 2:
               response = _context.sent;
 
               if (!(_util__WEBPACK_IMPORTED_MODULE_3__["OK"] === response.status)) {
-                _context.next = 7;
+                _context.next = 6;
                 break;
               }
 
@@ -61964,7 +61971,7 @@ var actions = {
 
               return _context.abrupt("return", false);
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }

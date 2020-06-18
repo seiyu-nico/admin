@@ -16,11 +16,16 @@ class AttendanceController extends Controller
     {
     }
 
-    public function index(Request $request)
+    public function index(RA\GetRequest $request)
     {
         $user = Auth::user();
-        $date = $request->date;
-        $attendance = Attendance::where('user_id', $user->id)->where('start_date', $date)->first();
+        if (isset($request->id)) {
+            $id = $request->id;
+            $attendance = Attendance::find($id)->where('user_id', $user->id)->first();
+        } elseif (isset($request->date)) {
+            $date = $request->date;
+            $attendance = Attendance::where('user_id', $user->id)->where('start_date', $date)->first();
+        }
         // なければ作成
         if (NULL === $attendance) {
             $attendance = Attendance::create([

@@ -70,6 +70,7 @@ import { mapState, mapGetters} from 'vuex';
 import BreakTimes from './BreakTime';
 import attendanceMixin from '../../mixin/Attendance/index';
 export default {
+  props: ['id'],
   mixins: [attendanceMixin],
   components: {
     VueClockPicker,
@@ -77,13 +78,27 @@ export default {
     BreakTimes,
   },
   created () {
-    this.getAttendance();
+    const id = this.$route.params.id;
+    this.getAttendance(id);
   },
   methods: {
-    async getAttendance() {
-      // 今日のデータ取得
-      let date = this.$moment().format('YYYY-MM-DD');
-      await this.$store.dispatch('attendance/getAttendance', date);
+    async getAttendance(id) {
+      const params = this.createAttendanceParams(id);
+      await this.$store.dispatch('attendance/getAttendance', params);
+    },
+    createAttendanceParams(id) {
+      if (undefined === id) {
+        // 今日のデータ取得
+        const params = {
+          'date': this.$moment().format('YYYY-MM-DD'),
+        }
+        return params;
+      } else {
+        const params = {
+          'id': id,
+        }
+        return params;
+      } 
     },
     select(select) {
       this.$store.commit('attendance/setSelect', select);
@@ -119,6 +134,11 @@ export default {
       break_times: state => state.attendance.break_time.break_times,
     }),
   },
+  watch: {
+    '$route' (to, from) {
+      // ルートの変更の検知...
+    }
+  }
 }
 </script>
 <style>

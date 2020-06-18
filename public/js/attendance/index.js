@@ -247,6 +247,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id'],
   mixins: [_mixin_Attendance_index__WEBPACK_IMPORTED_MODULE_6__["default"]],
   components: {
     VueClockPicker: _pencilpix_vue2_clock_picker__WEBPACK_IMPORTED_MODULE_1___default.a,
@@ -254,22 +255,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     BreakTimes: _BreakTime__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   created: function created() {
-    this.getAttendance();
+    var id = this.$route.params.id;
+    this.getAttendance(id);
   },
   methods: {
-    getAttendance: function getAttendance() {
+    getAttendance: function getAttendance(id) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var date;
+        var params;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // 今日のデータ取得
-                date = _this.$moment().format('YYYY-MM-DD');
+                params = _this.createAttendanceParams(id);
                 _context.next = 3;
-                return _this.$store.dispatch('attendance/getAttendance', date);
+                return _this.$store.dispatch('attendance/getAttendance', params);
 
               case 3:
               case "end":
@@ -278,6 +279,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    createAttendanceParams: function createAttendanceParams(id) {
+      if (undefined === id) {
+        // 今日のデータ取得
+        var params = {
+          'date': this.$moment().format('YYYY-MM-DD')
+        };
+        return params;
+      } else {
+        var _params = {
+          'id': id
+        };
+        return _params;
+      }
     },
     select: function select(_select) {
       this.$store.commit('attendance/setSelect', _select);
@@ -364,7 +379,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     break_times: function break_times(state) {
       return state.attendance.break_time.break_times;
     }
-  }))
+  })),
+  watch: {
+    '$route': function $route(to, from) {// ルートの変更の検知...
+    }
+  }
 });
 
 /***/ }),
