@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/attendance', 'Api\AttendanceController@index');
     Route::put('/attendance', 'Api\AttendanceController@update');
     Route::delete('/attendance', 'Api\AttendanceController@delete');
+    
     // リスト部分
     Route::get('/attendances', 'Api\AttendanceListController@index')->name('attendances.create');
 

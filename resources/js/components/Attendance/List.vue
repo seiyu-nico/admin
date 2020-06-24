@@ -30,21 +30,24 @@
         <td></td>
       </tr>
     </thead>
-    <tbody v-show="spinner">
+    <tbody v-show="false == spinner">
       <tr v-for="attendance in attendances" :key="attendance.id">
         <td>{{attendance.start_date}} {{attendance.start_time}}</td>
         <td>{{attendance.end_date}} {{attendance.end_time}}</td>
         <td>
           <router-link :to="{ name: 'Attendance.Update', params: { id: attendance.id }}">
-              <span class="material-icons text-dark">
+              <span class="material-icons text-dark mx-2 pointer">
                 create
               </span>
           </router-link>
+          <span class="material-icons mx-2 pointer" @click="deleteAttendance(attendance.id)">
+            delete
+          </span>
         </td>
       </tr>
     </tbody>
   </table>
-  <div v-show="false == spinner">
+  <div v-show="true == spinner">
     <Spinner />
   </div>
 </div>
@@ -97,7 +100,10 @@ export default {
         return this.getBreakTimes(attendance.break_time).reduce((sum, v) => sum + v, 0);
       });
       return this.format(minutes);
-    }
+    },
+    async deleteAttendance(id) {
+      await this.$store.dispatch('attendance/list/geleteAttendance', {'id': id});
+    },
   },
   computed: {
     ...mapState({

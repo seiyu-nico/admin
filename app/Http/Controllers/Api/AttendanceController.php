@@ -49,14 +49,16 @@ class AttendanceController extends Controller
 
     public function update(RA\UpdateRequest $request)
     {
-        $attendance = Attendance::find($request->id);
+        $user = Auth::user();
+        $attendance = Attendance::where('id', $request->id)->where('user_id', $user->id);
         $attendance->update($request->all());
         return response($attendance, 200);
     }
     
     public function delete(Request $request)
     {
-        // Memo::find($request->id)->delete();
-        // return response(null, 204);
+        $user = Auth::user();
+        Attendance::where('id', $request->id)->where('user_id', $user->id)->delete();
+        return response(null, 204);
     }
 }
