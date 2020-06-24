@@ -132,7 +132,7 @@ export default {
         appendToast: true,
         variant: variant,
       })
-    },コミット
+    },
   },
   filters: {
     formatTime: (value) => {
