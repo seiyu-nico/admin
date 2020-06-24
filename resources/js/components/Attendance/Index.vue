@@ -103,7 +103,13 @@ export default {
       this.$store.commit('attendance/setSelect', select);
     },
     async update(date) {
-      this.$store.dispatch('attendance/store', date);
+      const response = await this.$store.dispatch('attendance/store', date);
+      // console.log(response);
+      // if (200 != response.status) {
+      //   this.showToast('', '更新に失敗しました。', 'warning');
+      // } else {
+      //   this.showToast('', '更新に成功しました。', 'primary');
+      // }
     },
     async startDateUpdate(date) {
       this.select('start_date');
@@ -117,6 +123,16 @@ export default {
       const times = this.getWorkingTime(this.attendance, this.break_times);
       return this.format(times);
     },
+    showToast(title, body, variant) {
+      this.$bvToast.toast(body, {
+        title: title,
+        toaster: 'b-toaster-bottom-right',
+        autoHideDelay: 1000,
+        solid: true,
+        appendToast: true,
+        variant: variant,
+      })
+    },コミット
   },
   filters: {
     formatTime: (value) => {

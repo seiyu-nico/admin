@@ -7,6 +7,8 @@ import store from './store';
 // ルートコンポーネントをインポートする
 import App from './App.vue';
 
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+
 // moment
 import moment from 'vue-moment';
 
@@ -21,6 +23,11 @@ const createApp = async () => {
     template: '<App />', // ルートコンポーネントを描画する
   });
   Vue.use(moment, {});
+  // Install BootstrapVue
+  Vue.use(BootstrapVue)
+  // Optionally install the BootstrapVue icon components plugin
+  Vue.use(IconsPlugin)
+
 }
 
 

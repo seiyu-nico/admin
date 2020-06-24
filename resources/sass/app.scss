@@ -8,6 +8,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
 
 @import url('https://use.fontawesome.com/releases/v5.0.13/css/all.css');
 
@@ -24,6 +25,9 @@ body {
   overflow: hidden;
 }
 
+.pointer {
+  cursor: pointer;
+}
 
 @import 'login';
 @import 'scroll_bar';

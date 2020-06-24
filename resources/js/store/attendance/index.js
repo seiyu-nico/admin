@@ -38,8 +38,9 @@ const actions = {
         context.commit('setAttendance', response.data.attendance);
         context.commit('attendance/break_time/setBreakTime', response.data.break_times, {root: true});
       }
-      return false;
+      return response;
     }
+    return false;
   },
   async store(context, data) {
     let id = context.state.attendance.id;
@@ -52,13 +53,13 @@ const actions = {
       const response = await axios.post('/api/attendance', params);
       if (response.status === CREATED) {
         context.commit('setAttendance', response.data);
-        return false;
+        return response;
       }
     } else {
       const response = await axios.put('/api/attendance', params);
       if (response.status === OK) {
         context.commit('setAttendance', response.data);
-        return false;
+        return response;
       }
     }
     if (response.status === UNPROCESSABLE_ENTITY) {
@@ -66,6 +67,7 @@ const actions = {
     } else {
       context.commit('error/setCode', response.status, { root: true });
     }
+    return false;
   },
 }
 
