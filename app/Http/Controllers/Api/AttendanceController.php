@@ -50,7 +50,7 @@ class AttendanceController extends Controller
     public function update(RA\UpdateRequest $request)
     {
         $user = Auth::user();
-        $attendance = Attendance::where('id', $request->id)->where('user_id', $user->id);
+        $attendance = Attendance::where('id', $request->id)->where('user_id', $user->id)->first();
         $attendance->update($request->all());
         return response($attendance, 200);
     }
